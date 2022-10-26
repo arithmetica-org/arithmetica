@@ -15,4 +15,11 @@
 arithmetica_function_start void igcd(const char *a_in, const char *b_in,
                                      char *gcd);
 
+/// @brief Finds the lowest common multiple of the first and second integral
+/// arguments.
+/// @param a_in The first non-negative number to find the lcm of.
+/// @param b_in The second non-negative number to find the lcm of.
+/// @param lcm The lcm of the first two arguments.
+arithmetica_function_start void ilcm(const char *a_in, const char *b_in,
+                                     char *lcm);
 #endif
