@@ -1,0 +1,11 @@
+# Arithmetica
+
+Arithmetica is a general purpose math library with a wide variety of mathematical functions and features.
+
+This library uses [basic_math_operations](https://github.com/avighnac/basic_math_operations) to achieve arbitrary precision. While compiling an application using arithmetica, basic_math_operations will also have to be linked.
+
+# Functions
+
+Currently, arithmetica has the following functions:
+
+- `igcd()` computes the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative integers.

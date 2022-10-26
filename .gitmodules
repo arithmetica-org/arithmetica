@@ -1,0 +1,3 @@
+[submodule "src/basic_math_operations"]
+	path = src/basic_math_operations
+	url = https://github.com/avighnac/basic_math_operations
