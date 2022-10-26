@@ -9,3 +9,4 @@ This library uses [basic_math_operations](https://github.com/avighnac/basic_math
 Currently, arithmetica has the following functions:
 
 - `igcd()` computes the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative integers.
+- `ilcm()` computes the [least common multiple](https://en.wikipedia.org/wiki/Least_common_multiple) of two non-negative integers.
