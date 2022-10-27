@@ -41,8 +41,8 @@ void repeating_decimal_to_fraction(const char *non_repeating_part_in,
   for (size_t i = 0; i < decimalsRemoved; i++)
     nines[strlen(repeating_part) + i] = '0';
 
-  char *gcd =
-      (char *)calloc(max(strlen(repeating_part), strlen(_numerator)), 1);
+  char *gcd = (char *)calloc(
+      max(strlen(repeating_part) + decimalsRemoved, strlen(_numerator)) + 1, 1);
   igcd(_numerator, nines, gcd);
   divide(_numerator, gcd, numerator_out, 0);
   divide(nines, gcd, denominator_out, 0);

@@ -8,4 +8,4 @@ add_library(
     arithmetica.c
 )
 
-target_include_directories(arithmetica PRIVATE "basic_math_operations/src/library")
+target_include_directories(arithmetica PRIVATE "../basic_math_operations/src/library")
