@@ -1,5 +1,6 @@
 #include "arithmetica.h"
 
+#include "factorial.h"
 #include "igcd.h"
 #include "ilcm.h"
 #include "repeating_decimal_to_fraction.h"

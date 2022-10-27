@@ -7,6 +7,12 @@
 #define arithmetica_function_start
 #endif
 
+/// @brief Finds the factorial of the first argument and stores the result in
+/// the second argument.
+/// @param n The number to find the factorial of.
+/// @param factorial Where the factorial of [n] will be stored.
+arithmetica_function_start void factorial(unsigned long n, char *factorial);
+
 /// @brief Finds the greatest common divisor of the first and second integral
 /// arguments.
 /// @param a The first non-negative number to find the gcd of.
