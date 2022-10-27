@@ -22,4 +22,13 @@ arithmetica_function_start void igcd(const char *a_in, const char *b_in,
 /// @param lcm The lcm of the first two arguments.
 arithmetica_function_start void ilcm(const char *a_in, const char *b_in,
                                      char *lcm);
+
+/// @brief Converts a terminating decimal to a fraction reduced to its lowest
+/// terms.
+/// @param decimal_in The decimal number to convert to a fraction.
+/// @param numerator_out The output numerator of the fraction.
+/// @param denominator_out The output denominator of the fraction.
+arithmetica_function_start void
+terminating_decimal_to_fraction(const char *decimal_in, char *numerator_out,
+                                char *denominator_out);
 #endif
