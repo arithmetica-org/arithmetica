@@ -19,7 +19,7 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
   strcpy(b, b_in);
 
   // euclidean algorithm
-  while (!strcmp(b, "0")) {
+  while (strcmp(b, "0")) {
     strcpy(temp, b);
     clear_string(quotient);
     clear_string(b);
