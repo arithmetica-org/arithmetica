@@ -10,4 +10,5 @@ Currently, arithmetica has the following functions:
 
 - `igcd()` computes the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative integers.
 - `ilcm()` computes the [least common multiple](https://en.wikipedia.org/wiki/Least_common_multiple) of two non-negative integers.
-- `terminating_decimal_to_fraction()` converts a terminating decimal (like 0.5) to a fraction (1/2).
+- `repeating_decimal_to_fraction()` converts a [repeating decimal](https://en.wikipedia.org/wiki/Repeating_decimal) to a fraction.
+- `terminating_decimal_to_fraction()` converts a terminating decimal to a fraction.
