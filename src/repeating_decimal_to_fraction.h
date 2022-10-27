@@ -27,7 +27,7 @@ void repeating_decimal_to_fraction(const char *non_repeating_part_in,
   // fraction = non_repeating_part + repeating_part /
   // strlen(repeating_part) nines
 
-  char *nines = (char *)calloc(strlen(repeating_part) + 1, 1);
+  char *nines = (char *)calloc(strlen(repeating_part) + decimalsRemoved + 1, 1);
   for (size_t i = 0; i < strlen(repeating_part); i++)
     nines[i] = '9';
 
@@ -37,6 +37,9 @@ void repeating_decimal_to_fraction(const char *non_repeating_part_in,
       strlen(non_repeating_part_in) + strlen(repeating_part) + 1, 1);
   multiply(nines, non_repeating_part, numerator);
   add(numerator, repeating_part, _numerator);
+
+  for (size_t i = 0; i < decimalsRemoved; i++)
+    nines[strlen(repeating_part) + i] = '0';
 
   char *gcd =
       (char *)calloc(max(strlen(repeating_part), strlen(_numerator)), 1);
