@@ -14,8 +14,8 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
     _a > _b ? _a : _b;                                                         \
   })
 
-  char *a = (char *)malloc(strlen(a_in) + 1);
-  char *b = (char *)malloc(strlen(b_in) + 1);
+  char *a = (char *)malloc(max(strlen(a_in), strlen(b_in)) + 1);
+  char *b = (char *)malloc(max(strlen(a_in), strlen(b_in)) + 1);
 
   // allocate memory for some temporary variables
   char *quotient = (char *)calloc(max(strlen(a_in), strlen(b_in)) + 1, 1);

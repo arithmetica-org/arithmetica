@@ -7,6 +7,14 @@
 #define arithmetica_function_start
 #endif
 
+/// @brief Computes e^x, where e is Euler's number: the base to the natural
+/// logarithm.
+/// @param x The number to raise e to.
+/// @param accuracy The number of decimal places to calculate accurately to.
+/// @return The value of e^x. Free this pointer once it's done being used.
+arithmetica_function_start char *exponential(const char *x,
+                                             unsigned long accuracy);
+
 /// @brief Finds the factorial of the first argument and stores the result in
 /// the second argument.
 /// @param n The number to find the factorial of.

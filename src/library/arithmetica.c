@@ -1,5 +1,6 @@
 #include "arithmetica.h"
 
+#include "exponential.h"
 #include "factorial.h"
 #include "igcd.h"
 #include "ilcm.h"
