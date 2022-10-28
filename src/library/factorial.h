@@ -27,6 +27,10 @@ void factorial(unsigned long n, char *factorial) {
     clear_string(str_i);
     add(_str_i, one, str_i);
   }
+
+  free(_factorial);
+  free(str_i);
+  free(_str_i);
 }
 
 #endif
