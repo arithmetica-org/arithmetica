@@ -46,18 +46,18 @@ char *exponential(const char *x_in, unsigned long accuracy) {
       buf = (char *)realloc(buf, sz_2);
       m = sz_2;
     }
-    clear_string(buf);
+    clear_string_s(buf, m);
     multiply(denominator, i, buf);
     denominator = (char *)realloc(denominator, sz_2);
     strcpy(denominator, buf);
     size_t sz_3 = strlen(x) + strlen(denominator) + 2 * accuracy + 3;
     char *_buf = (char *)calloc(sz_3, 1);
     divide(x, denominator, _buf, 2 * accuracy);
-    if (max(strlen(answer), sz_3) + 1 > m) {
-      m = sz_3;
-      buf = (char *)realloc(buf, sz_3);
+    if (strlen(answer) + sz_3 + 1 > m) {
+      m = strlen(answer) + sz_3 + 1;
+      buf = (char *)realloc(buf, m);
     }
-    clear_string(buf);
+    clear_string_s(buf, m);
     add(answer, _buf, buf);
     answer = (char *)realloc(answer, m);
     strcpy(answer, buf);
@@ -65,7 +65,7 @@ char *exponential(const char *x_in, unsigned long accuracy) {
       m = sz_4;
       buf = (char *)realloc(buf, sz_4);
     }
-    clear_string(buf);
+    clear_string_s(buf, m);
     add(i, one, buf);
     i = (char *)realloc(i, m);
     strcpy(i, buf);
