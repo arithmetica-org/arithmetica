@@ -1,6 +1,8 @@
 #ifndef _arithmetica_
 #define _arithmetica_
 
+#include <stddef.h>
+
 #if defined(__cplusplus)
 #define arithmetica_function_start extern "C"
 #else
@@ -47,6 +49,12 @@ arithmetica_function_start void
 repeating_decimal_to_fraction(const char *non_repeating_part,
                               const char *repeating_part, char *numerator_out,
                               char *denominator_out);
+
+/// @brief Computes the sine of the first argument.
+/// @param number The angle to compute the sine of, in radians.
+/// @param accuracy The number of decimal places to calculate accuractely to.
+/// @return The sine of the first argument.
+arithmetica_function_start char *sine(const char *number, size_t accuracy);
 
 /// @brief Converts a terminating decimal to a fraction reduced to its lowest
 /// terms.

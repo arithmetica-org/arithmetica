@@ -101,6 +101,46 @@ int main() {
               << ".\n";
   }
 
+  testName = "sin_unit_tests";
+  functionName = "sine";
+
+  std::vector<std::pair<std::string, unsigned long>> input_sin = {
+      {"0.523599", 10}, {"0.69", 69}};
+  std::vector<std::string> expected_sin = {
+      "0.5000001943",
+      "0."
+      "636537182221967940237429207008720931849252173827564301711170385158449"};
+
+  print_test(testName, input_sin.size());
+
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_sin.size(); i++) {
+    char *answer =
+        (char *)sine(input_sin[i].first.c_str(), input_sin[i].second);
+
+    if (std::string(answer) != expected_sin[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_sin[i].first << "\", " << input_sin[i].second
+                << ") == \"" << expected_sin[i] << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
+
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
+
+  if (!number_of_failed_cases) {
+    std::cout << "no errors detected in " << testName << ". (finished in "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end -
+                                                                       start)
+                     .count()
+              << " microseconds)" << '\n';
+  } else {
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
+              << ".\n";
+  }
+
   if (number_of_failed_cases)
     throw std::runtime_error(std::to_string(number_of_failed_cases) +
                              " test/s failed.");
