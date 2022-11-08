@@ -20,7 +20,7 @@ char *sine(const char *number, size_t accuracy) {
   i[0] = '2';
   char *maxDiff = (char *)calloc(accuracy + 3, 1);
   maxDiff[0] = '0';
-  if (accuracy > 1) {
+  if (accuracy > 0) {
     maxDiff[1] = '.';
     for (size_t i = 1; i < accuracy; i++)
       maxDiff[i + 1] = '0';
