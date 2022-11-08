@@ -1,6 +1,7 @@
 #ifndef _sine_h_
 #define _sine_h_
 
+#include "clear_string.h"
 #include <basic_math_operations.h>
 #include <stdlib.h>
 #include <string.h>
@@ -112,6 +113,8 @@ char *sine(const char *number, size_t accuracy) {
   free(prev);
   free(maxDiff);
 
+  if (number[0] == '-')
+    decimalLocation++;
   answer[decimalLocation + accuracy + 2] = 0;
 
   return answer;

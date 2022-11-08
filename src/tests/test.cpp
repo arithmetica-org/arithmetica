@@ -142,6 +142,43 @@ int main() {
               << ".\n";
   }
 
+  testName = "arctan_unit_tests";
+  functionName = "arctan";
+
+  std::vector<std::pair<std::string, unsigned long>> input_atan = {{"1", 3}};
+  std::vector<std::string> expected_atan = {"0.785"};
+
+  print_test(testName, input_atan.size());
+
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_atan.size(); i++) {
+    char *answer =
+        (char *)arctan(input_atan[i].first.c_str(), input_atan[i].second);
+
+    if (std::string(answer) != expected_atan[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_atan[i].first << "\", "
+                << input_atan[i].second << ") == \"" << expected_atan[i]
+                << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
+
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
+
+  if (!number_of_failed_cases) {
+    std::cout << "no errors detected in " << testName << ". (finished in "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end -
+                                                                       start)
+                     .count()
+              << " microseconds)" << '\n';
+  } else {
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
+              << ".\n";
+  }
+
   if (number_of_failed_cases)
     throw std::runtime_error(std::to_string(number_of_failed_cases) +
                              " test/s failed.");

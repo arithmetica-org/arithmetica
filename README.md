@@ -8,6 +8,7 @@ This library uses [basic_math_operations](https://github.com/avighnac/basic_math
 
 Currently, arithmetica has the following functions:
 
+- `arctan()` computes the [inverse tangent](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of a number less than one to any decimal place.
 - `exponential()` computes e^x, where x is any rational number to any decimal place.
 - `factorial()` computes the [factorial](https://en.wikipedia.org/wiki/Factorial) of a non-negative integer.
 - `igcd()` computes the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative integers.

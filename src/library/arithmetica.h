@@ -9,13 +9,19 @@
 #define arithmetica_function_start
 #endif
 
+/// @brief Computes the inverse tangent of a number less than 1.
+/// @param x The number to compute the inverse tangent of.
+/// @param accuracy The number of decimal places to calculate accurately to.
+/// @return The inverse tangent of the first argument. Free this pointer once
+/// it's done being used.
+arithmetica_function_start char *arctan(const char *number, size_t accuracy);
+
 /// @brief Computes e^x, where e is Euler's number: the base to the natural
 /// logarithm.
 /// @param x The number to raise e to.
 /// @param accuracy The number of decimal places to calculate accurately to.
 /// @return The value of e^x. Free this pointer once it's done being used.
-arithmetica_function_start char *exponential(const char *x,
-                                             unsigned long accuracy);
+arithmetica_function_start char *exponential(const char *x, size_t accuracy);
 
 /// @brief Finds the factorial of the first argument and stores the result in
 /// the second argument.
@@ -53,7 +59,8 @@ repeating_decimal_to_fraction(const char *non_repeating_part,
 /// @brief Computes the sine of the first argument.
 /// @param number The angle to compute the sine of, in radians.
 /// @param accuracy The number of decimal places to calculate accuractely to.
-/// @return The sine of the first argument.
+/// @return The sine of the first argument. Free this pointer once it's done
+/// being used.
 arithmetica_function_start char *sine(const char *number, size_t accuracy);
 
 /// @brief Converts a terminating decimal to a fraction reduced to its lowest
