@@ -8,9 +8,6 @@
 char *arctan(const char *number, size_t accuracy) {
   // arctan(x) = \displaystyle \sum_{n=0}^{\infty} (-1)^n x^(2n+1) / (2n+1)
   //           = x - x^3 / 3 + x^5 / 5 - x^7 / 7 + ...
-
-  accuracy += 2;
-
   unsigned char toggle = 0;
   char two[] = "2";
   char *i = (char *)calloc(2, 1);
@@ -28,7 +25,7 @@ char *arctan(const char *number, size_t accuracy) {
     maxDiff[1] = '.';
     for (size_t i = 1; i < accuracy; i++)
       maxDiff[i + 1] = '0';
-    maxDiff[accuracy] = '1';
+    maxDiff[accuracy + 1] = '1';
   }
   char *prev = (char *)calloc(2, 1);
   prev[0] = '0';
@@ -97,9 +94,13 @@ char *arctan(const char *number, size_t accuracy) {
   free(x);
   free(x_squared);
 
-  if (number[0] == '-')
-    decimalLocation++;
-  answer[decimalLocation + accuracy] = 0;
+  for (size_t i = 0; i < strlen(answer); i++) {
+    if (answer[i] == '.') {
+      decimalLocation = i;
+      break;
+    }
+  }
+  answer[decimalLocation + accuracy + 1] = 0;
 
   return answer;
 }

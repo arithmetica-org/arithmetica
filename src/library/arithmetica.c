@@ -1,5 +1,6 @@
 #include "arithmetica.h"
 
+#include "arcsin.h"
 #include "arctan.h"
 #include "exponential.h"
 #include "factorial.h"

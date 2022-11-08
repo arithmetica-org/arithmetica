@@ -9,6 +9,13 @@
 #define arithmetica_function_start
 #endif
 
+/// @brief Computes the inverse sine of a number less than 1.
+/// @param number The number to compute the inverse sine of.
+/// @param accuracy The number of decimal places to calculate accurately to.
+/// @return The inverse sine of the first argument. Free this pointer one it's
+/// done being used.
+arithmetica_function_start char *arcsin(const char *number, size_t accuracy);
+
 /// @brief Computes the inverse tangent of a number less than 1.
 /// @param x The number to compute the inverse tangent of.
 /// @param accuracy The number of decimal places to calculate accurately to.

@@ -57,7 +57,7 @@ int main() {
               << std::chrono::duration_cast<std::chrono::microseconds>(end -
                                                                        start)
                      .count()
-              << " microseconds)" << '\n';
+              << " \u00b5s)" << '\n';
   } else {
     std::cout << number_of_failed_cases << " error/s detected in " << testName
               << ".\n";
@@ -95,7 +95,7 @@ int main() {
               << std::chrono::duration_cast<std::chrono::microseconds>(end -
                                                                        start)
                      .count()
-              << " microseconds)" << '\n';
+              << " \u00b5s)" << '\n';
   } else {
     std::cout << number_of_failed_cases << " error/s detected in " << testName
               << ".\n";
@@ -136,7 +136,7 @@ int main() {
               << std::chrono::duration_cast<std::chrono::microseconds>(end -
                                                                        start)
                      .count()
-              << " microseconds)" << '\n';
+              << " \u00b5s)" << '\n';
   } else {
     std::cout << number_of_failed_cases << " error/s detected in " << testName
               << ".\n";
@@ -173,7 +173,50 @@ int main() {
               << std::chrono::duration_cast<std::chrono::microseconds>(end -
                                                                        start)
                      .count()
-              << " microseconds)" << '\n';
+              << " \u00b5s)" << '\n';
+  } else {
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
+              << ".\n";
+  }
+
+  testName = "arcsin_unit_tests";
+  functionName = "arcsin";
+
+  std::vector<std::pair<std::string, unsigned long>> input_asin = {
+      {"0.5", 100}, {"0.866", 10}};
+  std::vector<std::string> expected_asin = {
+      "0."
+      "523598775598298873077107230546583814032861566562517636829157432051302734"
+      "3810348331046724708903528446",
+      "1.0471467458"};
+
+  print_test(testName, input_asin.size());
+
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_asin.size(); i++) {
+    char *answer =
+        (char *)arcsin(input_asin[i].first.c_str(), input_asin[i].second);
+
+    if (std::string(answer) != expected_asin[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_asin[i].first << "\", "
+                << input_asin[i].second << ") == \"" << expected_asin[i]
+                << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
+
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
+
+  if (!number_of_failed_cases) {
+    std::cout << "no errors detected in " << testName << ". (finished in "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end -
+                                                                       start)
+                         .count() *
+                     1e-6
+              << " s)" << '\n';
   } else {
     std::cout << number_of_failed_cases << " error/s detected in " << testName
               << ".\n";
