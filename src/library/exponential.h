@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *exponential(const char *x_in, unsigned long accuracy) {
+char *exponential(const char *x_in, size_t accuracy) {
   // e^x = \displaystyle\sum_{n=0}^{\infty} \frac{x^n}{n!}
   //     = 1 + x + x^2 / (1 * 2) + x^3 / (1 * 2 * 3) + x^4 / (1 * 2 * 3 * 4) +
   //     ...
