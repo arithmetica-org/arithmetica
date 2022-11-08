@@ -28,7 +28,7 @@ char *arcsin(const char *number, size_t accuracy) {
   char *prev = (char *)calloc(strlen(number) + 1, 1);
   strcpy(prev, answer);
 
-  char *epsilon = (char *)calloc(accuracy + 3, 1);
+  char *epsilon = (char *)calloc(accuracy + 4, 1);
   epsilon[0] = '0';
   if (accuracy > 0) {
     epsilon[1] = '.';
@@ -117,7 +117,7 @@ char *arcsin(const char *number, size_t accuracy) {
         diff[i] = diff[i + 1];
       diff[strlen(diff) - 1] = 0;
     } // diff = abs(diff)
-    char *_diff = (char *)calloc(strlen(diff) + accuracy + 5, 1);
+    char *_diff = (char *)calloc(strlen(diff) + accuracy + 6, 1);
     subtract(diff, epsilon, _diff);
     if (_diff[0] == '-') {
       free(buf);
