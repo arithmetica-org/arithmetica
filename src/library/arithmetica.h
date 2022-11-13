@@ -36,6 +36,15 @@ arithmetica_function_start char *exponential(const char *x, size_t accuracy);
 /// @param factorial Where the factorial of [n] will be stored.
 arithmetica_function_start void factorial(unsigned long n, char *factorial);
 
+/// @brief Converts a non-negative rational fraction to a continued fraction.
+/// @param numerator_in The numerator of the fraction.
+/// @param denominator_in The denominator of the fraction.
+/// @return A pointer to a char * containing the continued fraction
+/// representation of the input fraction. Safe to print; free once done using.
+arithmetica_function_start char *
+fraction_to_continued_fraction(const char *numerator_in,
+                               const char *denominator_in);
+
 /// @brief Finds the greatest common divisor of the first and second integral
 /// arguments.
 /// @param a The first non-negative number to find the gcd of.

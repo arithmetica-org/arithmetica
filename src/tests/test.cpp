@@ -222,6 +222,50 @@ int main() {
               << ".\n";
   }
 
+  testName = "fraction_to_continued_fraction_unit_tests";
+  functionName = "fraction_to_continued_fraction";
+
+  std::vector<std::pair<std::string, std::string>> input_frtocofr = {
+      {"123", "456"},
+      {"532013", "376190"},
+      {"1", "69"},
+      {"1", "1"},
+      {"3", "3"}};
+  std::vector<std::string> expected_frtocofr = {
+      "[0; 3, 1, 2, 2, 2, 2]", "[1; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3]",
+      "[0; 69]", "1", "1"};
+
+  print_test(testName, input_frtocofr.size());
+
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_frtocofr.size(); i++) {
+    char *answer = (char *)fraction_to_continued_fraction(
+        input_frtocofr[i].first.c_str(), input_frtocofr[i].second.c_str());
+
+    if (std::string(answer) != expected_frtocofr[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_frtocofr[i].first << "\", \""
+                << input_frtocofr[i].second << "\") == \""
+                << expected_frtocofr[i] << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
+
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
+
+  if (!number_of_failed_cases) {
+    std::cout << "no errors detected in " << testName << ". (finished in "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end -
+                                                                       start)
+                     .count()
+              << "\u00b5s)" << '\n';
+  } else {
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
+              << ".\n";
+  }
+
   if (number_of_failed_cases)
     throw std::runtime_error(std::to_string(number_of_failed_cases) +
                              " test/s failed.");
