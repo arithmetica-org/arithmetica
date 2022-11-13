@@ -47,6 +47,11 @@ char *fraction_to_continued_fraction(const char *numerator_in,
     answer[strlen(answer) - 1] = 0;
   }
 
+  free(numerator);
+  free(denominator);
+  free(quotient);
+  free(remainder);
+
   return answer;
 }
 
