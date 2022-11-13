@@ -38,13 +38,12 @@ char *fraction_to_continued_fraction(const char *numerator_in,
     c++;
   }
 
-  answer[strlen(answer) - 2] = 0;
+  memset(answer + strlen(answer) - 2, 0, 2);
   if (c > 1) {
     answer[strlen(answer)] = ']';
     memcpy(answer + 1, answer, strlen(answer));
     answer[0] = '[';
     *strstr(answer, ",") = ';';
-    answer[strlen(answer) - 1] = 0;
   }
 
   free(numerator);
