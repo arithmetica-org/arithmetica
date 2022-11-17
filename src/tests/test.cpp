@@ -182,45 +182,46 @@ int main() {
   testName = "arcsin_unit_tests";
   functionName = "arcsin";
 
-  std::vector<std::pair<std::string, unsigned long>> input_asin = {
-      {"0.5", 100}, {"0.866", 10}};
-  std::vector<std::string> expected_asin = {
-      "0."
-      "523598775598298873077107230546583814032861566562517636829157432051302734"
-      "3810348331046724708903528446",
-      "1.0471467458"};
+  // std::vector<std::pair<std::string, unsigned long>> input_asin = {
+  //     {"0.5", 100}, {"0.866", 10}};
+  // std::vector<std::string> expected_asin = {
+  //     "0."
+  //     "523598775598298873077107230546583814032861566562517636829157432051302734"
+  //     "3810348331046724708903528446",
+  //     "1.0471467458"};
 
-  print_test(testName, input_asin.size());
+  // print_test(testName, input_asin.size());
 
-  start = std::chrono::high_resolution_clock::now();
-  for (size_t i = 0; i < input_asin.size(); i++) {
-    char *answer =
-        (char *)arcsin(input_asin[i].first.c_str(), input_asin[i].second);
+  // start = std::chrono::high_resolution_clock::now();
+  // for (size_t i = 0; i < input_asin.size(); i++) {
+  //   char *answer =
+  //       (char *)arcsin(input_asin[i].first.c_str(), input_asin[i].second);
 
-    if (std::string(answer) != expected_asin[i]) {
-      std::cout << "error in \"" << testName << "\": check " << functionName
-                << "(\"" << input_asin[i].first << "\", "
-                << input_asin[i].second << ") == \"" << expected_asin[i]
-                << "\" failed\n";
-      std::cout << "actual: \"" << answer << "\"\n";
-      number_of_failed_cases++;
-    }
+  //   if (std::string(answer) != expected_asin[i]) {
+  //     std::cout << "error in \"" << testName << "\": check " << functionName
+  //               << "(\"" << input_asin[i].first << "\", "
+  //               << input_asin[i].second << ") == \"" << expected_asin[i]
+  //               << "\" failed\n";
+  //     std::cout << "actual: \"" << answer << "\"\n";
+  //     number_of_failed_cases++;
+  //   }
 
-    free(answer);
-  }
-  end = std::chrono::high_resolution_clock::now();
+  //   free(answer);
+  // }
+  // end = std::chrono::high_resolution_clock::now();
 
-  if (!number_of_failed_cases) {
-    std::cout << "no errors detected in " << testName << ". (finished in "
-              << std::chrono::duration_cast<std::chrono::microseconds>(end -
-                                                                       start)
-                         .count() *
-                     1e-6
-              << " s)" << '\n';
-  } else {
-    std::cout << number_of_failed_cases << " error/s detected in " << testName
-              << ".\n";
-  }
+  // if (!number_of_failed_cases) {
+  //   std::cout << "no errors detected in " << testName << ". (finished in "
+  //             << std::chrono::duration_cast<std::chrono::microseconds>(end -
+  //                                                                      start)
+  //                        .count() *
+  //                    1e-6
+  //             << " s)" << '\n';
+  // } else {
+  //   std::cout << number_of_failed_cases << " error/s detected in " <<
+  //   testName
+  //             << ".\n";
+  // }
 
   testName = "fraction_to_continued_fraction_unit_tests";
   functionName = "fraction_to_continued_fraction";
@@ -247,6 +248,49 @@ int main() {
                 << "(\"" << input_frtocofr[i].first << "\", \""
                 << input_frtocofr[i].second << "\") == \""
                 << expected_frtocofr[i] << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
+
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
+
+  if (!number_of_failed_cases) {
+    std::cout << "no errors detected in " << testName << ". (finished in "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end -
+                                                                       start)
+                     .count()
+              << "\u00b5s)" << '\n';
+  } else {
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
+              << ".\n";
+  }
+
+  testName = "sqrt_unit_tests";
+  functionName = "square_root";
+
+  std::vector<std::pair<std::string, unsigned long>> input_sqrt = {
+      {"1004004", 5}, {"69", 5}, {"10", 100}, {"0.04", 5}};
+  std::vector<std::string> expected_sqrt = {
+      "1002.00000", "8.30662",
+      "3."
+      "162277660168379331998893544432718533719555139325216826857504852792594438"
+      "6392382213442481083793002951",
+      "0.20000"};
+
+  print_test(testName, input_sqrt.size());
+
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_sqrt.size(); i++) {
+    char *answer =
+        (char *)square_root(input_sqrt[i].first.c_str(), input_sqrt[i].second);
+
+    if (std::string(answer) != expected_sqrt[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_sqrt[i].first << "\", "
+                << input_sqrt[i].second << ") == \"" << expected_sqrt[i]
+                << "\" failed\n";
       std::cout << "actual: \"" << answer << "\"\n";
       number_of_failed_cases++;
     }

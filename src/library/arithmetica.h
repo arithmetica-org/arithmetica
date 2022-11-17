@@ -79,6 +79,14 @@ repeating_decimal_to_fraction(const char *non_repeating_part,
 /// being used.
 arithmetica_function_start char *sine(const char *number, size_t accuracy);
 
+/// @brief Computes the square root of the first argument.
+/// @param number The non-negative number to compute the square root of.
+/// @param accuracy The number of decimal places to calculate accurately to.
+/// @return The square root of the first argument. Free this pointer once it's
+/// done being used.
+arithmetica_function_start char *square_root(const char *number_in,
+                                             size_t accuracy);		
+
 /// @brief Converts a terminating decimal to a fraction reduced to its lowest
 /// terms.
 /// @param decimal The decimal number to convert to a fraction.
