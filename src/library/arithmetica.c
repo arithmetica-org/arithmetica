@@ -7,6 +7,7 @@
 #include "fraction_to_continued_fraction.h"
 #include "igcd.h"
 #include "ilcm.h"
+#include "natural_logarithm.h"
 #include "repeating_decimal_to_fraction.h"
 #include "sine.h"
 #include "square_root.h"

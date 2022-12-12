@@ -59,6 +59,14 @@ arithmetica_function_start void igcd(const char *a, const char *b, char *gcd);
 /// @param lcm The lcm of the first two arguments.
 arithmetica_function_start void ilcm(const char *a, const char *b, char *lcm);
 
+/// @brief Computes the natural logarithm of a non-negative number
+/// to any decimal place.
+/// @param n The number to compute the natural logarithm of.
+/// @param accuracy The number of decimal places to calculate accurately to.
+/// @return A pointer to a char * containing the natural logarithm of the
+/// input number.
+arithmetica_function_start char *natural_logarithm(const char *n, size_t accuracy);
+
 /// @brief Converts a repeating decimal to a fraction
 /// @param non_repeating_part The part of the fraction (including the part
 /// before the decimal place) that does not repeat. For example, in

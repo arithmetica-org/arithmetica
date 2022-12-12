@@ -218,8 +218,7 @@ int main() {
                      1e-6
               << " s)" << '\n';
   } else {
-    std::cout << number_of_failed_cases << " error/s detected in " <<
-    testName
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
               << ".\n";
   }
 
@@ -271,13 +270,17 @@ int main() {
   functionName = "square_root";
 
   std::vector<std::pair<std::string, unsigned long>> input_sqrt = {
-      {"1004004", 5}, {"69", 5}, {"10", 100}, {"0.04", 5}};
+      {"1004004", 5},
+      {"69", 5},
+      {"10", 100},
+      {"0.04", 5},
+      {"1.00135471989210820588", 10}};
   std::vector<std::string> expected_sqrt = {
       "1002.00000", "8.30662",
       "3."
       "162277660168379331998893544432718533719555139325216826857504852792594438"
       "6392382213442481083793002951",
-      "0.20000"};
+      "0.20000", "1.0006771306"};
 
   print_test(testName, input_sqrt.size());
 
@@ -291,6 +294,44 @@ int main() {
                 << "(\"" << input_sqrt[i].first << "\", "
                 << input_sqrt[i].second << ") == \"" << expected_sqrt[i]
                 << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
+
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
+
+  if (!number_of_failed_cases) {
+    std::cout << "no errors detected in " << testName << ". (finished in "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end -
+                                                                       start)
+                     .count()
+              << "\u00b5s)" << '\n';
+  } else {
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
+              << ".\n";
+  }
+
+  testName = "ln_unit_tests";
+  functionName = "natural_logarithm";
+
+  std::vector<std::pair<std::string, unsigned long>> input_ln = {
+      {"2", 20}, {"69", 20}, {"0.1", 5}};
+  std::vector<std::string> expected_ln = {"0.69314718055994530941",
+                                          "4.23410650459725938220", "-2.30258"};
+
+  print_test(testName, input_ln.size());
+
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_ln.size(); i++) {
+    char *answer = (char *)natural_logarithm(input_ln[i].first.c_str(),
+                                             input_ln[i].second);
+
+    if (std::string(answer) != expected_ln[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_ln[i].first << "\", " << input_ln[i].second
+                << ") == \"" << expected_ln[i] << "\" failed\n";
       std::cout << "actual: \"" << answer << "\"\n";
       number_of_failed_cases++;
     }
