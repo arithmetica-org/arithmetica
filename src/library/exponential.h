@@ -1,6 +1,7 @@
 #ifndef _exponential_h_
 #define _exponential_h_
 
+#include "truncate.h"
 #include <basic_math_operations.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,6 +54,7 @@ char *exponential(const char *x_in, size_t accuracy) {
     strcpy(prevTerm, currentTerm);
     free(buf);
     free(currentTerm);
+    truncate(prevTerm, accuracy * 2);
 
     unsigned char found = 0;
     size_t location = 0;
