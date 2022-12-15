@@ -8,6 +8,7 @@
 #include "igcd.h"
 #include "ilcm.h"
 #include "natural_logarithm.h"
+#include "power.h"
 #include "repeating_decimal_to_fraction.h"
 #include "sine.h"
 #include "square_root.h"

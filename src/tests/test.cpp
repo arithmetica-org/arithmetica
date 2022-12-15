@@ -8,6 +8,19 @@ inline void print_test(std::string testName, size_t number_tests) {
             << ".\n";
 }
 
+class power_test {
+public:
+  std::string base, exponent;
+  size_t accuracy;
+
+  power_test() {}
+  power_test(std::string b, std::string e, size_t a) {
+    base = b;
+    exponent = e;
+    accuracy = a;
+  }
+};
+
 int main() {
   std::string testName = "repeating_decimal_to_fraction_unit_tests";
   std::string functionName = "repeating_decimal_to_fraction";
@@ -192,23 +205,23 @@ int main() {
 
   print_test(testName, input_asin.size());
 
-  start = std::chrono::high_resolution_clock::now();
-  for (size_t i = 0; i < input_asin.size(); i++) {
-    char *answer =
-        (char *)arcsin(input_asin[i].first.c_str(), input_asin[i].second);
+  // start = std::chrono::high_resolution_clock::now();
+  // for (size_t i = 0; i < input_asin.size(); i++) {
+  //   char *answer =
+  //       (char *)arcsin(input_asin[i].first.c_str(), input_asin[i].second);
 
-    if (std::string(answer) != expected_asin[i]) {
-      std::cout << "error in \"" << testName << "\": check " << functionName
-                << "(\"" << input_asin[i].first << "\", "
-                << input_asin[i].second << ") == \"" << expected_asin[i]
-                << "\" failed\n";
-      std::cout << "actual: \"" << answer << "\"\n";
-      number_of_failed_cases++;
-    }
+  //   if (std::string(answer) != expected_asin[i]) {
+  //     std::cout << "error in \"" << testName << "\": check " << functionName
+  //               << "(\"" << input_asin[i].first << "\", "
+  //               << input_asin[i].second << ") == \"" << expected_asin[i]
+  //               << "\" failed\n";
+  //     std::cout << "actual: \"" << answer << "\"\n";
+  //     number_of_failed_cases++;
+  //   }
 
-    free(answer);
-  }
-  end = std::chrono::high_resolution_clock::now();
+  //   free(answer);
+  // }
+  // end = std::chrono::high_resolution_clock::now();
 
   if (!number_of_failed_cases) {
     std::cout << "no errors detected in " << testName << ". (finished in "
@@ -332,6 +345,62 @@ int main() {
       std::cout << "error in \"" << testName << "\": check " << functionName
                 << "(\"" << input_ln[i].first << "\", " << input_ln[i].second
                 << ") == \"" << expected_ln[i] << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
+
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
+
+  if (!number_of_failed_cases) {
+    std::cout << "no errors detected in " << testName << ". (finished in "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end -
+                                                                       start)
+                     .count()
+              << "\u00b5s)" << '\n';
+  } else {
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
+              << ".\n";
+  }
+
+  testName = "power_unit_tests";
+  functionName = "natural_logarithm";
+
+  std::vector<power_test> input_power = {
+      power_test("2", "5", 0), power_test("2.717", "3.141", 10),
+      power_test("1.414213562373095", "1.414213562373095", 15),
+      power_test("3.141592653589793238462643", "3.141592653589793238462643",
+                 25),
+      power_test("69", "420", 0)};
+  std::vector<std::string> expected_power = {
+      "32", "23.0927446996", "1.632526919438152",
+      "36.4621596072079117709907960",
+      "207308977526536747147207234274590008892499155296009815304333653351885892"
+      "067755271392296019951158360435357866295807921447730784267768342682983321"
+      "872368180423802268494438848603696884064066601180187510415545430958066707"
+      "843240170676904087910781254639513780304991745122110217620538991463218117"
+      "543266762008483176686157460327914778101893707657968720154542087265358910"
+      "653923654977806809342947658906144624332304346420198502101945749418371499"
+      "045066680926235315667314639769578557380221485817710996842236642636373680"
+      "048620596486279357053307251863142859610322835862779661459662809299188872"
+      "669098908200243853754449231266527755891022635409781869010342123464944031"
+      "408995518569965212572412851338778145229949673588222246859263776604678710"
+      "22924275654082181950373765807211473562917453950351601"};
+
+  print_test(testName, input_power.size());
+
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_power.size(); i++) {
+    char *answer =
+        (char *)power(input_power[i].base.c_str(),
+                      input_power[i].exponent.c_str(), input_power[i].accuracy);
+
+    if (std::string(answer) != expected_power[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_power[i].base << "\", "
+                << input_power[i].exponent << "\", " << input_power[i].accuracy
+                << ") == \"" << expected_power[i] << "\" failed\n";
       std::cout << "actual: \"" << answer << "\"\n";
       number_of_failed_cases++;
     }

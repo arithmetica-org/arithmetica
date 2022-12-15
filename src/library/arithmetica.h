@@ -65,7 +65,16 @@ arithmetica_function_start void ilcm(const char *a, const char *b, char *lcm);
 /// @param accuracy The number of decimal places to calculate accurately to.
 /// @return A pointer to a char * containing the natural logarithm of the
 /// input number.
-arithmetica_function_start char *natural_logarithm(const char *n, size_t accuracy);
+arithmetica_function_start char *natural_logarithm(const char *n,
+                                                   size_t accuracy);
+
+/// @brief Computes x_in^n_in where x_in and n_in are two real numbers.
+/// @param x_in The real number base.
+/// @param n_in The real number exponent.
+/// @param accuracy The number of decimal places to calculate accurately to.
+/// @return A pointer to a char * containing x_in^n_in.
+arithmetica_function_start char *power(const char *x_in, const char *n_in,
+                                       size_t accuracy);
 
 /// @brief Converts a repeating decimal to a fraction
 /// @param non_repeating_part The part of the fraction (including the part
@@ -93,7 +102,7 @@ arithmetica_function_start char *sine(const char *number, size_t accuracy);
 /// @return The square root of the first argument. Free this pointer once it's
 /// done being used.
 arithmetica_function_start char *square_root(const char *number_in,
-                                             size_t accuracy);		
+                                             size_t accuracy);
 
 /// @brief Converts a terminating decimal to a fraction reduced to its lowest
 /// terms.
