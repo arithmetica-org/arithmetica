@@ -1,7 +1,6 @@
 #ifndef _exponential_h_
 #define _exponential_h_
 
-#include "clear_string.h"
 #include <basic_math_operations.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,14 +18,13 @@ char *exponential(const char *x_in, size_t accuracy) {
   })
 
   char one[] = "1";
+  size_t x_in_len = strlen(x_in);
 
-  char *answer = (char *)calloc(strlen(x_in) + 2, 1);
+  char *answer = (char *)calloc(x_in_len + 2, 1);
   add(x_in, one, answer);
 
-  char *x = (char *)calloc(strlen(x_in) + 1, 1);
-  strcpy(x, x_in);
-  char *denominator = (char *)calloc(2, 1);
-  denominator[0] = '1';
+  char *prevTerm = (char *)calloc(x_in_len + 1, 1);
+  strcpy(prevTerm, x_in);
   char *i = (char *)calloc(2, 1);
   i[0] = '2';
   char *prevAfterDecimal = (char *)calloc(accuracy + 1, 1);
@@ -34,44 +32,27 @@ char *exponential(const char *x_in, size_t accuracy) {
   size_t decimalLocation = 0;
 
   while (1) {
-    size_t sz_1 = strlen(x) + strlen(x_in) + 1;
-    size_t sz_4 = strlen(i) + 2;
-    size_t m = sz_1;
-    char *buf = (char *)calloc(sz_1, 1);
-    multiply(x, x_in, buf);
-    x = (char *)realloc(x, sz_1);
-    strcpy(x, buf);
-    size_t sz_2 = strlen(denominator) + strlen(i) + 1;
-    if (sz_2 > sz_1) {
-      buf = (char *)realloc(buf, sz_2);
-      m = sz_2;
-    }
-    clear_string_s(buf, m);
-    multiply(denominator, i, buf);
-    denominator = (char *)realloc(denominator, sz_2);
-    strcpy(denominator, buf);
-    size_t sz_3 = strlen(x) + strlen(denominator) + 2 * accuracy + 3;
-    char *_buf = (char *)calloc(sz_3, 1);
-    divide(x, denominator, _buf, 2 * accuracy);
-    if (strlen(answer) + sz_3 + 1 > m) {
-      m = strlen(answer) + sz_3 + 1;
-      buf = (char *)realloc(buf, m);
-    }
-    clear_string_s(buf, m);
-    add(answer, _buf, buf);
-    answer = (char *)realloc(answer, m);
+    size_t sz = x_in_len + strlen(i) + accuracy * 2 + 3;
+    char *buf = (char *)calloc(sz, 1);
+    divide(x_in, i, buf, accuracy * 2);
+    char *currentTerm = (char *)calloc(strlen(buf) + strlen(prevTerm) + 3, 1);
+    multiply(buf, prevTerm, currentTerm);
+    sz = strlen(answer) + strlen(currentTerm) + 3;
+    buf = (char *)realloc(buf, sz);
+    memset(buf, 0, sz);
+    add(answer, currentTerm, buf);
+    answer = (char *)realloc(answer, sz);
     strcpy(answer, buf);
-    if (sz_4 > m) {
-      m = sz_4;
-      buf = (char *)realloc(buf, sz_4);
-    }
-    clear_string_s(buf, m);
+    sz = strlen(i) + 2;
+    buf = (char *)realloc(buf, sz);
+    memset(buf, 0, sz);
     add(i, one, buf);
-    i = (char *)realloc(i, m);
+    i = (char *)realloc(i, sz);
     strcpy(i, buf);
-
+    prevTerm = (char *)realloc(prevTerm, strlen(currentTerm) + 1);
+    strcpy(prevTerm, currentTerm);
     free(buf);
-    free(_buf);
+    free(currentTerm);
 
     unsigned char found = 0;
     size_t location = 0;
@@ -101,8 +82,7 @@ char *exponential(const char *x_in, size_t accuracy) {
     }
   }
 
-  free(x);
-  free(denominator);
+  free(prevTerm);
   free(i);
   free(prevAfterDecimal);
 
