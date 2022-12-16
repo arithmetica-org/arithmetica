@@ -1,5 +1,7 @@
 project(arithmetica C)
 
+enable_language(ASM_NASM)
+
 add_subdirectory(src/library)
 
 option(ENABLE_TESTS "Build tests" OFF)

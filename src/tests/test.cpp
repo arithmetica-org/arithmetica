@@ -205,23 +205,23 @@ int main() {
 
   print_test(testName, input_asin.size());
 
-  // start = std::chrono::high_resolution_clock::now();
-  // for (size_t i = 0; i < input_asin.size(); i++) {
-  //   char *answer =
-  //       (char *)arcsin(input_asin[i].first.c_str(), input_asin[i].second);
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_asin.size(); i++) {
+    char *answer =
+        (char *)arcsin(input_asin[i].first.c_str(), input_asin[i].second);
 
-  //   if (std::string(answer) != expected_asin[i]) {
-  //     std::cout << "error in \"" << testName << "\": check " << functionName
-  //               << "(\"" << input_asin[i].first << "\", "
-  //               << input_asin[i].second << ") == \"" << expected_asin[i]
-  //               << "\" failed\n";
-  //     std::cout << "actual: \"" << answer << "\"\n";
-  //     number_of_failed_cases++;
-  //   }
+    if (std::string(answer) != expected_asin[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_asin[i].first << "\", "
+                << input_asin[i].second << ") == \"" << expected_asin[i]
+                << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
 
-  //   free(answer);
-  // }
-  // end = std::chrono::high_resolution_clock::now();
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
 
   if (!number_of_failed_cases) {
     std::cout << "no errors detected in " << testName << ". (finished in "
