@@ -23,9 +23,10 @@ truncate:
   mov   dl, byte [rbx]
   inc   rbx
   cmp   dl, '.'
-  sete  al ; if decimal is found then set al
-  test  al, al
-  jnz   .after_loop
+  jne   .after_if
+  mov   al, 1 ; if decimal is found then set al
+  jmp   .after_loop
+.after_if:
   test  dl, dl
   jnz   .find_dec_loop
 .after_loop:
