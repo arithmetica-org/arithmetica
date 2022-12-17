@@ -4,38 +4,38 @@ section .text
 global  truncate
 truncate:
   ; Input:
-  ;   - rdi -> char *n, the number to truncate.
-  ;   - rsi -> size_t accuracy, the amount to truncate.
+  ;   - rcx -> char *n, the number to truncate.
+  ;   - rdx -> size_t accuracy, the amount to truncate.
 
   ; Registers used:
   ;   - rax
-  ;   - rcx
+  ;   - r8, rdx
   ;   - rbx
-  ;   - rdx
+  ;   - r11, rcx
   
   push  rbx
   call  strlen
-  mov   rcx, rax ; rcx = strlen(n)
-  inc   rsi ; increase accuracy by 1 for zeroing
+  mov   r11, rax ; rcx = strlen(n)
+  inc   rdx ; increase accuracy by 1 for zeroing
   xor   eax, eax ; Set al to 0
-  mov   rbx, rdi
+  mov   rbx, rcx
 .find_dec_loop:
-  mov   dl, byte [rbx]
+  mov   r8b, byte [rbx]
   inc   rbx
-  cmp   dl, '.'
+  cmp   r8b, '.'
   jne   .after_if
   mov   al, 1 ; if decimal is found then set al
   jmp   .after_loop
 .after_if:
-  test  dl, dl
+  test  r8b, r8b
   jnz   .find_dec_loop
 .after_loop:
   test  al, al
   jz    .return
-  add   rbx, rsi
+  add   rbx, rdx
   dec   rbx
-  add   rdi, rcx
-  cmp   rbx, rdi
+  add   rcx, r11
+  cmp   rbx, rcx
   jae   .return
   mov   byte [rbx], 0
 .return:

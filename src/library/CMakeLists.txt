@@ -19,7 +19,8 @@ add_library(
 
     arithmetica.c
     
-    windows/truncate.c
+    windows/strlen.asm
+    windows/truncate.asm
 )
 endif (WIN32)
 
