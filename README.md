@@ -1,6 +1,6 @@
 # Arithmetica
 
-Arithmetica is a general purpose linux math library with a wide variety of mathematical functions and features.
+Arithmetica is a general purpose linux and windows math library with a wide variety of mathematical functions and features.
 
 This library uses [basic_math_operations](https://github.com/avighnac/basic_math_operations) to achieve arbitrary precision. While linking an application using arithmetica, basic_math_operations will also have to be linked.
 
