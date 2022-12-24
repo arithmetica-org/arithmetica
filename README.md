@@ -29,3 +29,4 @@ Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex
 - `add_complex()` adds two complex numbers.
 - `subtract_complex()` subtracts two complex numbers.
 - `multiply_complex()` multiplies two complex numbers.
+- `divide_complex()` divides two complex numbers.
