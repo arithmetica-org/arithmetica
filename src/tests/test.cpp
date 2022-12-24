@@ -365,7 +365,7 @@ int main() {
   }
 
   testName = "power_unit_tests";
-  functionName = "natural_logarithm";
+  functionName = "power";
 
   std::vector<power_test> input_power = {
       power_test("2", "5", 0), power_test("2.717", "3.141", 10),
@@ -401,6 +401,42 @@ int main() {
                 << "(\"" << input_power[i].base << "\", "
                 << input_power[i].exponent << "\", " << input_power[i].accuracy
                 << ") == \"" << expected_power[i] << "\" failed\n";
+      std::cout << "actual: \"" << answer << "\"\n";
+      number_of_failed_cases++;
+    }
+
+    free(answer);
+  }
+  end = std::chrono::high_resolution_clock::now();
+
+  if (!number_of_failed_cases) {
+    std::cout << "no errors detected in " << testName << ". (finished in "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end -
+                                                                       start)
+                     .count()
+              << "\u00b5s)" << '\n';
+  } else {
+    std::cout << number_of_failed_cases << " error/s detected in " << testName
+              << ".\n";
+  }
+
+  testName = "cos_unit_tests";
+  functionName = "cosine";
+
+  std::vector<std::pair<std::string, unsigned long>> input_cos = {{"0.523", 5}};
+  std::vector<std::string> expected_cos = {"0.86632"};
+
+  print_test(testName, input_cos.size());
+
+  start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < input_cos.size(); i++) {
+    char *answer =
+        (char *)cosine(input_cos[i].first.c_str(), input_cos[i].second);
+
+    if (std::string(answer) != expected_cos[i]) {
+      std::cout << "error in \"" << testName << "\": check " << functionName
+                << "(\"" << input_cos[i].first << "\", " << input_cos[i].second
+                << ") == \"" << expected_cos[i] << "\" failed\n";
       std::cout << "actual: \"" << answer << "\"\n";
       number_of_failed_cases++;
     }
