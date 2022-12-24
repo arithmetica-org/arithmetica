@@ -25,6 +25,7 @@ char *cosine(const char *number, size_t accuracy) {
   }
   char *sine_arg = (char *)calloc(strlen(half_pi) + strlen(number) + 3, 1);
   subtract(half_pi, number, sine_arg);
+  truncate(sine_arg, number + strlen(number) - 1 - strchr(number, '.'));
   char *answer = sine(sine_arg, accuracy);
 
   free(half_pi);
