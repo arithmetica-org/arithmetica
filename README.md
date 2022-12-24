@@ -6,7 +6,7 @@ This library uses [basic_math_operations](https://github.com/avighnac/basic_math
 
 # Functions
 
-Currently, arithmetica has the following functions:
+Currently, arithmetica has the following real number functions:
 
 - `arcsin()` computes the [inverse sine](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
 - `arctan()` computes the [inverse tangent](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
@@ -23,3 +23,9 @@ Currently, arithmetica has the following functions:
 - `square_root()` computes the [square root](https://en.wikipedia.org/wiki/Square_root) of a number to any decimal place.
 - `tangent()` computes the [trignometric tangent](https://en.wikipedia.org/wiki/Trigonometric_functions) of an angle in radians to any decimal place.
 - `terminating_decimal_to_fraction()` converts a terminating decimal to a fraction.
+
+Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex_number) functions:
+
+- `add_complex()` adds two complex numbers.
+- `subtract_complex()` subtracts two complex numbers.
+- `multiply_complex()` multiplies two complex numbers.
