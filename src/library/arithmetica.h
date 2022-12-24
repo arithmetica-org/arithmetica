@@ -161,4 +161,12 @@ arithmetica_function_start struct complex subtract_complex(struct complex a,
 /// @return Where a * b will be stored.
 arithmetica_function_start struct complex multiply_complex(struct complex a,
                                                            struct complex b);
+
+/// @brief Divides two complex numbers. If you're using this function, you
+/// know what complex numbers are.
+/// @param a The complex numerator.
+/// @param b The complex number denominator.
+/// @return Where a / b will be stored.
+arithmetica_function_start struct complex divide_complex(struct complex a,
+                                                         struct complex b);
 #endif

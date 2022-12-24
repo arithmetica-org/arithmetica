@@ -20,5 +20,6 @@
 
 // functions
 #include "complex/add_complex.h"
+#include "complex/divide_complex.h"
 #include "complex/multiply_complex.h"
 #include "complex/subtract_complex.h"
