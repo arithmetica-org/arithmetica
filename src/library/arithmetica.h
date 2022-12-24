@@ -23,6 +23,13 @@ arithmetica_function_start char *arcsin(const char *number, size_t accuracy);
 /// it's done being used.
 arithmetica_function_start char *arctan(const char *number, size_t accuracy);
 
+/// @brief Computes the cosine of the first argument.
+/// @param number The angle to compute the cosine of, in radians.
+/// @param accuracy The number of decimal places to calculate accuractely to.
+/// @return The cosine of the first argument. Free this pointer once it's done
+/// being used.
+arithmetica_function_start char *cosine(const char *number, size_t accuracy);
+
 /// @brief Computes e^x, where e is Euler's number: the base to the natural
 /// logarithm.
 /// @param x The number to raise e to.
@@ -103,6 +110,13 @@ arithmetica_function_start char *sine(const char *number, size_t accuracy);
 /// done being used.
 arithmetica_function_start char *square_root(const char *number_in,
                                              size_t accuracy);
+
+/// @brief Computes the trignometric tangent of the first argument.
+/// @param number The angle to compute the tangent of, in radians.
+/// @param accuracy The number of decimal places to calculate accuractely to.
+/// @return The tangent of the first argument. Free this pointer once it's done
+/// being used.
+arithmetica_function_start char *tangent(const char *number, size_t accuracy);
 
 /// @brief Converts a terminating decimal to a fraction reduced to its lowest
 /// terms.

@@ -2,6 +2,7 @@
 
 #include "arcsin.h"
 #include "arctan.h"
+#include "cosine.h"
 #include "exponential.h"
 #include "factorial.h"
 #include "fraction_to_continued_fraction.h"
@@ -12,4 +13,5 @@
 #include "repeating_decimal_to_fraction.h"
 #include "sine.h"
 #include "square_root.h"
+#include "tangent.h"
 #include "terminating_decimal_to_fraction.h"
