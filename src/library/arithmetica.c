@@ -1,5 +1,3 @@
-#include "arithmetica.h"
-
 #include "arcsin.h"
 #include "arctan.h"
 #include "cosine.h"
@@ -15,3 +13,12 @@
 #include "square_root.h"
 #include "tangent.h"
 #include "terminating_decimal_to_fraction.h"
+
+// complex number functions
+// complex header file
+#include "complex/complex.h"
+
+// functions
+#include "complex/add_complex.h"
+#include "complex/multiply_complex.h"
+#include "complex/subtract_complex.h"

@@ -1,7 +1,7 @@
 #ifndef _natural_logarithm_h_
 #define _natural_logarithm_h_
 
-#include "arithmetica.h"
+#include "square_root.h"
 #include "power_integer.h"
 #include <basic_math_operations.h>
 #include <stdlib.h>
