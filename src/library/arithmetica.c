@@ -1,3 +1,4 @@
+#include "arccos.h"
 #include "arcsin.h"
 #include "arctan.h"
 #include "cosine.h"

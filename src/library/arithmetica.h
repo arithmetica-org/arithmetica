@@ -9,6 +9,13 @@
 #define arithmetica_function_start
 #endif
 
+/// @brief Computes the inverse cosine of a number less than 1.
+/// @param number The number to compute the inverse cosine of.
+/// @param accuracy The number of decimal places to calculate accurately to.
+/// @return The inverse cosine of the first argument. Free this pointer one it's
+/// done being used.
+arithmetica_function_start char *arccos(const char *number, size_t accuracy);
+
 /// @brief Computes the inverse sine of a number less than 1.
 /// @param number The number to compute the inverse sine of.
 /// @param accuracy The number of decimal places to calculate accurately to.
