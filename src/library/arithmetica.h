@@ -166,7 +166,16 @@ arithmetica_function_start struct complex multiply_complex(struct complex a,
 /// know what complex numbers are.
 /// @param a The complex numerator.
 /// @param b The complex number denominator.
+/// @param accuracy The number of decimals the division will be accurate to.
 /// @return Where a / b will be stored.
-arithmetica_function_start struct complex divide_complex(struct complex a,
-                                                         struct complex b);
+arithmetica_function_start struct complex
+divide_complex(struct complex a, struct complex b, size_t accuracy);
+
+/// @brief Finds the square root of a complex number. If you're using this
+/// function, you know what complex numbers are.
+/// @param n The complex number to find the square root of.
+/// @param accuracy The number of decimals the square root will be accurate to.
+/// @return Where sqrt(n) will be stored.
+arithmetica_function_start struct complex square_root_complex(struct complex n,
+                                                              size_t accuracy);
 #endif
