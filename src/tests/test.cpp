@@ -158,8 +158,8 @@ int main() {
   testName = "arctan_unit_tests";
   functionName = "arctan";
 
-  std::vector<std::pair<std::string, unsigned long>> input_atan = {{"1", 3}};
-  std::vector<std::string> expected_atan = {"0.785"};
+  std::vector<std::pair<std::string, unsigned long>> input_atan = {{"1", 20}};
+  std::vector<std::string> expected_atan = {"0.78539816339744830961"};
 
   print_test(testName, input_atan.size());
 
@@ -185,8 +185,9 @@ int main() {
     std::cout << "no errors detected in " << testName << ". (finished in "
               << std::chrono::duration_cast<std::chrono::microseconds>(end -
                                                                        start)
-                     .count()
-              << " \u00b5s)" << '\n';
+                         .count() *
+                     1e-6
+              << " s)" << '\n';
   } else {
     std::cout << number_of_failed_cases << " error/s detected in " << testName
               << ".\n";

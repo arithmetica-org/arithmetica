@@ -12,7 +12,9 @@ char *cosine(const char *number, size_t accuracy) {
   // cos(x) = sin(pi / 2 - x)
   // = sin(arcsin(1) - x)
 
-  size_t num_accuracy = number + strlen(number) - 1 - strchr(number, '.');
+  size_t num_accuracy = 10;
+  if (strchr(number, '.') != NULL)
+    num_accuracy = number + strlen(number) - 1 - strchr(number, '.');
   num_accuracy += 2; // to keep final answer accuracy high
   char _half_pi[] = "1."
                     "5707963267948966192313216916397514420985846996875529104874"
