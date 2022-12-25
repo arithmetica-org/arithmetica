@@ -29,5 +29,5 @@ Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex
 - `add_complex()` adds two complex numbers.
 - `divide_complex()` divides two complex numbers.
 - `multiply_complex()` multiplies two complex numbers.
-- `square_root_complex()` finds the square root of a complex number.
+- `square_root_complex()` finds the [square root](https://en.wikipedia.org/wiki/Square_root) of a complex number.
 - `subtract_complex()` subtracts two complex numbers.
