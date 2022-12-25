@@ -18,6 +18,16 @@ char *exponential(const char *x_in, size_t accuracy) {
     _a > _b ? _a : _b;                                                         \
   })
 
+  char *x = (char *)calloc(strlen(x_in) + 1, 1);
+  strcpy(x, x_in);
+  remove_zeroes(x);
+  if (!strcmp(x, "0")) {
+    x = (char *)realloc(x, 2);
+    x[0] = '1';
+    x[1] = 0;
+    return x;
+  }
+
   char one[] = "1";
   size_t x_in_len = strlen(x_in);
 

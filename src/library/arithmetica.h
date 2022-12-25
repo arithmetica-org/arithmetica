@@ -178,11 +178,19 @@ arithmetica_function_start struct complex multiply_complex(struct complex a,
 arithmetica_function_start struct complex
 divide_complex(struct complex a, struct complex b, size_t accuracy);
 
-/// @brief Finds the square root of a complex number. If you're using this
+/// @brief Computes the square root of a complex number. If you're using this
 /// function, you know what complex numbers are.
 /// @param n The complex number to find the square root of.
 /// @param accuracy The number of decimals the square root will be accurate to.
 /// @return Where sqrt(n) will be stored.
 arithmetica_function_start struct complex square_root_complex(struct complex n,
+                                                              size_t accuracy);
+
+/// @brief Computes e^(a + bi), where a + bi is a complex number to any decimal
+/// place.
+/// @param n The complex number to exponentiate.
+/// @param accuracy The number of decimals the calculation will be accurate to.
+/// @return Where e^(a + bi) will be stored.
+arithmetica_function_start struct complex exponential_complex(struct complex n,
                                                               size_t accuracy);
 #endif

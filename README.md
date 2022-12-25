@@ -28,7 +28,8 @@ Currently, arithmetica has the following real number functions:
 Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex_number) functions:
 
 - `add_complex()` adds two complex numbers.
-- `divide_complex()` divides two complex numbers.
+- `divide_complex()` divides two complex numbers to any decimal place.
+- `exponential_complex()` computes e^(a + bi), where a + bi is a complex number to any decimal place.
 - `multiply_complex()` multiplies two complex numbers.
-- `square_root_complex()` finds the [square root](https://en.wikipedia.org/wiki/Square_root) of a complex number.
+- `square_root_complex()` finds the [square root](https://en.wikipedia.org/wiki/Square_root) of a complex number to any decimal place.
 - `subtract_complex()` subtracts two complex numbers.
