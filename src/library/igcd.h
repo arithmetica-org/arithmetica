@@ -21,9 +21,9 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
   char *quotient = (char *)calloc(max(strlen(a_in), strlen(b_in)) + 1, 1);
   char *temp = (char *)malloc(strlen(b_in) + 1);
 
-  // copy over the input numbers
-  strcpy(a, a_in);
-  strcpy(b, b_in);
+  // copy over the input numbers, ignoring sign
+  (*a_in != '-') ? strcpy(a, a_in) : strcpy(a, a_in + 1);
+  (*b_in != '-') ? strcpy(b, b_in) : strcpy(b, b_in + 1);
 
   // euclidean algorithm
   while (strcmp(b, "0")) {
