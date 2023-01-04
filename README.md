@@ -6,8 +6,8 @@ This library uses [basic_math_operations](https://github.com/avighnac/basic_math
 
 # Functions
 
-Currently, arithmetica has the following real number functions:
-
+Currently, arithmetica has the following decimal number functions:
+## Decimal number functions
 - `arccos()` complex the [inverse cosine](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
 - `arcsin()` computes the [inverse sine](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
 - `arctan()` computes the [inverse tangent](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
@@ -26,8 +26,17 @@ Currently, arithmetica has the following real number functions:
 - `tangent()` computes the [trignometric tangent](https://en.wikipedia.org/wiki/Trigonometric_functions) of an angle in radians to any decimal place.
 - `terminating_decimal_to_fraction()` converts a terminating decimal to a fraction.
 
-Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex_number) functions:
+Arithmetica supports basic fraction arithmetic:
+## Fractional number functions:
+- `add_fraction()` adds two fractions.
+- `multiply_fraction()` multiplies two fractions.
+- `parse_fraction()` extracts a fraction from a string and/or converts a decimal to a fraction.
+- `power_fraction()` computes x^n, where x and n are fractions.
+- `simplify_parsed_fraction()` simplifies a parsed fraction (reduces it to its lowest terms).
+- `subtract_fraction()` subtracts two fractions.
 
+Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex_number) functions:
+## Complex number functions:
 - `add_complex()` adds two complex numbers.
 - `divide_complex()` divides two complex numbers to any decimal place.
 - `exponential_complex()` computes e^(a + bi), where a + bi is a complex number to any decimal place.
