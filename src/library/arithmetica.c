@@ -24,6 +24,7 @@
 #include "fraction/add_fraction.h"
 #include "fraction/parse_fraction.h"
 #include "fraction/simplify_parsed_fraction.h"
+#include "fraction/subtract_fraction.h"
 
 // complex number functions
 // complex header file

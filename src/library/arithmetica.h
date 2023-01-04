@@ -177,6 +177,13 @@ arithmetica_function_start void delete_fraction(struct fraction f);
 /// @return The fractional representation of `frac` in its simplest form.
 arithmetica_function_start struct fraction parse_fraction(const char *frac);
 
+/// @brief Subtractss two fractions and reduces the result to its simplest form.
+/// @param frac1 The first fraction to subtract.
+/// @param frac2 The second fraction to subtract.
+/// @return Where frac1 - frac2 will be stored.
+arithmetica_function_start struct fraction
+subtract_fraction(struct fraction frac1, struct fraction frac2);
+
 // Complex number functions
 
 struct complex {
