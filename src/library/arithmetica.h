@@ -103,6 +103,23 @@ repeating_decimal_to_fraction(const char *non_repeating_part,
                               const char *repeating_part, char *numerator_out,
                               char *denominator_out);
 
+/// @brief Simplies an arithmetic expression involving the five basic math
+/// operations: addition, subtraction, multiplication, division, and
+/// exponentiation.
+/// @param expression The expression to simplify, in standard computer
+/// mathematical notation.
+/// @param outputType This parameter controls the output type. Use zero to
+/// output a decimal, one to output a fraction, and two to output a mixed
+/// fraction. Output types one and two will calculate everything with maximum
+/// precision.
+/// @param accuracy The accuracy of the divisions and exponentiations performed.
+/// You only need to worry about this if you have fractional exponents in your
+/// input, or if you have divisions in output type zero.
+/// @return The simplified expression.
+arithmetica_function_start char *
+simplify_arithmetic_expression(const char *expression, int outputType,
+                               size_t accuracy);
+
 /// @brief Computes the sine of the first argument.
 /// @param number The angle to compute the sine of, in radians.
 /// @param accuracy The number of decimal places to calculate accuractely to.
