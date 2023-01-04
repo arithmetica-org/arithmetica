@@ -103,6 +103,7 @@ char *square_root(const char *number_in, size_t accuracy) {
   memmove(_answer + strlen(answer) - accuracy - shift + 1,
           answer + strlen(answer) - accuracy - shift, accuracy);
   free(answer);
+  remove_zeroes(_answer);
   return _answer;
 }
 
