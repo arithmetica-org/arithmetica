@@ -151,6 +151,32 @@ arithmetica_function_start void
 terminating_decimal_to_fraction(const char *decimal, char *numerator_out,
                                 char *denominator_out);
 
+// Fractional number functions
+
+struct fraction {
+  char *numerator;
+  char *denominator;
+};
+
+/// @brief Adds two fractions and reduces the result to its simplest form.
+/// @param frac1 The first fraction to add.
+/// @param frac2 The second fraction to add.
+/// @return Where frac1 + frac2 will be stored.
+arithmetica_function_start struct fraction add_fraction(struct fraction frac1,
+                                                        struct fraction frac2);
+
+arithmetica_function_start struct fraction create_fraction(const char *n,
+                                                           const char *d);
+
+arithmetica_function_start void delete_fraction(struct fraction f);
+
+/// @brief Extracts a fraction from a string and/or converts a decimal to a
+/// fraction.
+/// @param frac The fraction as a decimal and/or in the form a/b, where a and b
+/// are decimal numbers.
+/// @return The fractional representation of `frac` in its simplest form.
+arithmetica_function_start struct fraction parse_fraction(const char *frac);
+
 // Complex number functions
 
 struct complex {

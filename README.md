@@ -32,7 +32,6 @@ Arithmetica supports basic fraction arithmetic:
 - `multiply_fraction()` multiplies two fractions.
 - `parse_fraction()` extracts a fraction from a string and/or converts a decimal to a fraction.
 - `power_fraction()` computes x^n, where x and n are fractions.
-- `simplify_parsed_fraction()` simplifies a parsed fraction (reduces it to its lowest terms).
 - `subtract_fraction()` subtracts two fractions.
 
 Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex_number) functions:

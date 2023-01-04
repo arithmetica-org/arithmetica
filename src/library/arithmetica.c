@@ -16,6 +16,15 @@
 #include "tangent.h"
 #include "terminating_decimal_to_fraction.h"
 
+// fractional number functions
+// fraction header file
+#include "fraction/fraction.h"
+
+// functions
+#include "fraction/add_fraction.h"
+#include "fraction/parse_fraction.h"
+#include "fraction/simplify_parsed_fraction.h"
+
 // complex number functions
 // complex header file
 #include "complex/complex.h"
