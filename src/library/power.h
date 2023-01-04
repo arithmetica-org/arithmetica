@@ -19,9 +19,11 @@ char *power(const char *x_in, const char *n_in, size_t accuracy) {
   remove_zeroes(x);
   remove_zeroes(n);
   if (strchr(n, '.') == NULL) {
-    size_t n_z = 0;
-    for (size_t i = 0; i < strlen(n_in); i++)
+    long n_z = 0;
+    for (size_t i = n_in[0] == '-' ? 1 : 0; i < strlen(n_in); i++)
       n_z = n_z * 10 + n_in[i] - '0';
+    if (n_in[0] == '-')
+      n_z *= -1;
     return power_integer(x, n_z, accuracy);
   }
 
