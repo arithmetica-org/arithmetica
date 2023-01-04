@@ -165,6 +165,13 @@ struct fraction {
 arithmetica_function_start struct fraction add_fraction(struct fraction frac1,
                                                         struct fraction frac2);
 
+/// @brief Multiplies two fractions and reduces the result to its simplest form.
+/// @param frac1 The first fraction to multiply.
+/// @param frac2 The second fraction to multiply.
+/// @return Where frac1 * frac2 will be stored.
+arithmetica_function_start struct fraction
+multiply_fraction(struct fraction frac1, struct fraction frac2);
+
 arithmetica_function_start struct fraction create_fraction(const char *n,
                                                            const char *d);
 
