@@ -29,9 +29,10 @@ struct fraction simplify_parsed_fraction(struct fraction frac) {
 
   char *hcf = (char *)calloc(numerator_len + denominator_len + 1, 1);
   igcd(frac.numerator, frac.denominator, hcf);
+  size_t hcf_len = strlen(hcf);
   struct fraction answer;
-  answer.numerator = (char *)calloc(numerator_len + 1, 1);
-  answer.denominator = (char *)calloc(denominator_len + 1, 1);
+  answer.numerator = (char *)calloc(numerator_len + hcf_len + 3, 1);
+  answer.denominator = (char *)calloc(denominator_len + hcf_len + 3, 1);
   divide(frac.numerator, hcf, answer.numerator, 0);
   divide(frac.denominator, hcf, answer.denominator, 0);
 

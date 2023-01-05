@@ -117,7 +117,7 @@ repeating_decimal_to_fraction(const char *non_repeating_part,
 /// input, or if you have divisions in output type zero.
 /// @return The simplified expression.
 arithmetica_function_start char *
-simplify_arithmetic_expression(const char *expression, int outputType,
+simplify_arithmetic_expression(const char *expression_in, int outputType,
                                size_t accuracy);
 
 /// @brief Computes the sine of the first argument.

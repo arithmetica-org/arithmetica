@@ -63,7 +63,8 @@ int main() {
                                         "square_root",
                                         "tangent",
                                         "terminating_decimal_to_fraction",
-                                        "truncate"};
+                                        "add_fraction",
+                                        "multiply_fraction"};
   std::sort(functions.begin(), functions.end());
 
   std::string currentDir = get_current_directory();
@@ -84,7 +85,7 @@ int main() {
     if (!expectedFile || !inputFile) {
       std::cout << "Couldn't open test files!\n";
       std::cout << currentDir << "\n";
-      return 0;
+      continue;
     }
 
     std::string input;

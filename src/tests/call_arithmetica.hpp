@@ -3,12 +3,35 @@
 #include <arithmetica.h>
 #include <chrono>
 #include <string>
+#include <truncate.h>
 #include <vector>
 
 std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
   if (args.empty())
     return "";
 
+  if (args[0] == "add_fraction") {
+    if (args.size() < 3)
+      return "";
+
+    struct fraction fraction1 = parse_fraction(args[1].c_str());
+    struct fraction fraction2 = parse_fraction(args[2].c_str());
+
+    auto start = std::chrono::high_resolution_clock::now();
+    struct fraction _answer = add_fraction(fraction1, fraction2);
+    auto end = std::chrono::high_resolution_clock::now();
+    timeMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+                 .count();
+    std::string answer = std::string(_answer.denominator) == "1"
+                             ? _answer.numerator
+                             : std::string(_answer.numerator) +
+                                   std::string("/") +
+                                   std::string(_answer.denominator);
+    delete_fraction(fraction1);
+    delete_fraction(fraction2);
+    delete_fraction(_answer);
+    return answer;
+  }
   if (args[0] == "arccos") {
     if (args.size() < 3)
       return "";
@@ -136,6 +159,28 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
     free(_answer);
     return answer;
   }
+  if (args[0] == "multiply_fraction") {
+    if (args.size() < 3)
+      return "";
+
+    struct fraction fraction1 = parse_fraction(args[1].c_str());
+    struct fraction fraction2 = parse_fraction(args[2].c_str());
+
+    auto start = std::chrono::high_resolution_clock::now();
+    struct fraction _answer = multiply_fraction(fraction1, fraction2);
+    auto end = std::chrono::high_resolution_clock::now();
+    timeMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+                 .count();
+    std::string answer = std::string(_answer.denominator) == "1"
+                             ? _answer.numerator
+                             : std::string(_answer.numerator) +
+                                   std::string("/") +
+                                   std::string(_answer.denominator);
+    delete_fraction(fraction1);
+    delete_fraction(fraction2);
+    delete_fraction(_answer);
+    return answer;
+  }
   if (args[0] == "natural_logarithm") {
     if (args.size() < 3)
       return "";
@@ -182,6 +227,22 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
         std::string(numerator) + "/" + std::string(denominator);
     free(numerator);
     free(denominator);
+    return answer;
+  }
+  if (args[0] == "simplify_arithmetic_expression") {
+    if (args.size() < 4)
+      return "";
+
+    size_t accuracy = std::stoul(args[3]);
+    int outputType = std::stoi(args[2]);
+    auto start = std::chrono::high_resolution_clock::now();
+    char *_answer =
+        simplify_arithmetic_expression(args[1].c_str(), outputType, accuracy);
+    auto end = std::chrono::high_resolution_clock::now();
+    timeMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+                 .count();
+    std::string answer = _answer;
+    free(_answer);
     return answer;
   }
   if (args[0] == "sine") {
