@@ -14,6 +14,9 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
     _a > _b ? _a : _b;                                                         \
   })
 
+  if (strlen(a_in) == 0 || strlen(b_in) == 0)
+    return;
+
   char *a = (char *)malloc(max(strlen(a_in), strlen(b_in)) + 1);
   char *b = (char *)malloc(max(strlen(a_in), strlen(b_in)) + 1);
 

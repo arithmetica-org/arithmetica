@@ -191,6 +191,15 @@ arithmetica_function_start struct fraction parse_fraction(const char *frac);
 arithmetica_function_start struct fraction
 subtract_fraction(struct fraction frac1, struct fraction frac2);
 
+/// @brief Raises a fraction to a fractional power and reduces the result to its
+/// simplest form.
+/// @param base The base of the exponentiation.
+/// @param exponent The exponent of the exponentiation.
+/// @param accuracy The accuracy of the exponentiation.
+/// @return Where frac1^frac2 will be stored.
+arithmetica_function_start struct fraction
+power_fraction(struct fraction base, struct fraction exponent, size_t accuracy);
+
 // Complex number functions
 
 struct complex {

@@ -209,6 +209,29 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
     free(_answer);
     return answer;
   }
+  if (args[0] == "power_fraction") {
+    if (args.size() < 4)
+      return "";
+
+    struct fraction base = parse_fraction(args[1].c_str());
+    struct fraction exponent = parse_fraction(args[2].c_str());
+    size_t accuracy = std::stoul(args[3]);
+
+    auto start = std::chrono::high_resolution_clock::now();
+    struct fraction _answer = power_fraction(base, exponent, accuracy);
+    auto end = std::chrono::high_resolution_clock::now();
+    timeMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+                 .count();
+    std::string answer = std::string(_answer.denominator) == "1"
+                             ? _answer.numerator
+                             : std::string(_answer.numerator) +
+                                   std::string("/") +
+                                   std::string(_answer.denominator);
+    delete_fraction(base);
+    delete_fraction(exponent);
+    delete_fraction(_answer);
+    return answer;
+  }
   if (args[0] == "repeating_decimal_to_fraction") {
     if (args.size() < 3)
       return "";

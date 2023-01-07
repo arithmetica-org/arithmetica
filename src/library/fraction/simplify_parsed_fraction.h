@@ -6,6 +6,11 @@
 #include <basic_math_operations.h>
 
 struct fraction simplify_parsed_fraction(struct fraction frac) {
+  struct fraction answer;
+  if (strlen(frac.numerator) == 0 || strlen(frac.denominator) == 0) {
+    answer = create_fraction("0", "1");
+    return answer;
+  }
   if (frac.numerator[0] != '-' && frac.denominator[0] == '-') {
     size_t n = strlen(frac.numerator);
     frac.numerator = (char *)realloc(frac.numerator, n + 2);
@@ -30,7 +35,6 @@ struct fraction simplify_parsed_fraction(struct fraction frac) {
   char *hcf = (char *)calloc(numerator_len + denominator_len + 1, 1);
   igcd(frac.numerator, frac.denominator, hcf);
   size_t hcf_len = strlen(hcf);
-  struct fraction answer;
   answer.numerator = (char *)calloc(numerator_len + hcf_len + 3, 1);
   answer.denominator = (char *)calloc(denominator_len + hcf_len + 3, 1);
   divide(frac.numerator, hcf, answer.numerator, 0);

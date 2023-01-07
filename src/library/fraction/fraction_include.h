@@ -5,6 +5,7 @@
 #include "fraction.h"
 #include "multiply_fraction.h"
 #include "parse_fraction.h"
+#include "power_fraction.h"
 #include "simplify_parsed_fraction.h"
 #include "subtract_fraction.h"
 

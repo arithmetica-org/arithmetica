@@ -64,7 +64,8 @@ int main() {
                                         "tangent",
                                         "terminating_decimal_to_fraction",
                                         "add_fraction",
-                                        "multiply_fraction"};
+                                        "multiply_fraction",
+                                        "power_fraction"};
   std::sort(functions.begin(), functions.end());
 
   std::string currentDir = get_current_directory();
