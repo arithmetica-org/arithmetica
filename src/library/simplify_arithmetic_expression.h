@@ -548,20 +548,20 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
   if (!outputMixedFraction)
     return expression;
 
+  char sign = frac.numerator[0] == '-' ? '-' : '+';
+  // Ignore sign.
+  if (sign == '-') {
+    size_t length = strlen(frac.numerator);
+    memmove(frac.numerator, frac.numerator + 1, length - 1);
+    frac.numerator[length - 1] = 0;
+  }
+
   char *denominatorBiggerCheck =
       (char *)calloc(strlen(frac.numerator) + strlen(frac.denominator) + 3, 1);
   subtract(frac.numerator, frac.denominator, denominatorBiggerCheck);
   if (denominatorBiggerCheck[0] == '-') {
     free(denominatorBiggerCheck);
     return expression;
-  }
-
-  char sign = frac.numerator[0] == '-' ? '-' : '+';
-  // Ignore sign for division
-  if (sign == '-') {
-    size_t length = strlen(frac.numerator);
-    memmove(frac.numerator, frac.numerator + 1, length - 1);
-    frac.numerator[length - 1] = 0;
   }
 
   char *quotient =
@@ -576,16 +576,20 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
   expression =
       (char *)realloc(expression, strlen(quotient) + strlen(remainder) +
                                       strlen(frac.denominator) + 6);
+  memset(expression, 0,
+         strlen(quotient) + strlen(remainder) + strlen(frac.denominator) + 6);
   size_t charactersWritten = 0;
   if (sign == '-')
     expression[charactersWritten++] = '-';
   strncpy(expression + charactersWritten, quotient, strlen(quotient));
   charactersWritten += strlen(quotient);
-  if (!strcmp(remainder, "0")) {
+  if (strcmp(remainder, "0")) {
     // If the remainder is non-zero.
     expression[charactersWritten++] = ' ';
     expression[charactersWritten++] = sign;
+    expression[charactersWritten++] = ' ';
     strncpy(expression + charactersWritten, remainder, strlen(remainder));
+    charactersWritten += strlen(remainder);
     expression[charactersWritten++] = '/';
     strncpy(expression + charactersWritten, frac.denominator,
             strlen(frac.denominator));
