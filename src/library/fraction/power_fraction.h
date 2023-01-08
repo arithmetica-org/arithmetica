@@ -7,8 +7,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct fraction power_fraction(struct fraction base, struct fraction exponent,
-                               size_t accuracy) {
+struct fraction power_fraction(struct fraction base_in,
+                               struct fraction exponent_in, size_t accuracy) {
+  struct fraction base;
+  struct fraction exponent;
+  base.numerator = (char *)calloc(strlen(base_in.numerator) + 1, 1);
+  base.denominator = (char *)calloc(strlen(base_in.denominator) + 1, 1);
+  exponent.numerator = (char *)calloc(strlen(exponent_in.numerator) + 1, 1);
+  exponent.denominator = (char *)calloc(strlen(exponent_in.denominator) + 1, 1);
+  strcpy(base.numerator, base_in.numerator);
+  strcpy(base.denominator, base_in.denominator);
+  strcpy(exponent.numerator, exponent_in.numerator);
+  strcpy(exponent.denominator, exponent_in.denominator);
+
   // If the exponent is negative, then invert the fraction and make the exponent
   // positive since x^(-n) = (1/x)^n
   if (exponent.numerator[0] == '-') {
@@ -60,6 +71,9 @@ struct fraction power_fraction(struct fraction base, struct fraction exponent,
   free(powerNumerator);
   free(powerDenominator);
   free(parseFractionArgument);
+
+  delete_fraction(base);
+  delete_fraction(exponent);
 
   return answer;
 }

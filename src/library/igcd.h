@@ -17,12 +17,12 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
   if (strlen(a_in) == 0 || strlen(b_in) == 0)
     return;
 
-  char *a = (char *)malloc(max(strlen(a_in), strlen(b_in)) + 1);
-  char *b = (char *)malloc(max(strlen(a_in), strlen(b_in)) + 1);
+  char *a = (char *)calloc(strlen(a_in) + strlen(b_in) + 3, 1);
+  char *b = (char *)calloc(strlen(a_in) + strlen(b_in) + 3, 1);
 
   // allocate memory for some temporary variables
-  char *quotient = (char *)calloc(max(strlen(a_in), strlen(b_in)) + 1, 1);
-  char *temp = (char *)malloc(strlen(b_in) + 1);
+  char *quotient = (char *)calloc(strlen(a_in) + strlen(b_in) + 3, 1);
+  char *temp = (char *)calloc(strlen(a_in) + strlen(b_in) + 3, 1);
 
   // copy over the input numbers, ignoring sign
   (*a_in != '-') ? strcpy(a, a_in) : strcpy(a, a_in + 1);
@@ -34,6 +34,8 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
     clear_string(quotient);
     clear_string(b);
     divide_whole_with_remainder(a, temp, quotient, b);
+    remove_zeroes(quotient);
+    remove_zeroes(b);
     strcpy(a, temp);
   }
 

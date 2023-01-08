@@ -5,7 +5,8 @@
 #include "simplify_parsed_fraction.h"
 #include <stddef.h>
 
-static long return_decimals_and_remove_decimal_point(char *n) {
+static long return_decimals_and_remove_decimal_point(char **n_in) {
+  char *n = *n_in;
   long decimals = 0;
   const char *_loc = strchr(n, '.');
   if (_loc != NULL) {
@@ -18,6 +19,7 @@ static long return_decimals_and_remove_decimal_point(char *n) {
     strcpy(n, buf);
     free(buf);
   }
+  *n_in = n;
   return decimals;
 }
 
@@ -40,7 +42,8 @@ struct fraction parse_fraction(const char *frac) {
 
     // If the denominator is negative and the numerator isn't, then swap.
     if (answer.denominator[0] == '-' && answer.numerator[0] != '-') {
-      memmove(answer.denominator, answer.denominator + 1, strlen(answer.denominator) - 1);
+      memmove(answer.denominator, answer.denominator + 1,
+              strlen(answer.denominator) - 1);
       answer.denominator[strlen(answer.denominator) - 1] = 0;
       size_t n = strlen(answer.numerator);
       answer.numerator = (char *)realloc(answer.numerator, n + 2);
@@ -48,8 +51,8 @@ struct fraction parse_fraction(const char *frac) {
       answer.numerator[0] = '-';
     }
   }
-  long d1 = return_decimals_and_remove_decimal_point(answer.numerator),
-       d2 = return_decimals_and_remove_decimal_point(answer.denominator);
+  long d1 = return_decimals_and_remove_decimal_point(&answer.numerator),
+       d2 = return_decimals_and_remove_decimal_point(&answer.denominator);
   long diff = d1 - d2;
   if (diff > 0) {
     size_t len = strlen(answer.denominator);
