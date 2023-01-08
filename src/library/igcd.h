@@ -25,8 +25,8 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
   char *temp = (char *)calloc(strlen(a_in) + strlen(b_in) + 3, 1);
 
   // copy over the input numbers, ignoring sign
-  (*a_in != '-') ? strcpy(a, a_in) : strcpy(a, a_in + 1);
-  (*b_in != '-') ? strcpy(b, b_in) : strcpy(b, b_in + 1);
+  (*a_in == '-') ? strcpy(a, a_in + 1) : strcpy(a, a_in);
+  (*b_in == '-') ? strcpy(b, b_in + 1) : strcpy(b, b_in);
 
   // euclidean algorithm
   while (strcmp(b, "0")) {
@@ -39,13 +39,14 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
     strcpy(a, temp);
   }
 
-  memmove(gcd, a, strlen(a));
-  gcd[strlen(a)] = 0;
+  remove_zeroes(a);
+  strcpy(gcd, a);
 
   free(a);
   free(b);
   free(quotient);
   free(temp);
+  return;
 }
 
 #endif

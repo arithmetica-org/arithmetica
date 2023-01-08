@@ -32,7 +32,7 @@ struct fraction simplify_parsed_fraction(struct fraction frac) {
   size_t numerator_len = strlen(frac.numerator),
          denominator_len = strlen(frac.denominator);
 
-  char *hcf = (char *)calloc(numerator_len + denominator_len + 1, 1);
+  char *hcf = (char *)calloc(numerator_len + denominator_len + 3, 1);
   igcd(frac.numerator, frac.denominator, hcf);
   size_t hcf_len = strlen(hcf);
   answer.numerator = (char *)calloc(numerator_len + hcf_len + 3, 1);
