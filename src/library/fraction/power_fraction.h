@@ -64,7 +64,7 @@ struct fraction power_fraction(struct fraction base_in,
   strncpy(parseFractionArgument, powerNumerator, strlen(powerNumerator));
   parseFractionArgument[strlen(powerNumerator)] = '/';
   strncpy(parseFractionArgument + strlen(powerNumerator) + 1, powerDenominator,
-          strlen(powerDenominator));
+          strlen(powerDenominator) + 1);
   struct fraction answer = parse_fraction(parseFractionArgument);
 
   free(exponentDecimal);

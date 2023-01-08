@@ -124,7 +124,7 @@ static long find_operational_sign(const char *expression, char sign) {
     if (isdigit(expression[find]))
       numberFound = true;
     if (expression[find] == sign && numberFound)
-        return (long)find;
+      return (long)find;
     noExponent ? find++ : find--;
   }
   // Not found
@@ -524,6 +524,17 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
         delete_fraction(fraction1);
         delete_fraction(fraction2);
         delete_fraction(answer);
+      }
+
+      // If the left argument is negative and the result is not then the
+      // negative sign is lost. This is obviously unacceptable: 1/4-1/3+1/2 -->
+      // -1/3+1/2 = 1/6 so this becomes 1/41/6?? Instead, apped a '+' if this is
+      // the case.
+      if (leftArgument[0] == '-' && operationResult[0] != '-') {
+        size_t n = strlen(operationResult);
+        operationResult = (char *)realloc(operationResult, n + 2);
+        memmove(operationResult + 1, operationResult, n + 1);
+        operationResult[0] = '+';
       }
 
       replace_substring_from_position(start, end, &expression, operationResult);
