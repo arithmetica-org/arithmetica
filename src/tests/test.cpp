@@ -127,4 +127,6 @@ int main() {
     inputFile.close();
     expectedFile.close();
   }
+
+  std::cout << color("All tests passed successfully!\n", "Green");
 }
