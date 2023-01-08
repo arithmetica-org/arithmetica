@@ -149,7 +149,7 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
     if (args.size() < 3)
       return "";
 
-    char *_answer = (char *)calloc(args[1].length() + args[2].length() + 1, 1);
+    char *_answer = (char *)calloc(args[1].length() + args[2].length() + 3, 1);
     auto start = std::chrono::high_resolution_clock::now();
     ilcm(args[1].c_str(), args[2].c_str(), _answer);
     auto end = std::chrono::high_resolution_clock::now();

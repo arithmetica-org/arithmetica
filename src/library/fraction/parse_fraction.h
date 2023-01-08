@@ -34,8 +34,19 @@ struct fraction parse_fraction(const char *frac) {
     size_t loc = _loc - frac;
     answer.numerator = (char *)calloc(loc + 1, 1);
     answer.denominator = (char *)calloc(frac_len - loc, 1);
+
     strncpy(answer.numerator, frac, loc);
     strncpy(answer.denominator, _loc + 1, frac_len - loc);
+
+    // If the denominator is negative and the numerator isn't, then swap.
+    if (answer.denominator[0] == '-' && answer.numerator[0] != '-') {
+      memmove(answer.denominator, answer.denominator + 1, strlen(answer.denominator) - 1);
+      answer.denominator[strlen(answer.denominator) - 1] = 0;
+      size_t n = strlen(answer.numerator);
+      answer.numerator = (char *)realloc(answer.numerator, n + 2);
+      memmove(answer.numerator + 1, answer.numerator, n + 1);
+      answer.numerator[0] = '-';
+    }
   }
   long d1 = return_decimals_and_remove_decimal_point(answer.numerator),
        d2 = return_decimals_and_remove_decimal_point(answer.denominator);

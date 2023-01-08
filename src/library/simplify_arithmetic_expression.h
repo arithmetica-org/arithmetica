@@ -21,12 +21,11 @@ static void str_replace_all(char **str_in, char *from, char *to) {
   size_t characters_added = 0;
   for (size_t i = 0; i < strlen(str); i++) {
     const char *loc = strstr(str + i, from);
-    bool add_characters = false;
+    bool found = loc == str + i;
     size_t _characters_added = characters_added;
-    if (loc != str + i) {
-      new_str[characters_added++] = str[i];
+    if (!found) {
+      characters_added++;
     } else {
-      add_characters = true;
       characters_added += strlen(to);
     }
     if (characters_added >= len) {
@@ -35,9 +34,11 @@ static void str_replace_all(char **str_in, char *from, char *to) {
       new_str = (char *)realloc(new_str, len);
       memset(new_str + _characters_added, 0, old_len);
     }
-    if (add_characters) {
+    if (found) {
       memcpy(new_str + _characters_added, to, strlen(to));
       i += strlen(from) - 1;
+    } else {
+      new_str[_characters_added++] = str[i];
     }
   }
   new_str = (char *)realloc(new_str, strlen(new_str) + 1);
@@ -117,15 +118,14 @@ static void replace_substring_from_position(size_t startPosition,
 
 static long find_operational_sign(const char *expression, char sign) {
   bool numberFound = false;
-  bool exponent = sign == '^';
-  size_t find = !exponent ? 0 : strlen(expression) - 1;
-  while (!exponent ? find < strlen(expression) : find >= 0) {
+  bool noExponent = sign != '^';
+  size_t find = noExponent ? 0 : strlen(expression) - 1;
+  while (noExponent ? find < strlen(expression) : find + 1 > 0) {
     if (isdigit(expression[find]))
       numberFound = true;
-    if (expression[find] == sign)
-      if (numberFound)
+    if (expression[find] == sign && numberFound)
         return (long)find;
-    !exponent ? find++ : find--;
+    noExponent ? find++ : find--;
   }
   // Not found
   return -1;
@@ -237,7 +237,7 @@ static void get_chain_division_location(char *expression, long *sign1In,
 
   long divisionSignLocation = find_operational_sign(expression, '/');
   while (divisionSignLocation >= 0) {
-    size_t rightArgumentEnd = divisionSignLocation;
+    long rightArgumentEnd = divisionSignLocation;
     expression[divisionSignLocation] =
         '^'; // This is just temporary, it's so we don't pull division signs in
              // the right argument.

@@ -37,7 +37,8 @@ void igcd(const char *a_in, const char *b_in, char *gcd) {
     strcpy(a, temp);
   }
 
-  strcpy(gcd, a);
+  memmove(gcd, a, strlen(a));
+  gcd[strlen(a)] = 0;
 
   free(a);
   free(b);
