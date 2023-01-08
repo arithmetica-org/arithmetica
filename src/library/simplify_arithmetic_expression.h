@@ -117,12 +117,15 @@ static void replace_substring_from_position(size_t startPosition,
 
 static long find_operational_sign(const char *expression, char sign) {
   bool numberFound = false;
-  for (size_t find = 0; find < strlen(expression); find++) {
+  bool exponent = sign == '^';
+  size_t find = !exponent ? 0 : strlen(expression) - 1;
+  while (!exponent ? find < strlen(expression) : find >= 0) {
     if (isdigit(expression[find]))
       numberFound = true;
     if (expression[find] == sign)
       if (numberFound)
         return (long)find;
+    !exponent ? find++ : find--;
   }
   // Not found
   return -1;
@@ -227,6 +230,42 @@ static char *get_numerical_arguments(const char *expression, bool fromLeft,
   return answer;
 }
 
+static void get_chain_division_location(char *expression, long *sign1In,
+                                        long *sign2In) {
+  long sign1 = *sign1In;
+  long sign2 = *sign2In;
+
+  long divisionSignLocation = find_operational_sign(expression, '/');
+  while (divisionSignLocation >= 0) {
+    size_t rightArgumentEnd = divisionSignLocation;
+    expression[divisionSignLocation] =
+        '^'; // This is just temporary, it's so we don't pull division signs in
+             // the right argument.
+    char *rightArgument =
+        get_numerical_arguments(expression, false, &rightArgumentEnd, 1);
+    expression[divisionSignLocation] = '/';
+    if (rightArgumentEnd + 1 < strlen(expression) &&
+        expression[rightArgumentEnd + 1] == '/') {
+      free(rightArgument);
+      *sign1In = divisionSignLocation;
+      *sign2In = rightArgumentEnd + 1;
+      return;
+    }
+
+    // Find next division sign.
+    long n = find_operational_sign(expression + divisionSignLocation + 1, '/');
+    if (n != -1)
+      divisionSignLocation += n + 1;
+    else
+      divisionSignLocation = -1;
+    free(rightArgument);
+  }
+
+  *sign1In = -1;
+  *sign2In = -1;
+  return;
+}
+
 char *simplify_arithmetic_expression(const char *expression_in, int outputType,
                                      size_t accuracy) {
   char *expression = (char *)calloc(strlen(expression_in) + 1, 1);
@@ -325,6 +364,8 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
   // Non operational signs are things like the '-' in '-2*4'
   // There is no number behind '-', so it does not act
   // as an operator.
+  // Also, in the case of exponents, we need to start looking for signs from the
+  // back in order to correctly deal with cases like 3^3^3.
   long signLocation = find_operational_sign(expression, '^');
   while (signLocation >= 0) {
     long start = signLocation, end = signLocation;
@@ -340,12 +381,18 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
       struct fraction fraction2 = parse_fraction(rightArgument);
       struct fraction answer = power_fraction(fraction1, fraction2, accuracy);
       simplifiedExponentiation = (char *)calloc(
-          strlen(answer.numerator) + strlen(answer.denominator) + 2, 1);
-      strncpy(simplifiedExponentiation, answer.numerator,
+          strlen(answer.numerator) + strlen(answer.denominator) + 4, 1);
+      bool squareBrackets = start - 1 >= 0 && expression[start - 1] == '^';
+      if (squareBrackets)
+        simplifiedExponentiation[0] = '[';
+      strncpy(simplifiedExponentiation + squareBrackets, answer.numerator,
               strlen(answer.numerator));
-      simplifiedExponentiation[strlen(answer.numerator)] = '/';
-      strncpy(simplifiedExponentiation + strlen(answer.numerator) + 1,
+      simplifiedExponentiation[strlen(answer.numerator) + squareBrackets] = '/';
+      strncpy(simplifiedExponentiation + strlen(answer.numerator) + 1 +
+                  squareBrackets,
               answer.denominator, strlen(answer.denominator));
+      if (squareBrackets)
+        simplifiedExponentiation[strlen(simplifiedExponentiation)] = ']';
       delete_fraction(fraction1);
       delete_fraction(fraction2);
       delete_fraction(answer);
@@ -354,8 +401,8 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
     free(rightArgument);
     replace_substring_from_position(start, end, &expression,
                                     simplifiedExponentiation);
-    signLocation = find_operational_sign(expression, '^');
     free(simplifiedExponentiation);
+    signLocation = find_operational_sign(expression, '^');
   }
 
   // This next part deals with decimal division.
@@ -372,11 +419,48 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
       divide(numerator, denominator, quotient, accuracy);
       replace_substring_from_position(start, end, &expression, quotient);
       signLocation = find_operational_sign(expression, '/');
+      free(numerator);
+      free(denominator);
+      free(quotient);
     }
   } else if (outputType == 1) {
     // Check for and deal with chain divisions.
     // Chain division are divisions in the form of a/b/c/d/...
-    // a/b/c/d = a/(bcd)
+    // a/b/c/d = a/(bc)/d = a/(bcd)
+    long sign1 = 0, sign2 = 0;
+    get_chain_division_location(expression, &sign1, &sign2);
+    while (sign1 >= 0 && sign2 >= 0) {
+      long numeratorStart = sign1;
+      long div1End = sign1;
+      long div2End = sign2;
+      char *numerator = get_numerical_arguments(expression, true,
+                                                &numeratorStart, outputType);
+      // Again, this is just temporary (to avoid pulling division signs)
+      expression[sign1] = '^';
+      char *div1 =
+          get_numerical_arguments(expression, false, &div1End, outputType);
+      expression[sign1] = '/';
+      expression[sign2] = '^'; // Avoid pulling division signs
+      char *div2 =
+          get_numerical_arguments(expression, false, &div2End, outputType);
+      expression[sign2] = '/';
+      char *denominator = (char *)calloc(strlen(div1) + strlen(div2) + 3, 1);
+      multiply(div1, div2, denominator);
+      char *simplifiedChainDivision =
+          (char *)calloc(strlen(numerator) + strlen(denominator) + 2, 1);
+      strncpy(simplifiedChainDivision, numerator, strlen(numerator));
+      simplifiedChainDivision[strlen(numerator)] = '/';
+      strncpy(simplifiedChainDivision + strlen(numerator) + 1, denominator,
+              strlen(denominator));
+      replace_substring_from_position(numeratorStart, div2End, &expression,
+                                      simplifiedChainDivision);
+      get_chain_division_location(expression, &sign1, &sign2);
+      free(numerator);
+      free(div1);
+      free(div2);
+      free(denominator);
+      free(simplifiedChainDivision);
+    }
   }
 
   remove_misplaced_and_redundant_signs(&expression);
