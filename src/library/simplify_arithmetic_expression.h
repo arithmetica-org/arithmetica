@@ -117,12 +117,15 @@ static void replace_substring_from_position(size_t startPosition,
 
 static long find_operational_sign(const char *expression, char sign) {
   bool numberFound = false;
-  for (size_t find = 0; find < strlen(expression); find++) {
+  bool exponent = sign == '^';
+  size_t find = !exponent ? 0 : strlen(expression) - 1;
+  while (!exponent ? find < strlen(expression) : find >= 0) {
     if (isdigit(expression[find]))
       numberFound = true;
     if (expression[find] == sign)
       if (numberFound)
         return (long)find;
+    !exponent ? find++ : find--;
   }
   // Not found
   return -1;
@@ -325,6 +328,8 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
   // Non operational signs are things like the '-' in '-2*4'
   // There is no number behind '-', so it does not act
   // as an operator.
+  // Also, in the case of exponents, we need to start looking for signs from the
+  // back in order to correctly deal with cases like 3^3^3.
   long signLocation = find_operational_sign(expression, '^');
   while (signLocation >= 0) {
     long start = signLocation, end = signLocation;
@@ -340,12 +345,18 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
       struct fraction fraction2 = parse_fraction(rightArgument);
       struct fraction answer = power_fraction(fraction1, fraction2, accuracy);
       simplifiedExponentiation = (char *)calloc(
-          strlen(answer.numerator) + strlen(answer.denominator) + 2, 1);
-      strncpy(simplifiedExponentiation, answer.numerator,
+          strlen(answer.numerator) + strlen(answer.denominator) + 4, 1);
+      bool squareBrackets = start - 1 >= 0 && expression[start - 1] == '^';
+      if (squareBrackets)
+        simplifiedExponentiation[0] = '[';
+      strncpy(simplifiedExponentiation + squareBrackets, answer.numerator,
               strlen(answer.numerator));
-      simplifiedExponentiation[strlen(answer.numerator)] = '/';
-      strncpy(simplifiedExponentiation + strlen(answer.numerator) + 1,
+      simplifiedExponentiation[strlen(answer.numerator) + squareBrackets] = '/';
+      strncpy(simplifiedExponentiation + strlen(answer.numerator) + 1 +
+                  squareBrackets,
               answer.denominator, strlen(answer.denominator));
+      if (squareBrackets)
+        simplifiedExponentiation[strlen(simplifiedExponentiation)] = ']';
       delete_fraction(fraction1);
       delete_fraction(fraction2);
       delete_fraction(answer);
@@ -354,8 +365,8 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
     free(rightArgument);
     replace_substring_from_position(start, end, &expression,
                                     simplifiedExponentiation);
-    signLocation = find_operational_sign(expression, '^');
     free(simplifiedExponentiation);
+    signLocation = find_operational_sign(expression, '^');
   }
 
   // This next part deals with decimal division.
