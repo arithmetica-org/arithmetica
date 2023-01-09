@@ -276,6 +276,36 @@ char *simplify_arithmetic_expression(const char *expression_in, int outputType,
   str_replace_all(&expression, "}", ")");
   str_replace_all(&expression, " ", "");
 
+  // Multiplication can also be indicated by:
+  // a*b = a(b) = (a)b = (a)(b)
+  str_replace_all(&expression, ")(", ")*(");
+
+  // a(b) = a*(b)
+  char *multiplicationReplaceFrom = (char *)calloc(3, 1);
+  char *multiplicationReplaceTo = (char *)calloc(4, 1);
+  multiplicationReplaceFrom[1] = '(';
+  multiplicationReplaceTo[1] = '*';
+  multiplicationReplaceTo[2] = '(';
+  for (char i = '0'; i <= '9'; i++) {
+    multiplicationReplaceFrom[0] = i;
+    multiplicationReplaceTo[0] = i;
+    str_replace_all(&expression, multiplicationReplaceFrom,
+                    multiplicationReplaceTo);
+  }
+  // (a)b = (a)*b
+  multiplicationReplaceFrom[0] = ')';
+  multiplicationReplaceTo[0] = ')';
+  multiplicationReplaceTo[1] = '*';
+  for (char i = '0'; i <= '9'; i++) {
+    multiplicationReplaceFrom[1] = i;
+    multiplicationReplaceTo[2] = i;
+    str_replace_all(&expression, multiplicationReplaceFrom,
+                    multiplicationReplaceTo);
+  }
+
+  free(multiplicationReplaceFrom);
+  free(multiplicationReplaceTo);
+
   size_t n = strlen(expression);
   expression = (char *)realloc(expression, n + 3);
   strcpy(expression + n, "+0");
