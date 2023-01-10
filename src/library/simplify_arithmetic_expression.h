@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void str_replace_all(char **str_in, char *from, char *to) {
+static void str_replace_all(char **str_in, const char *from, const char *to) {
   char *str = *str_in;
   size_t from_len = strlen(from);
   if (from_len == 0)
@@ -37,9 +37,8 @@ static void str_replace_all(char **str_in, char *from, char *to) {
     if (found) {
       memcpy(new_str + _characters_added, to, strlen(to));
       i += strlen(from) - 1;
-    } else {
+    } else
       new_str[_characters_added++] = str[i];
-    }
   }
   new_str = (char *)realloc(new_str, strlen(new_str) + 1);
   if (new_str[strlen(new_str)] != 0)
