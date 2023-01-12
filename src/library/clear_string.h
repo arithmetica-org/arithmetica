@@ -3,12 +3,16 @@
 
 #include <stddef.h>
 
-void clear_string(char *s) {
+void
+clear_string (char *s)
+{
   while (*s != 0)
     *s++ = 0;
 }
 
-void clear_string_s(char *s, size_t n) {
+void
+clear_string_s (char *s, size_t n)
+{
   while (n--)
     *s++ = 0;
 }
