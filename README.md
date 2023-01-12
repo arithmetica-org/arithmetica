@@ -1,6 +1,8 @@
 # Arithmetica
 
-Arithmetica is a general purpose linux and windows math library with a wide variety of mathematical functions and features.
+> Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benifit other people too.
+
+Arithmetica is a general purpose infinite precision linux and windows math library with a wide variety of mathematical functions and features.
 
 This library uses [basic_math_operations](https://github.com/avighnac/basic_math_operations) to achieve arbitrary precision. While linking an application using arithmetica, basic_math_operations will also have to be linked.
 
