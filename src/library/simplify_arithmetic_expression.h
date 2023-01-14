@@ -26,14 +26,10 @@ str_replace_all (char **str_in, const char *from, const char *to)
       const char *loc = strstr (str + i, from);
       bool found = loc == str + i;
       size_t _characters_added = characters_added;
-      if (!found)
-        {
-          characters_added++;
-        }
+      if (found)
+        characters_added += strlen (to);
       else
-        {
-          characters_added += strlen (to);
-        }
+        characters_added++;
       if (characters_added >= len)
         {
           size_t old_len = len;
