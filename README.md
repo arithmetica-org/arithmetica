@@ -1,13 +1,69 @@
 # Arithmetica
-
 > Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benifit other people too.
 
-Arithmetica is a general purpose infinite precision linux and windows math library with a wide variety of mathematical functions and features.
+Arithmetica is a general purpose infinite precision linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are: C and C++.
 
-This library uses [basic_math_operations](https://github.com/avighnac/basic_math_operations) to achieve arbitrary precision. While linking an application using arithmetica, basic_math_operations will also have to be linked.
+# Installation
+Include the header [arithmetica.h]() and download the `.a` file from the [releases section](https://github.com/avighnac/arithmetica/releases/).
+```c
+#include "arithmetica.h"
+
+// your code here
+// ...
+```
+This library uses [basic_math_operations](https://github.com/avighnac/basic_math_operations) for infinite precision arithmetic.
+To compile a program using [arithmetica](https://github.com/avighnac/arithmetica), do the following:
+## Command line
+[Download basic_math_operations](https://github.com/avighnac/basic_math_operations/releases/) in a similar manner. However, you do not have to include any headers for [basic_math_operations](https://github.com/avighnac/basic_math_operations). Use the following command to compile:
+`gcc/g++ filename.cpp/c [your arguments] -L. -larithmetica -lbasic_math_operations`
+## CMake
+Clone [basic_math_operations](https://github.com/avighnac/basic_math_operations) and [arithmetica](https://github.com/avighnac/arithmetica) using `git`, or download the repositories. If your project is on github, then use [submodules](https://github.blog/2016-02-01-working-with-submodules/) to prevent cluttering your language statistics. In either case, the repositories should be present in your project's base folder (or any subfolders in that base folder).
+
+In your _base_ `CMakeLists.txt` file, include the following lines of code:
+```cmake
+# your previous CMake code here
+# ...
+
+# replace path_pointing_to_cloned_repo with the actual path 
+add_subdirectory(path_pointing_to_cloned_repo_arithmetica)
+add_subdirectory(path_pointing_to_cloned_repo_basic_math_operations)
+```
+
+Then, in your `CMakeLists.txt` responsible for compiling your executable, add these lines of code:
+```cmake
+target_link_libraries(your_project_name_here PRIVATE arithmetica)
+target_link_libraries(your_project_name_here PRIVATE basic_math_operations)
+```
+
+# Usage
+```c
+#include "arithmetica.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int
+main ()
+{
+  char input[] = "0.5";
+  char *res = arcsin (input, 20); // 20 is the precision
+  printf ("%s%s%s", "arcsin(0.5) = ", res,
+          "\n"); // prints the inverse sine of 0.5
+
+  free (res);
+
+  return 0;
+}
+```
+
+# Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+After making changes, please run the program's test suite by changing the `ENABLE_TESTS` option to `ON`, deleting the `build/` folder and recompiling. 
+
+Please make sure to update tests as appropriate.
 
 # Functions
-
 Currently, arithmetica has the following decimal number functions:
 ## Decimal number functions
 - `arccos()` complex the [inverse cosine](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
