@@ -132,14 +132,20 @@ int main() {
         expectedFile.close();
         throw std::runtime_error(functions[i] + " failed a test.");
       } else {
-        charactersPrinted += 1 + std::to_string(currentTest).length() + 3 +
+        auto cPrint = 1 + spaces.length() + std::to_string(currentTest).length() + 3 +
                              std::to_string((int)timeMS).length() + 5 +
                              functions[i].length() + 1 + inputsStr.length() +
                              4 + res.length();
-        std::cout << spaces << "<" << currentTest << "> (" << timeMS << " ms) "
-                  << color(functions[i], "Yellow") << "("
-                  << color_digits(inputsStr, "Green")
-                  << ") = " << color_digits(res, "Green") << '\n';
+        if (cPrint <= width) {
+          charactersPrinted += cPrint;
+          std::cout << spaces << "<" << currentTest << "> (" << timeMS << " ms) "
+                    << color(functions[i], "Yellow") << "("
+                    << color_digits(inputsStr, "Green")
+                    << ") = " << color_digits(res, "Green") << '\n';
+        } else {
+          charactersPrinted += spaces.length() + 1 + std::to_string(currentTest).length() + 14;
+          std::cout << spaces << "<" << currentTest << "> Test passed!\n";
+        }
       }
 
       linesPrinted = std::ceil((double)charactersPrinted / width);

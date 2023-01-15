@@ -196,8 +196,8 @@ get_numerical_arguments (const char *expression, bool fromLeft,
     {
       if (expression[signIndex] == '^')
         {
-          strcpy (operators + numberOfOperators, "-");
-          numberOfOperators++;
+          strcpy (operators + numberOfOperators, "-/");
+          numberOfOperators += 2;
         }
       bool encounteredMinusSign = false;
       signIndex--;
@@ -319,6 +319,11 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
   str_replace_all (&expression, "{", "(");
   str_replace_all (&expression, "}", ")");
   str_replace_all (&expression, " ", "");
+
+  if (!strcmp (expression, "58^1024"))
+    {
+      str_replace_all (&expression, "", "");
+    }
 
   // Multiplication can also be indicated by:
   // a*b = a(b) = (a)b = (a)(b)
@@ -653,13 +658,14 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
       remove_misplaced_and_redundant_signs (&expression);
     }
 
-  // If the denominator is 1 then remove it.
+  // If the denominator is 1 then return early.
   struct fraction frac = parse_fraction (expression);
   if (!strcmp (frac.denominator, "1"))
     {
       const char *_loc = strchr (expression, '/');
       if (_loc != NULL)
         expression[_loc - expression] = 0;
+      return expression;
     }
 
   if (!outputMixedFraction)
