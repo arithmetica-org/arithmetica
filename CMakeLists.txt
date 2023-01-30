@@ -6,7 +6,7 @@ enable_language(ASM_NASM)
 
 add_subdirectory(src/library)
 
-option(ENABLE_TESTS "Build tests" OFF)
+option(ENABLE_TESTS "Build tests" ON)
 
 if (ENABLE_TESTS)
     add_subdirectory(src/basic_math_operations/src/library)
