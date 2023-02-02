@@ -11,28 +11,28 @@
 
 /// @brief Computes the inverse cosine of a number less than 1.
 /// @param number The number to compute the inverse cosine of.
-/// @param accuracy The number of decimal places to calculate accurately to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return The inverse cosine of the first argument. Free this pointer one
 /// it's done being used.
 arithmetica_function_start char *arccos (const char *number, size_t accuracy);
 
 /// @brief Computes the inverse sine of a number less than 1.
 /// @param number The number to compute the inverse sine of.
-/// @param accuracy The number of decimal places to calculate accurately to.
-/// @return The inverse sine of the first argument. Free this pointer one it's
+/// @param accuracy The number of decimal places to calculate accurately.
+/// @return The inverse sine of the first argument. Free this pointer once its
 /// done being used.
 arithmetica_function_start char *arcsin (const char *number, size_t accuracy);
 
 /// @brief Computes the inverse tangent of a number less than 1.
 /// @param x The number to compute the inverse tangent of.
-/// @param accuracy The number of decimal places to calculate accurately to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return The inverse tangent of the first argument. Free this pointer once
 /// it's done being used.
 arithmetica_function_start char *arctan (const char *number, size_t accuracy);
 
 /// @brief Computes the cosine of the first argument.
 /// @param number The angle to compute the cosine of, in radians.
-/// @param accuracy The number of decimal places to calculate accuractely to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return The cosine of the first argument. Free this pointer once it's done
 /// being used.
 arithmetica_function_start char *cosine (const char *number, size_t accuracy);
@@ -40,7 +40,7 @@ arithmetica_function_start char *cosine (const char *number, size_t accuracy);
 /// @brief Computes e^x, where e is Euler's number: the base to the natural
 /// logarithm.
 /// @param x The number to raise e to.
-/// @param accuracy The number of decimal places to calculate accurately to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return The value of e^x. Free this pointer once it's done being used.
 arithmetica_function_start char *exponential (const char *x, size_t accuracy);
 
@@ -76,7 +76,7 @@ arithmetica_function_start void ilcm (const char *a, const char *b, char *lcm);
 /// @brief Computes the natural logarithm of a non-negative number
 /// to any decimal place.
 /// @param n The number to compute the natural logarithm of.
-/// @param accuracy The number of decimal places to calculate accurately to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return A pointer to a char * containing the natural logarithm of the
 /// input number.
 arithmetica_function_start char *natural_logarithm (const char *n,
@@ -85,7 +85,7 @@ arithmetica_function_start char *natural_logarithm (const char *n,
 /// @brief Computes x_in^n_in where x_in and n_in are two real numbers.
 /// @param x_in The real number base.
 /// @param n_in The real number exponent.
-/// @param accuracy The number of decimal places to calculate accurately to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return A pointer to a char * containing x_in^n_in.
 arithmetica_function_start char *power (const char *x_in, const char *n_in,
                                         size_t accuracy);
@@ -103,7 +103,7 @@ repeating_decimal_to_fraction (const char *non_repeating_part,
                                const char *repeating_part, char *numerator_out,
                                char *denominator_out);
 
-/// @brief Simplies an arithmetic expression involving the five basic math
+/// @brief Simplifies an arithmetic expression involving the five basic math
 /// operations: addition, subtraction, multiplication, division, and
 /// exponentiation.
 /// @param expression The expression to simplify, in standard computer
@@ -122,22 +122,22 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
 
 /// @brief Computes the sine of the first argument.
 /// @param number The angle to compute the sine of, in radians.
-/// @param accuracy The number of decimal places to calculate accuractely to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return The sine of the first argument. Free this pointer once it's done
 /// being used.
 arithmetica_function_start char *sine (const char *number, size_t accuracy);
 
 /// @brief Computes the square root of the first argument.
 /// @param number The non-negative number to compute the square root of.
-/// @param accuracy The number of decimal places to calculate accurately to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return The square root of the first argument. Free this pointer once it's
 /// done being used.
 arithmetica_function_start char *square_root (const char *number_in,
                                               size_t accuracy);
 
-/// @brief Computes the trignometric tangent of the first argument.
+/// @brief Computes the trigonometric tangent of the first argument.
 /// @param number The angle to compute the tangent of, in radians.
-/// @param accuracy The number of decimal places to calculate accuractely to.
+/// @param accuracy The number of decimal places to calculate accurately.
 /// @return The tangent of the first argument. Free this pointer once it's done
 /// being used.
 arithmetica_function_start char *tangent (const char *number, size_t accuracy);
@@ -244,7 +244,7 @@ arithmetica_function_start struct complex multiply_complex (struct complex a,
 /// know what complex numbers are.
 /// @param a The complex numerator.
 /// @param b The complex number denominator.
-/// @param accuracy The number of decimals the division will be accurate to.
+/// @param accuracy The number of decimal places the division will be accurate to.
 /// @return Where a / b will be stored.
 arithmetica_function_start struct complex
 divide_complex (struct complex a, struct complex b, size_t accuracy);
