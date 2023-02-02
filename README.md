@@ -1,7 +1,7 @@
 # Arithmetica
-> Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benifit other people too.
+> Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benefit other people too.
 
-Arithmetica is a general purpose infinite precision linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are: C and C++.
+Arithmetica is a general-purpose infinite precision Linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are C and C++.
 
 # Installation
 Include the header [arithmetica.h]() and download the `.a` file from the [releases section](https://github.com/avighnac/arithmetica/releases/).
@@ -17,7 +17,7 @@ To compile a program using [arithmetica](https://github.com/avighnac/arithmetica
 [Download basic_math_operations](https://github.com/avighnac/basic_math_operations/releases/) in a similar manner. However, you do not have to include any headers for [basic_math_operations](https://github.com/avighnac/basic_math_operations). Use the following command to compile:
 `gcc/g++ filename.cpp/c [your arguments] -L. -larithmetica -lbasic_math_operations`
 ## CMake
-Clone [basic_math_operations](https://github.com/avighnac/basic_math_operations) and [arithmetica](https://github.com/avighnac/arithmetica) using `git`, or download the repositories. If your project is on github, then use [submodules](https://github.blog/2016-02-01-working-with-submodules/) to prevent cluttering your language statistics. In either case, the repositories should be present in your project's base folder (or any subfolders in that base folder).
+Clone [basic_math_operations](https://github.com/avighnac/basic_math_operations) and [arithmetica](https://github.com/avighnac/arithmetica) using `git`, or download the repositories. If your project is on GitHub, then use [submodules](https://github.blog/2016-02-01-working-with-submodules/) to prevent cluttering your language statistics. In either case, the repositories should be present in your project's base folder (or any subfolders in that base folder).
 
 In your _base_ `CMakeLists.txt` file, include the following lines of code:
 ```cmake
@@ -59,7 +59,7 @@ main ()
 # Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-After making changes, please run the program's test suite by changing the `ENABLE_TESTS` option to `ON`, deleting the `build/` folder and recompiling. 
+After making changes, please run the program's test suite by changing the `ENABLE_TESTS` option to `ON`, deleting the `build/` folder, and recompiling. 
 
 Please make sure to update tests as appropriate.
 
@@ -78,7 +78,7 @@ Currently, arithmetica has the following decimal number functions:
 - `natural_logarithm()` computes the [natural logarithm](https://en.wikipedia.org/wiki/Natural_logarithm) of a positive number to any decimal place.
 - `power()` computes x^n, where x and n are rational numbers to any decimal place.
 - `repeating_decimal_to_fraction()` converts a [repeating decimal](https://en.wikipedia.org/wiki/Repeating_decimal) to a fraction.
-- `simplify_arithmetic_expression()` simplies an arithmetic expression involving the five basic math operations: addition, subtraction, multiplication, division, and exponentiation. This function can output either a decimal or fractional answer.
+- `simplify_arithmetic_expression()` simplifies an arithmetic expression involving the five basic math operations: addition, subtraction, multiplication, division, and exponentiation. This function can output either a decimal or fractional answer.
 - `sine()` computes the [sine](https://en.wikipedia.org/wiki/Sine_and_cosine) of an angle in radians to any decimal place.
 - `square_root()` computes the [square root](https://en.wikipedia.org/wiki/Square_root) of a number to any decimal place.
 - `tangent()` computes the [trignometric tangent](https://en.wikipedia.org/wiki/Trigonometric_functions) of an angle in radians to any decimal place.
