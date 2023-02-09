@@ -320,11 +320,6 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
   str_replace_all (&expression, "}", ")");
   str_replace_all (&expression, " ", "");
 
-  if (!strcmp (expression, "58^1024"))
-    {
-      str_replace_all (&expression, "", "");
-    }
-
   // Multiplication can also be indicated by:
   // a*b = a(b) = (a)b = (a)(b)
   str_replace_all (&expression, ")(", ")*(");
