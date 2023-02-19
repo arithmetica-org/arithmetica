@@ -7,7 +7,7 @@
 #include "point.h"
 #include <basic_math_operations.hpp>
 
-namespace construct_n_gon_helpers
+namespace construct_regular_polygon_helpers
 {
 using namespace basic_math_operations;
 class PointCpp
@@ -51,14 +51,14 @@ ConvertToC (const std::vector<PointCpp> &polygon)
     }
   return points;
 }
-}; // namespace construct_n_gon_helpers
+}; // namespace construct_regular_polygon_helpers
 
 point *
-construct_n_gon_cpp (int n, const char *length_c, size_t accuracy)
+construct_regular_polygon_cpp (int n, const char *length_c, size_t accuracy)
 {
   using namespace arithmetica;
   using namespace basic_math_operations;
-  using namespace construct_n_gon_helpers;
+  using namespace construct_regular_polygon_helpers;
 
   BMONum length = std::string (length_c);
 
@@ -93,22 +93,23 @@ construct_n_gon_cpp (int n, const char *length_c, size_t accuracy)
 
       // Compute candidate intersection points.
       BMONum x_1, y_1, x_2, y_2;
-      construct_n_gon_helpers::ComputeIntersectionPoints (
+      construct_regular_polygon_helpers::ComputeIntersectionPoints (
           prev_pt, slope_new_line, intercept_new_line, length, x_1, y_1, x_2,
           y_2, accuracy);
 
       // Add new point to polygon.
-      polygon.push_back (construct_n_gon_helpers::GetCorrectPoint (
+      polygon.push_back (construct_regular_polygon_helpers::GetCorrectPoint (
           x_1, y_1, x_2, y_2, i, n, prev_pt));
     }
 
   return ConvertToC (polygon);
 }
 
-construct_n_gon_helpers::PointCpp
-construct_n_gon_helpers::GetCorrectPoint (BMONum &x_1, BMONum &y_1,
-                                          BMONum &x_2, BMONum &y_2, int &i,
-                                          int n, PointCpp &prev_pt)
+construct_regular_polygon_helpers::PointCpp
+construct_regular_polygon_helpers::GetCorrectPoint (BMONum &x_1, BMONum &y_1,
+                                                    BMONum &x_2, BMONum &y_2,
+                                                    int &i, int n,
+                                                    PointCpp &prev_pt)
 {
   // To decide the correct x,y pair, notice that y is never decreasing for the
   // first n / 2 sides, and is always decreasing after that.
@@ -124,9 +125,9 @@ construct_n_gon_helpers::GetCorrectPoint (BMONum &x_1, BMONum &y_1,
   return ChooseHigherPoint (x_1, y_1, x_2, y_2, prev_pt);
 }
 
-construct_n_gon_helpers::PointCpp
-construct_n_gon_helpers::ChoosePointToLeft (BMONum &x_1, BMONum &y_1,
-                                            BMONum &x_2, BMONum &y_2)
+construct_regular_polygon_helpers::PointCpp
+construct_regular_polygon_helpers::ChoosePointToLeft (BMONum &x_1, BMONum &y_1,
+                                                      BMONum &x_2, BMONum &y_2)
 {
   if (x_1 < x_2)
     {
@@ -135,10 +136,10 @@ construct_n_gon_helpers::ChoosePointToLeft (BMONum &x_1, BMONum &y_1,
   return PointCpp (x_2, y_2);
 }
 
-construct_n_gon_helpers::PointCpp
-construct_n_gon_helpers::ChooseHigherPoint (BMONum &x_1, BMONum &y_1,
-                                            BMONum &x_2, BMONum &y_2,
-                                            PointCpp &prev_pt)
+construct_regular_polygon_helpers::PointCpp
+construct_regular_polygon_helpers::ChooseHigherPoint (BMONum &x_1, BMONum &y_1,
+                                                      BMONum &x_2, BMONum &y_2,
+                                                      PointCpp &prev_pt)
 {
   bool higher_or_equal = y_1 >= prev_pt.y;
   if (higher_or_equal)
@@ -148,10 +149,10 @@ construct_n_gon_helpers::ChooseHigherPoint (BMONum &x_1, BMONum &y_1,
   return PointCpp (x_2, y_2);
 }
 
-construct_n_gon_helpers::PointCpp
-construct_n_gon_helpers::ChooseLowerPoint (BMONum &x_1, BMONum &y_1,
-                                           BMONum &x_2, BMONum &y_2,
-                                           PointCpp &prev_pt)
+construct_regular_polygon_helpers::PointCpp
+construct_regular_polygon_helpers::ChooseLowerPoint (BMONum &x_1, BMONum &y_1,
+                                                     BMONum &x_2, BMONum &y_2,
+                                                     PointCpp &prev_pt)
 {
   bool higher_or_equal = y_1 >= prev_pt.y;
   if (higher_or_equal)
@@ -164,9 +165,10 @@ construct_n_gon_helpers::ChooseLowerPoint (BMONum &x_1, BMONum &y_1,
 // Computes the slope and intercept of line rotated 360/n degrees to the left
 // that also passes through the previous point.
 void
-construct_n_gon_helpers::ComputeLine (PointCpp &prev_pt, BMONum &m,
-                                      BMONum &tan_exterior_angle, BMONum &l,
-                                      BMONum &s, BMONum &c)
+construct_regular_polygon_helpers::ComputeLine (PointCpp &prev_pt, BMONum &m,
+                                                BMONum &tan_exterior_angle,
+                                                BMONum &l, BMONum &s,
+                                                BMONum &c)
 {
   // Since tan(a + b) = (tan(a) + tan(b)) / (1 - tan(a) tan(b)),
   // tan(atan(m) + angle) = (m + tan(angle)) / (1 - m tan(angle))
@@ -175,7 +177,7 @@ construct_n_gon_helpers::ComputeLine (PointCpp &prev_pt, BMONum &m,
 }
 
 void
-construct_n_gon_helpers::ComputeIntersectionPoints (
+construct_regular_polygon_helpers::ComputeIntersectionPoints (
     PointCpp &prev_pt, BMONum &s, BMONum &c, BMONum &l, BMONum &x_1,
     BMONum &y_1, BMONum &x_2, BMONum &y_2, size_t accuracy)
 {
@@ -198,8 +200,8 @@ construct_n_gon_helpers::ComputeIntersectionPoints (
 }
 
 extern "C" struct point *
-construct_n_gon (int n, const char *length, size_t accuracy)
+construct_regular_polygon (int n, const char *length, size_t accuracy)
 {
-  point *answer = construct_n_gon_cpp (n, length, accuracy);
+  point *answer = construct_regular_polygon_cpp (n, length, accuracy);
   return answer;
 }

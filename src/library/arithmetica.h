@@ -213,7 +213,7 @@ power_fraction (struct fraction base, struct fraction exponent,
 /// @return Returns an array of points, each with a malloc'd char *. Free each
 /// of these once they're done being used.
 arithmetica_function_start struct point *
-construct_n_gon (int n, const char *length, size_t accuracy);
+construct_regular_polygon (int n, const char *length, size_t accuracy);
 
 // Complex number functions
 

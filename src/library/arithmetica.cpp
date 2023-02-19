@@ -3,4 +3,4 @@
 // point header file
 #include "geometry/point.h"
 
-#include "geometry/construct_n_gon.hpp"
+#include "geometry/construct_regular_polygon.hpp"

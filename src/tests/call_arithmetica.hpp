@@ -374,14 +374,14 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       free (denominator);
       return answer;
     }
-  if (args[0] == "construct_n_gon")
+  if (args[0] == "construct_regular_polygon")
     {
       if (args.size () < 4)
         return "";
 
       auto start = std::chrono::high_resolution_clock::now ();
-      point *polygon = construct_n_gon (std::stoi (args[1]), args[2].c_str (),
-                                        std::stoull (args[3]));
+      point *polygon = construct_regular_polygon (
+          std::stoi (args[1]), args[2].c_str (), std::stoull (args[3]));
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
           = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)

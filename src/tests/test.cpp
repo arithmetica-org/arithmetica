@@ -79,7 +79,7 @@ main ()
                                          "add_fraction",
                                          "multiply_fraction",
                                          "power_fraction",
-                                         "construct_n_gon" };
+                                         "construct_regular_polygon" };
   std::sort (functions.begin (), functions.end ());
 
   int width = 10, height = 10;
