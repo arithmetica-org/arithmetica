@@ -204,6 +204,17 @@ arithmetica_function_start struct fraction
 power_fraction (struct fraction base, struct fraction exponent,
                 size_t accuracy);
 
+// Geometry functions
+
+/// @brief Constructs an n-sided regular polygon.
+/// @param n The number of sides of the polygon.
+/// @param length The length of each side.
+/// @param accuracy The decimal place accuracy of the construction.
+/// @return Returns an array of points, each with a malloc'd char *. Free each
+/// of these once they're done being used.
+arithmetica_function_start struct point *
+construct_n_gon (int n, const char *length, size_t accuracy);
+
 // Complex number functions
 
 struct complex
@@ -244,7 +255,8 @@ arithmetica_function_start struct complex multiply_complex (struct complex a,
 /// know what complex numbers are.
 /// @param a The complex numerator.
 /// @param b The complex number denominator.
-/// @param accuracy The number of decimal places the division will be accurate to.
+/// @param accuracy The number of decimal places the division will be accurate
+/// to.
 /// @return Where a / b will be stored.
 arithmetica_function_start struct complex
 divide_complex (struct complex a, struct complex b, size_t accuracy);

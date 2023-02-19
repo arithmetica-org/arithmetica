@@ -1,12 +1,14 @@
 project(arithmetica C)
 
 enable_language(C)
+enable_language(CXX)
 
 if (UNIX)
 add_library(
     arithmetica
 
     arithmetica.c
+    arithmetica.cpp
     
     linux/strlen.asm
     linux/truncate.asm
@@ -18,6 +20,7 @@ add_library(
     arithmetica
 
     arithmetica.c
+    arithmetica.cpp
     
     windows/strlen.asm
     windows/truncate.asm
