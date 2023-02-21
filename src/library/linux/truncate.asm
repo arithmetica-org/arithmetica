@@ -1,4 +1,4 @@
-extern strlen
+extern strlen_arithmetica
 
 section .text
 global  truncate
@@ -14,7 +14,7 @@ truncate:
   ;   - rdx
   
   push  rbx
-  call  strlen
+  call  strlen_arithmetica wrt ..plt
   mov   rcx, rax ; rcx = strlen(n)
   inc   rsi ; increase accuracy by 1 for zeroing
   xor   eax, eax ; Set al to 0

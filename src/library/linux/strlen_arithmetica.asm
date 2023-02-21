@@ -1,6 +1,6 @@
 section .text
-global strlen
-strlen:
+global strlen_arithmetica
+strlen_arithmetica:
   ; Input:
   ;   - char *str -> rdi
 

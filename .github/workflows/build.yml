@@ -1,4 +1,4 @@
-name: "Make libarithmetica.a"
+name: "Make libarithmetica."
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   make-linux:
-    name: Make libarithmetica-linux.a
+    name: Make libarithmetica for Linux.
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -34,11 +34,17 @@ jobs:
         git submodule update --init --recursive
         cmake --no-warn-unused-cli -DENABLE_TESTS=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++ -S . -B build -G "Unix Makefiles"
         cmake --build build --config Release --target all -j 10 --
-        mv build/src/library/libarithmetica.a build/src/library/libarithmetica-linux.a
+        mkdir linux-build
+        mv build/src/library/libarithmetica.a linux-build/libarithmetica.a
+        mv build/src/library/libarithmetica.so linux-build/libarithmetica.so
+        cp src/library/arithmetica.h linux-build/arithmetica.h
+        cp src/library/arithmetica.hpp linux-build/arithmetica.hpp
+        cd linux-build
+        zip -r libarithmetica-linux.zip ./
     - uses: actions/upload-artifact@v3
       with:
         name: linux-build
-        path: build/src/library/libarithmetica-linux.a
+        path: build/src/library/libarithmetica-linux.zip
 
   make-windows:
     name: Make libarithmetica-windows.a
@@ -111,9 +117,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/artifacts/linux-build/libarithmetica-linux.a
-          asset_name: libarithmetica-linux.a
-          asset_content_type: application/octet-stream
+          asset_path: dist/artifacts/linux-build/libarithmetica-linux.zip
+          asset_name: libarithmetica-linux.zip
+          asset_content_type: application/zip
       - name: Upload asset for Windows.
         uses: actions/upload-release-asset@v1
         env:
