@@ -44,7 +44,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: linux-build
-        path: build/src/library/libarithmetica-linux.zip
+        path: build/src/library/linux-build/libarithmetica-linux.zip
 
   make-windows:
     name: Make libarithmetica-windows.a
