@@ -14,6 +14,7 @@ linux/truncate.asm
 add_library(arithmetica STATIC ${linux_sources})
 add_library(arithmetica_sh SHARED ${linux_sources})
 set_target_properties(arithmetica_sh PROPERTIES OUTPUT_NAME "arithmetica")
+target_include_directories(arithmetica_sh PRIVATE "../basic_math_operations/src/library")
 endif (UNIX)
 
 if (WIN32)
@@ -29,4 +30,3 @@ add_library(
 endif (WIN32)
 
 target_include_directories(arithmetica PRIVATE "../basic_math_operations/src/library")
-target_include_directories(arithmetica_sh PRIVATE "../basic_math_operations/src/library")
