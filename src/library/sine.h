@@ -18,7 +18,6 @@ sine (const char *number, size_t accuracy)
   strcpy (answer, number);
   char *denominator = (char *)calloc (2, 1);
   denominator[0] = '1';
-  char one[] = "1";
   char *i = (char *)calloc (2, 1);
   i[0] = '2';
   char *maxDiff = (char *)calloc (accuracy + 3, 1);
@@ -50,19 +49,14 @@ sine (const char *number, size_t accuracy)
       denominator = (char *)realloc (denominator, m);
       clear_string_s (buf, m);
       multiply (denominator, i, buf);
-      char *_buf = (char *)calloc (m, 1);
-      add (i, one, _buf);
       strcpy (denominator, buf);
       clear_string_s (buf, m);
-      multiply (denominator, _buf, buf);
+      increment_whole (&i);
+      multiply (denominator, i, buf);
       strcpy (denominator, buf);
-      i = (char *)realloc (i, strlen (i) + 2);
-      strcpy (i, _buf);
-      clear_string_s (_buf, m);
-      add (i, one, _buf);
-      i = (char *)realloc (i, strlen (i) + 2);
-      strcpy (i, _buf);
+      increment_whole (&i);
       toggle = !toggle;
+      char *_buf = (char *)calloc (1, 1);
       if (strlen (x) + strlen (denominator) + 2 * accuracy + 3 > m)
         {
           m = strlen (x) + strlen (denominator) + 2 * accuracy + 3;
