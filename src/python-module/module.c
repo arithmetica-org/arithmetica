@@ -286,7 +286,7 @@ arithmetica_terminating_decimal_to_fraction (PyObject *self, PyObject *args)
 static PyMethodDef arithmetica_methods[] = {
   { "arccos", arithmetica_arccos, METH_VARARGS,
     "Computes the inverse cosine of a number less than 1." },
-  { "arcos", arithmetica_arcsin, METH_VARARGS,
+  { "arcsin", arithmetica_arcsin, METH_VARARGS,
     "Computes the inverse sine of a number less than 1." },
   { "arctan", arithmetica_arctan, METH_VARARGS,
     "Computes the inverse tangent of a number less than 1." },

@@ -8,8 +8,8 @@ module_name = 'arithmetica'
 arithmetica_module = Extension(
     module_name,
     sources=['src/python-module/module.c'],
-    extra_objects=['build/src/library/libarithmetica.a' if os.name == 'nt' else 'build/src/library/arithmetica.lib',
-                   'build/src/basic_math_operations/src/library/libbasic_math_operations.a' if os.name == 'nt' else 'build/src/basic_math_operations/src/library/basic_math_operations.lib',]
+    extra_objects=['build/src/library/libarithmetica.a' if os.name != 'nt' else 'build/src/library/arithmetica.lib',
+                   'build/src/basic_math_operations/src/library/libbasic_math_operations.a' if os.name != 'nt' else 'build/src/basic_math_operations/src/library/basic_math_operations.lib',]
 )
 
 
