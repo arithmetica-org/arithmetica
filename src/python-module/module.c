@@ -2,6 +2,7 @@
 #include <Python.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "../library/arithmetica.h"
 
@@ -89,7 +90,7 @@ arithmetica_factorial (PyObject *self, PyObject *args)
       return NULL;
     }
   char *_factorial = (char *)calloc (
-      number * __builtin_floorf (__builtin_log10 (number) + 1) + 2, 1);
+      number * floor (log10 (number) + 1) + 2, 1);
   factorial (number, _factorial);
   PyObject *ret = Py_BuildValue ("s", _factorial);
   free (_factorial);

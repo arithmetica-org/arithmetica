@@ -3,6 +3,7 @@
 
 #include "clear_string.h"
 #include <basic_math_operations.h>
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -14,13 +15,13 @@ factorial (unsigned long n, char *factorial)
   // doesn't waste much space. For 5-digit numbers, only 43kb is wasted.
 
   char *_factorial
-      = (char *)calloc (n * __builtin_floorf (__builtin_log10 (n) + 1) + 2, 1);
+      = (char *)calloc (n * floor (log10 (n) + 1) + 2, 1);
   factorial[0] = '1'; // 0! = 1
 
   char *str_i
-      = (char *)calloc (__builtin_floorf (__builtin_log10 (n) + 1) + 2, 1);
+      = (char *)calloc (floor (log10 (n) + 1) + 2, 1);
   char *_str_i
-      = (char *)calloc (__builtin_floorf (__builtin_log10 (n) + 1) + 2, 1);
+      = (char *)calloc (floor (log10 (n) + 1) + 2, 1);
   str_i[0] = '2';
   char one[] = "1";
   for (unsigned long i = 2; i <= n; i++)
