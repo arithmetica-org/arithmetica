@@ -217,39 +217,40 @@ construct_regular_polygon (int n, const char *length, size_t accuracy);
 
 // Complex number functions
 
-struct complex
+struct complex_arithmetica
 {
   char *real;
   char *imaginary;
 };
 
-arithmetica_function_start struct complex
+arithmetica_function_start struct complex_arithmetica
 create_complex_number (const char *re, const char *im);
-arithmetica_function_start void delete_complex_number (struct complex n);
+arithmetica_function_start void
+delete_complex_number (struct complex_arithmetica n);
 
 /// @brief Adds two complex numbers. If you're using this function, you know
 /// what complex numbers are.
 /// @param a The first complex number to add.
 /// @param b The second complex number to add.
 /// @return Where a + b will be stored.
-arithmetica_function_start struct complex add_complex (struct complex a,
-                                                       struct complex b);
+arithmetica_function_start struct complex_arithmetica
+add_complex (struct complex_arithmetica a, struct complex_arithmetica b);
 
 /// @brief Subtracts two complex numbers. If you're using this function, you
 /// know what complex numbers are.
 /// @param a The first complex number to subtract.
 /// @param b The second complex number to subtract.
 /// @return Where a - b will be stored.
-arithmetica_function_start struct complex subtract_complex (struct complex a,
-                                                            struct complex b);
+arithmetica_function_start struct complex_arithmetica
+subtract_complex (struct complex_arithmetica a, struct complex_arithmetica b);
 
 /// @brief Multiples two complex numbers. If you're using this function, you
 /// know what complex numbers are.
 /// @param a The first complex number to multiply.
 /// @param b The second complex number to multiply.
 /// @return Where a * b will be stored.
-arithmetica_function_start struct complex multiply_complex (struct complex a,
-                                                            struct complex b);
+arithmetica_function_start struct complex_arithmetica
+multiply_complex (struct complex_arithmetica a, struct complex_arithmetica b);
 
 /// @brief Divides two complex numbers. If you're using this function, you
 /// know what complex numbers are.
@@ -258,22 +259,23 @@ arithmetica_function_start struct complex multiply_complex (struct complex a,
 /// @param accuracy The number of decimal places the division will be accurate
 /// to.
 /// @return Where a / b will be stored.
-arithmetica_function_start struct complex
-divide_complex (struct complex a, struct complex b, size_t accuracy);
+arithmetica_function_start struct complex_arithmetica
+divide_complex (struct complex_arithmetica a, struct complex_arithmetica b,
+                size_t accuracy);
 
 /// @brief Computes the square root of a complex number. If you're using this
 /// function, you know what complex numbers are.
 /// @param n The complex number to find the square root of.
 /// @param accuracy The number of decimals the square root will be accurate to.
 /// @return Where sqrt(n) will be stored.
-arithmetica_function_start struct complex
-square_root_complex (struct complex n, size_t accuracy);
+arithmetica_function_start struct complex_arithmetica
+square_root_complex (struct complex_arithmetica n, size_t accuracy);
 
 /// @brief Computes e^(a + bi), where a + bi is a complex number to any decimal
 /// place.
 /// @param n The complex number to exponentiate.
 /// @param accuracy The number of decimals the calculation will be accurate to.
 /// @return Where e^(a + bi) will be stored.
-arithmetica_function_start struct complex
-exponential_complex (struct complex n, size_t accuracy);
+arithmetica_function_start struct complex_arithmetica
+exponential_complex (struct complex_arithmetica n, size_t accuracy);
 #endif

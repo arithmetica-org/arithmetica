@@ -1,13 +1,13 @@
 #ifndef _multiply_complex_h_
 #define _multiply_complex_h_
 
-#include "complex.h"
+#include "complex_arithmetica.h"
 #include <basic_math_operations.h>
 
-struct complex
-multiply_complex (struct complex a, struct complex b)
+struct complex_arithmetica
+multiply_complex (struct complex_arithmetica a, struct complex_arithmetica b)
 {
-  struct complex answer;
+  struct complex_arithmetica answer;
 
   char *re_mul = (char *)calloc (strlen (a.real) + strlen (b.real) + 3, 1);
   char *im_mul

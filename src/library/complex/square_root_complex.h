@@ -2,18 +2,18 @@
 #define _square_root_complex_
 
 #include "../square_root.h"
-#include "complex.h"
+#include "complex_arithmetica.h"
 #include <basic_math_operations.h>
 #include <stddef.h>
 
-struct complex
-square_root_complex (struct complex n, size_t accuracy)
+struct complex_arithmetica
+square_root_complex (struct complex_arithmetica n, size_t accuracy)
 {
   remove_zeroes (n.imaginary);
   if (!strcmp (n.imaginary, "0"))
     {
       char *sqrt = square_root (n.real, accuracy);
-      struct complex answer;
+      struct complex_arithmetica answer;
       answer.imaginary = (char *)realloc (answer.imaginary, 2);
       answer.real = (char *)realloc (answer.real, strlen (sqrt) + 1);
       strcpy (answer.imaginary, n.imaginary);
@@ -52,7 +52,7 @@ square_root_complex (struct complex n, size_t accuracy)
       memmove (sqrt_3 + 1, sqrt_3, m);
       *sqrt_3 = '-';
     }
-  struct complex answer = create_complex_number (sqrt_2, sqrt_3);
+  struct complex_arithmetica answer = create_complex_number (sqrt_2, sqrt_3);
   free (buf1);
   free (buf2);
   free (half_buf_1);

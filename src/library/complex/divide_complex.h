@@ -1,16 +1,16 @@
 #ifndef _divide_complex_h
 #define _divide_complex_h
 
-#include "complex.h"
+#include "complex_arithmetica.h"
 #include "multiply_complex.h"
 #include <basic_math_operations.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-struct complex
-divide_complex (struct complex numerator, struct complex denominator,
-                size_t accuracy)
+struct complex_arithmetica
+divide_complex (struct complex_arithmetica numerator,
+                struct complex_arithmetica denominator, size_t accuracy)
 {
   // (a + bi) / (c + di) = [ (a + bi) (c - di) ] / [ c^2 + d^2 ]
 
@@ -38,7 +38,8 @@ divide_complex (struct complex numerator, struct complex denominator,
       *denominator.imaginary = '-';
     }
 
-  struct complex answer = multiply_complex (numerator, denominator);
+  struct complex_arithmetica answer
+      = multiply_complex (numerator, denominator);
   char *buf1 = (char *)calloc (
       strlen (answer.real) + strlen (divisor) + accuracy + 3, 1);
   char *buf2 = (char *)calloc (

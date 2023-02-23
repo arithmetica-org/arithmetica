@@ -452,8 +452,8 @@ public:
   Complex
   operator+ (Complex n)
   {
-    struct complex i_1;
-    struct complex i_2;
+    struct complex_arithmetica i_1;
+    struct complex_arithmetica i_2;
 
     i_1.real = (char *)calloc (real.length () + 1, 1);
     i_1.imaginary = (char *)calloc (imaginary.length () + 1, 1);
@@ -465,7 +465,7 @@ public:
     strcpy (i_2.real, n.real.c_str ());
     strcpy (i_2.imaginary, n.imaginary.c_str ());
 
-    struct complex result = add_complex (i_1, i_2);
+    struct complex_arithmetica result = add_complex (i_1, i_2);
     delete_complex_number (i_1);
     delete_complex_number (i_2);
 

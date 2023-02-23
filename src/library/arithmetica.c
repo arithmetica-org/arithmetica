@@ -29,7 +29,7 @@
 
 // complex number functions
 // complex header file
-#include "complex/complex.h"
+#include "complex/complex_arithmetica.h"
 
 // functions
 #include "complex/add_complex.h"
