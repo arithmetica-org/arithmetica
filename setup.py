@@ -27,7 +27,7 @@ if os.name == 'nt':
         shutil.copy("dist/artifacts/windows-build/libarithmetica-windows.a",
                     "src/python-module/libarithmetica.a")
     if os.path.exists('dist/artifacts/windows-bmo/libbasic_math_operations.a'):
-        shutil.copy('dist/artifacts/winows-bmo/libbasic_math_operations.a',
+        shutil.copy('dist/artifacts/windows-bmo/libbasic_math_operations.a',
                     'src/python-module/libbasic_math_operations.a')
 
 shutil.copy("dist/artifacts/version-info/version.txt",
