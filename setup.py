@@ -7,7 +7,7 @@ import shutil
 import sys
 from zipfile import ZipFile
 
-module_name = 'arithmetica'
+module_name = 'arithmetica-py'
 version = '1.0.0'
 
 # Print current directory
@@ -46,7 +46,7 @@ arithmetica_module = Extension(
 
 
 setup(
-    name="arithmetica",
+    name=module_name,
     version=version,
     description="General purpose math library with primarily arithmetic functions.",
     author="avighnac",
