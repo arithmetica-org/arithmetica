@@ -72,7 +72,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: linux-bmo
-        path: build/src/basic_math_operations/libbasic_math_operations.a
+        path: build/src/basic_math_operations/src/library/libbasic_math_operations.a
 
   make-windows:
     name: Make libarithmetica-windows.a
@@ -112,7 +112,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: windows-bmo
-        path: build/src/basic_math_operations/libbasic_math_operations.a
+        path: build/src/basic_math_operations/src/library/libbasic_math_operations.a
 
   make-wheel-windows:
     needs:
