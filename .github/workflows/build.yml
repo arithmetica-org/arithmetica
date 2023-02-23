@@ -239,7 +239,7 @@ jobs:
           asset_path: dist/artifacts/windows-build/libarithmetica-windows.a
           asset_name: libarithmetica-windows.a
           asset_content_type: application/octet-stream
-            - name: Get Linux and Windows wheel name
+      - name: Get Linux and Windows wheel name
         run: |
           cd dist/artifacts/linux-whl/
           echo "LINUX_WHEEL=$(ls *.whl)" >> $GITHUB_ENV
