@@ -90,9 +90,21 @@ jobs:
     steps:
     - name: Set up NASM
       uses: ilammy/setup-nasm@v1.3.0
-    - name: Set up MinGW
-      uses: egor-tensin/setup-mingw@v2
+    - name: cache monthly
+      run: |
+        echo ("CACHE_MONTH=" + $(date '+%b %Y')) >> $env:GITHUB_ENV
+    - name: cache mingw setup
+      id: cache-mingw
+      uses: actions/cache@v3
       with:
+        path: C:\ProgramData\chocolatey\lib\mingw
+        key: ${{ env.CACHE_MONTH }}
+    - name: setup mingw
+      if: steps.cache-mingw.outputs.cache-hit != 'true'
+      uses: coffeebe4code/setup-mingw@v1-beta-2
+      with:
+        static: 1
+        version: 10.2.0
         platform: x64
     - name: Checkout repo.
       uses: actions/checkout@v2
