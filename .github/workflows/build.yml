@@ -1,44 +1,3 @@
-name: "Build"
-
-on:
-  push:
-    branches: [ main ]
-  schedule:
-    - cron: '18 13 * * 6'
-
-jobs:
-  determine_version:
-    name: Determine the major.minor.patch version.
-    runs-on: ubuntu-latest
-    permissions:
-        actions: write
-        contents: write
-        security-events: write
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Git Version
-      id: version
-      uses: codacy/git-version@2.7.1
-    - name: Use the version
-      run: |
-        echo ${{ steps.version.outputs.version }} > version.txt
-        g++ src/python-module/fix-version.cpp -O3
-        ./a.out version.txt
-        echo ${{ steps.version.outputs.version }}
-    - uses: actions/upload-artifact@v3
-      with:
-        name: version-info
-        path: version.txt
-
-  make-linux:
-    name: Make libarithmetica for Linux.
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      contents: write
       security-events: write
 
     strategy:
@@ -49,62 +8,9 @@ jobs:
     steps:
     - name: Set up NASM
       uses: ilammy/setup-nasm@v1.3.0
-    - name: Checkout repo.
-      uses: actions/checkout@v2
+    - name: Set up MinGW
+      uses: egor-tensin/setup-mingw@v2
       with:
-        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
-        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
-    - run: |
-        git submodule update --init --recursive
-        cmake --no-warn-unused-cli -DENABLE_TESTS=ON -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++ -S . -B build -G "Unix Makefiles"
-        cmake --build build --config Release --target all -j 10 --
-        mkdir linux-build
-        mv build/src/library/libarithmetica.a linux-build/libarithmetica.a
-        mv build/src/library/libarithmetica.so linux-build/libarithmetica.so
-        cp src/library/arithmetica.h linux-build/arithmetica.h
-        cp src/library/arithmetica.hpp linux-build/arithmetica.hpp
-        cd linux-build
-        zip -r libarithmetica-linux.zip ./
-    - uses: actions/upload-artifact@v3
-      with:
-        name: linux-build
-        path: linux-build/libarithmetica-linux.zip
-    - uses: actions/upload-artifact@v3
-      with:
-        name: linux-bmo
-        path: build/src/basic_math_operations/src/library/libbasic_math_operations.a
-
-  make-windows:
-    name: Make libarithmetica-windows.a
-    runs-on: windows-latest
-    permissions:
-      actions: write
-      contents: write
-      security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'cpp' ]
-
-    steps:
-    - name: Set up NASM
-      uses: ilammy/setup-nasm@v1.3.0
-    - name: cache monthly
-      run: |
-        echo ("CACHE_MONTH=" + $(date '+%b %Y')) >> $env:GITHUB_ENV
-    - name: cache mingw setup
-      id: cache-mingw
-      uses: actions/cache@v3
-      with:
-        path: C:\ProgramData\chocolatey\lib\mingw
-        key: ${{ env.CACHE_MONTH }}
-    - name: setup mingw
-      if: steps.cache-mingw.outputs.cache-hit != 'true'
-      uses: coffeebe4code/setup-mingw@v1-beta-2
-      with:
-        static: 1
-        version: 10.2.0
         platform: x64
     - name: Checkout repo.
       uses: actions/checkout@v2

@@ -1,9 +1,23 @@
 # Arithmetica
 > Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benefit other people too.
 
-Arithmetica is a general-purpose infinite precision Linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are C and C++.
+Arithmetica is a general-purpose infinite precision Linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are C, C++, and Python.
 
 # Installation
+
+## Python
+
+### Using pip
+If you're on or above Python 3.10, then pip will work for you. See below if not.
+```shell
+pip install arithmetica-py
+```
+
+### Using binaries
+Go to the [project page](https://pypi.org/project/arithmetica-py/) on PyPi and download the built distributions. Use pip to install the .whl file as per your operating system.
+
+## C/C++
+
 Include the header [arithmetica.h]() and download the `.a` file from the [releases section](https://github.com/avighnac/arithmetica/releases/).
 ```c
 #include "arithmetica.h"
@@ -36,6 +50,16 @@ target_link_libraries(your_project_name_here PRIVATE basic_math_operations)
 ```
 
 # Usage
+
+## Python
+```py
+import arithmetica
+
+print(arithmetica.arcsin('0.5', 20))
+```
+
+## C
+
 ```c
 #include "arithmetica.h"
 #include <stdio.h>
