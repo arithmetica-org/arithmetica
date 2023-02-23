@@ -265,7 +265,7 @@ jobs:
           asset_name: ${{ env.WIN_WHEEL }}
           asset_content_type: application/octet-stream
     
-    pypi-upload:
+  pypi-upload:
     needs:
       - make-wheel-linux
       - make-wheel-windows
