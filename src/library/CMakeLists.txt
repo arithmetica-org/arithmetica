@@ -3,30 +3,70 @@ project(arithmetica C)
 enable_language(C)
 enable_language(CXX)
 
+set(c_cpp_sources
+    arccos.c
+    arcsin.c
+    arctan.c
+    cosine.c
+    exponential.c
+    factorial.c
+    fraction_to_continued_fraction.c
+    igcd.c
+    ilcm.c
+    natural_logarithm.c
+    power.c
+    power_integer.c
+    repeating_decimal_to_fraction.c
+    simplify_arithmetic_expression.c
+    sine.c
+    square_root.c
+    tangent.c
+    terminating_decimal_to_fraction.c
+
+    fraction/fraction.c
+    fraction/add_fraction.c
+    fraction/multiply_fraction.c
+    fraction/parse_fraction.c
+    fraction/power_fraction.c
+    fraction/simplify_parsed_fraction.c
+    fraction/subtract_fraction.c
+
+    complex/complex_arithmetica.c
+    complex/add_complex.c
+    complex/divide_complex.c
+    complex/exponential_complex.c
+    complex/multiply_complex.c
+    complex/square_root_complex.c
+    complex/subtract_complex.c
+
+    geometry/construct_regular_polygon.cpp
+)
+
 if (UNIX)
 set(linux_sources
-arithmetica.c
-arithmetica.cpp
-
-linux/strlen_arithmetica.asm
-linux/truncate.asm
+    linux/strlen_arithmetica.asm
+    linux/truncate.asm
 )
-add_library(arithmetica STATIC ${linux_sources})
-add_library(arithmetica_sh SHARED ${linux_sources})
+add_library(arithmetica STATIC ${c_cpp_sources} ${linux_sources})
+add_library(arithmetica_sh SHARED ${c_cpp_sources} ${linux_sources})
 set_target_properties(arithmetica_sh PROPERTIES OUTPUT_NAME "arithmetica")
 target_include_directories(arithmetica_sh PRIVATE "../basic_math_operations/src/library")
+target_include_directories(arithmetica_sh PRIVATE "geometry")
+target_include_directories(arithmetica_sh PRIVATE "fraction")
+target_include_directories(arithmetica_sh PRIVATE "complex")
+target_include_directories(arithmetica_sh PRIVATE ".")
 endif (UNIX)
 
 if (WIN32)
-add_library(
-    arithmetica
-
-    arithmetica.c
-    arithmetica.cpp
-    
+set(windows_sources
     windows/strlen.asm
     windows/truncate.asm
 )
+add_library(arithmetica STATIC ${c_cpp_sources} ${windows_sources})
 endif (WIN32)
 
 target_include_directories(arithmetica PRIVATE "../basic_math_operations/src/library")
+target_include_directories(arithmetica PRIVATE "geometry")
+target_include_directories(arithmetica PRIVATE "fraction")
+target_include_directories(arithmetica PRIVATE "complex")
+target_include_directories(arithmetica PRIVATE ".")

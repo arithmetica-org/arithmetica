@@ -82,6 +82,9 @@ arithmetica_function_start void ilcm (const char *a, const char *b, char *lcm);
 arithmetica_function_start char *natural_logarithm (const char *n,
                                                     size_t accuracy);
 
+arithmetica_function_start char *power_integer (const char *x_in, long n,
+                                                size_t accuracy);
+
 /// @brief Computes x_in^n_in where x_in and n_in are two real numbers.
 /// @param x_in The real number base.
 /// @param n_in The real number exponent.
@@ -153,11 +156,14 @@ terminating_decimal_to_fraction (const char *decimal, char *numerator_out,
 
 // Fractional number functions
 
+#ifndef _fraction_h_
+#define _fraction_h_
 struct fraction
 {
   char *numerator;
   char *denominator;
 };
+#endif
 
 /// @brief Adds two fractions and reduces the result to its simplest form.
 /// @param frac1 The first fraction to add.
@@ -205,6 +211,14 @@ power_fraction (struct fraction base, struct fraction exponent,
                 size_t accuracy);
 
 // Geometry functions
+#ifndef _point_h_
+#define _point_h_
+struct point
+{
+  char *x;
+  char *y;
+};
+#endif
 
 /// @brief Constructs an n-sided regular polygon.
 /// @param n The number of sides of the polygon.
@@ -217,11 +231,14 @@ construct_regular_polygon (int n, const char *length, size_t accuracy);
 
 // Complex number functions
 
+#ifndef _complex_arithmetica_h_
+#define _complex_arithmetica_h_
 struct complex_arithmetica
 {
   char *real;
   char *imaginary;
 };
+#endif
 
 arithmetica_function_start struct complex_arithmetica
 create_complex_number (const char *re, const char *im);
