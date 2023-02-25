@@ -68,7 +68,7 @@ main ()
                                          "igcd",
                                          "ilcm",
                                          "natural_logarithm",
-                                        //  "power",
+                                         "power",
                                          "repeating_decimal_to_fraction",
                                          "simplify_arithmetic_expression",
                                          "sine",
