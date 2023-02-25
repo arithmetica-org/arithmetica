@@ -1,6 +1,7 @@
 #pragma once
 
 #include <arithmetica.h>
+#include <arithmetica.hpp>
 #include <chrono>
 #include <geometry/point.h>
 #include <string>
@@ -402,6 +403,20 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       free (polygon);
 
       return answer;
+    }
+  if (args[0] == "function_constructor")
+    {
+      if (args.size () < 2)
+        return "";
+
+      auto start = std::chrono::high_resolution_clock::now ();
+      arithmetica::Function f (args[1]);
+      auto end = std::chrono::high_resolution_clock::now ();
+      timeMS
+          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
+                .count ();
+
+      return f.get_parsed_info ();
     }
 
   return "function does not exist";

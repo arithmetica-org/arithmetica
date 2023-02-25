@@ -1,0 +1,8 @@
+sin(x)
+cos^2(x)
+sqrt^(2n-1)(3y+C)
+log^(1/n)(x)
+sin^221(20)
+tan^(-1)(2x-3y+9)
+cosech^(-1)(18x)
+sin(cos(x))

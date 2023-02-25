@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
 
 set(c_cpp_sources
+    arithmetica.cpp
+
     arccos.c
     arcsin.c
     arctan.c
@@ -46,14 +48,22 @@ set(c_cpp_sources
     complex/subtract_complex.c
 
     geometry/construct_regular_polygon.cpp
+
+    algebra/term/algebra_term.cpp
+
+    "function/Function.cpp"
+    
+    helpers/helpers.cpp
 )
 
 set(include_directories
+    "."
     "../basic_math_operations/src/library"
     "geometry"
     "fraction"
     "complex"
-    "."
+    "function"
+    "helpers"
 )
 
 if (UNIX)

@@ -78,7 +78,8 @@ main ()
                                          "add_fraction",
                                          "multiply_fraction",
                                          "power_fraction",
-                                         "construct_regular_polygon" };
+                                         "construct_regular_polygon",
+                                         "function_constructor" };
   std::sort (functions.begin (), functions.end ());
 
   std::string currentDir = get_current_directory ();
@@ -149,9 +150,9 @@ main ()
                             + functions[i].length () + 1 + inputsStr.length ()
                             + 4 + res.length ();
               std::cout << spaces << "<" << currentTest << "> (" << timeMS
-                            << " ms) " << color (functions[i], "Yellow") << "("
-                            << color_digits (inputsStr, "Green")
-                            << ") = " << color_digits (res, "Green") << '\n';
+                        << " ms) " << color (functions[i], "Yellow") << "("
+                        << color_digits (inputsStr, "Green")
+                        << ") = " << color_digits (res, "Green") << '\n';
             }
         }
 

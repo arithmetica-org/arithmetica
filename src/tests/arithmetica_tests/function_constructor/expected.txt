@@ -1,0 +1,8 @@
+name="sin" power="1" argument="x"
+name="cos" power="2" argument="x"
+name="sqrt" power="2n-1" argument="3y+C"
+name="log" power="1/n" argument="x"
+name="sin" power="221" argument="20"
+name="arctan" power="1" argument="2x-3y+9"
+name="arccsch" power="1" argument="18x"
+name="sin" power="1" argument="cos(x)"
