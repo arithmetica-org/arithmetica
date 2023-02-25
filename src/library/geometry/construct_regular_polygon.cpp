@@ -71,9 +71,11 @@ construct_regular_polygon_cpp (int n, const char *length_c, size_t accuracy)
       return ConvertToC (polygon);
     }
 
-  BMONum two_pi = BMONum (arcsin ("0.5", accuracy)) * "12";
+  char *two_pi_c = arcsin ("0.5", accuracy);
+  BMONum two_pi = BMONum (two_pi_c) * "12";
   std::string angle_in_radians = (two_pi / std::to_string (n)).number;
   BMONum tan_ext_angle = tangent (angle_in_radians, accuracy);
+  free(two_pi_c);
 
   for (auto i = 0; i < n - 2; i++)
     {

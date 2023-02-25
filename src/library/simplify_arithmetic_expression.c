@@ -613,6 +613,7 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
                   answer = subtract_fraction (fraction1, fraction2);
                   break;
                 default:
+                  answer = create_fraction ("0", "1");
                   break;
                 }
 
@@ -658,15 +659,17 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
   struct fraction frac = parse_fraction (expression);
   if (!strcmp (frac.denominator, "1"))
     {
+      delete_fraction (frac);
       const char *_loc = strchr (expression, '/');
       if (_loc != NULL)
         expression[_loc - expression] = 0;
-      delete_fraction (frac);
       return expression;
     }
 
-  if (!outputMixedFraction)
+  if (!outputMixedFraction) {
+    delete_fraction (frac);
     return expression;
+  }
 
   char sign = frac.numerator[0] == '-' ? '-' : '+';
   // Ignore sign.
@@ -693,15 +696,12 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
       strlen (frac.numerator) + strlen (frac.denominator) + 3, 1);
   divide_whole_with_remainder (frac.numerator, frac.denominator, quotient,
                                remainder);
-  remove_zeroes (quotient);
-  remove_zeroes (remainder);
+
+  size_t expression_buf_len = strlen (quotient) + strlen (remainder)
+                              + strlen (frac.denominator) + 6;
 
   expression
-      = (char *)realloc (expression, strlen (quotient) + strlen (remainder)
-                                         + strlen (frac.denominator) + 6);
-  memset (expression, 0,
-          strlen (quotient) + strlen (remainder) + strlen (frac.denominator)
-              + 6);
+      = (char *)realloc (expression, expression_buf_len);
   size_t charactersWritten = 0;
   if (sign == '-')
     expression[charactersWritten++] = '-';
@@ -718,6 +718,7 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
       expression[charactersWritten++] = '/';
       strncpy (expression + charactersWritten, frac.denominator,
                strlen (frac.denominator));
+      expression[charactersWritten+strlen(frac.denominator)] = 0; // Final null terminator.
     }
 
   free (quotient);

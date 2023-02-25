@@ -4,8 +4,8 @@ struct fraction
 create_fraction (const char *n, const char *d)
 {
   struct fraction f;
-  f.numerator = (char *)calloc (strlen (n) + 1, 1);
-  f.denominator = (char *)calloc (strlen (d) + 1, 1);
+  f.numerator = (char *)malloc (strlen (n) + 1);
+  f.denominator = (char *)malloc (strlen (d) + 1);
   strcpy (f.numerator, n);
   strcpy (f.denominator, d);
   return f;

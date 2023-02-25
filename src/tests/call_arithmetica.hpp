@@ -399,6 +399,8 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
           free (polygon[i].y);
         }
 
+      free (polygon);
+
       return answer;
     }
 
