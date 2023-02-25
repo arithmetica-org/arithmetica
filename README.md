@@ -1,6 +1,14 @@
-# Arithmetica
+<h1 align='center'>Arithmetica</h1>
+
 > Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benefit other people too.
 
+<div align='center'>
+  If thou dost find this test passing, thou art assured of a library that doth not suffer from memory leaks.
+  <a href='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml'>
+    <img src='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml/badge.svg'>
+  </a>
+</div>
+<br>
 Arithmetica is a general-purpose infinite precision Linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are C, C++, and Python.
 
 # Installation
