@@ -43,8 +43,7 @@ str_replace_all (char **str_in, const char *from, const char *to)
         new_str[_characters_added++] = str[i];
     }
   new_str = (char *)realloc (new_str, strlen (new_str) + 1);
-  if (new_str[strlen (new_str)] != 0)
-    new_str[strlen (new_str)] = 0;
+  new_str[strlen (new_str)] = 0;
   free (str);
   *str_in = new_str;
   return;

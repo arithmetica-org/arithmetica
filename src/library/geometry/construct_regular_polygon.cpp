@@ -11,8 +11,8 @@ class PointCpp
 {
 
 public:
-  BMONum x, y;
-  PointCpp () { x = y = 0; }
+  BMONum x = "0", y = "0";
+  PointCpp (){};
   PointCpp (BMONum x, BMONum y)
   {
     this->x = x;
@@ -25,7 +25,7 @@ PointCpp GetCorrectPoint (BMONum &x_1, BMONum &y_1, BMONum &x_2, BMONum &y_2,
 PointCpp ChoosePointToLeft (BMONum &x_1, BMONum &y_1, BMONum &x_2,
                             BMONum &y_2);
 PointCpp ChooseHigherPoint (BMONum &x_1, BMONum &y_1, BMONum &x_2, BMONum &y_2,
-                            PointCpp &prev_pt);
+                            const PointCpp &prev_pt);
 PointCpp ChooseLowerPoint (BMONum &x_1, BMONum &y_1, BMONum &x_2, BMONum &y_2,
                            PointCpp &prev_pt);
 void ComputeLine (PointCpp &prev_pt, BMONum &m, BMONum &tan_exterior_angle,
@@ -136,7 +136,7 @@ construct_regular_polygon_helpers::ChoosePointToLeft (BMONum &x_1, BMONum &y_1,
 construct_regular_polygon_helpers::PointCpp
 construct_regular_polygon_helpers::ChooseHigherPoint (BMONum &x_1, BMONum &y_1,
                                                       BMONum &x_2, BMONum &y_2,
-                                                      PointCpp &prev_pt)
+                                                      const PointCpp &prev_pt)
 {
   bool higher_or_equal = y_1 >= prev_pt.y;
   if (higher_or_equal)

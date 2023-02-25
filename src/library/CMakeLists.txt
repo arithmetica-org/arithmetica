@@ -48,31 +48,36 @@ set(c_cpp_sources
     geometry/construct_regular_polygon.cpp
 )
 
-if (UNIX)
-set(linux_sources
-    linux/strlen_arithmetica.asm
-    linux/truncate.asm
+set(include_directories
+    "../basic_math_operations/src/library"
+    "geometry"
+    "fraction"
+    "complex"
+    "."
 )
-add_library(arithmetica STATIC ${c_cpp_sources} ${linux_sources})
-add_library(arithmetica_sh SHARED ${c_cpp_sources} ${linux_sources})
-set_target_properties(arithmetica_sh PROPERTIES OUTPUT_NAME "arithmetica")
-target_include_directories(arithmetica_sh PRIVATE "../basic_math_operations/src/library")
-target_include_directories(arithmetica_sh PRIVATE "geometry")
-target_include_directories(arithmetica_sh PRIVATE "fraction")
-target_include_directories(arithmetica_sh PRIVATE "complex")
-target_include_directories(arithmetica_sh PRIVATE ".")
+
+if (UNIX)
+    set(linux_sources
+        linux/strlen_arithmetica.asm
+        linux/truncate.asm
+    )
+
+    add_library(objlib OBJECT ${c_cpp_sources} ${linux_sources})
+    set_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE 1)
+    target_include_directories(objlib PRIVATE ${include_directories})
+
+    add_library(arithmetica STATIC $<TARGET_OBJECTS:objlib>)
+    add_library(arithmetica_sh SHARED $<TARGET_OBJECTS:objlib>)
+    set_target_properties(arithmetica_sh PROPERTIES OUTPUT_NAME "arithmetica")
+    target_include_directories(arithmetica_sh PRIVATE ${include_directories})
 endif (UNIX)
 
 if (WIN32)
-set(windows_sources
-    windows/strlen.asm
-    windows/truncate.asm
-)
-add_library(arithmetica STATIC ${c_cpp_sources} ${windows_sources})
+    set(windows_sources
+        windows/strlen.asm
+        windows/truncate.asm
+    )
+    add_library(arithmetica STATIC ${c_cpp_sources} ${windows_sources})
 endif (WIN32)
 
-target_include_directories(arithmetica PRIVATE "../basic_math_operations/src/library")
-target_include_directories(arithmetica PRIVATE "geometry")
-target_include_directories(arithmetica PRIVATE "fraction")
-target_include_directories(arithmetica PRIVATE "complex")
-target_include_directories(arithmetica PRIVATE ".")
+target_include_directories(arithmetica PRIVATE ${include_directories})
