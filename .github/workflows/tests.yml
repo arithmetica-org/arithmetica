@@ -43,5 +43,5 @@ jobs:
         cmake --build build --config Release --target all -j 10 --
         chmod +x build/src/tests/tests
     - name: Run tests using valgrind.
-    - run: |
-        valgrind ./build/src/tests/tests
+      run: |
+        valgrind --error-exitcode=1 --leak-check=full --track-origins=yes ./build/src/tests/tests
