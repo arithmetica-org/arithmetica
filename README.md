@@ -1,7 +1,7 @@
 <h1 align='center'>Arithmetica</h1>
 
 > Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benefit other people too.
-
+<br>
 <div align='center'>
   If thou dost find this test passing, thou art assured of a library that doth not suffer from memory leaks.
   <a href='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml'>
