@@ -420,6 +420,8 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
                   innerExpressionFraction.denominator);
           // Change division to multiplication.
           expression[start - 1] = '*';
+
+          delete_fraction(innerExpressionFraction);
         }
       bool haveToChangeBrackets
           = (end + 1 < strlen (expression) && expression[end + 1] == '^')
@@ -436,6 +438,9 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
           : replace_substring_from_position (start, end, &expression,
                                              simplifiedInnerExpression);
       _loc = strchr (expression, '(');
+
+      free(simplifiedInnerExpression);
+      free(innerExpression);
     }
 
   remove_misplaced_and_redundant_signs (&expression);
@@ -656,6 +661,7 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
       const char *_loc = strchr (expression, '/');
       if (_loc != NULL)
         expression[_loc - expression] = 0;
+      delete_fraction (frac);
       return expression;
     }
 
@@ -677,6 +683,7 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
   if (denominatorBiggerCheck[0] == '-')
     {
       free (denominatorBiggerCheck);
+      delete_fraction (frac);
       return expression;
     }
 
@@ -716,6 +723,7 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
   free (quotient);
   free (remainder);
   free (denominatorBiggerCheck);
+  delete_fraction (frac);
 
   return expression;
 }

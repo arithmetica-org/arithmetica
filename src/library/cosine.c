@@ -19,16 +19,6 @@ cosine (const char *number, size_t accuracy)
   prev_term[0] = '1';
   answer[0] = '1';
 
-  char *maxDiff = (char *)calloc (accuracy + 3, 1);
-  maxDiff[0] = '0';
-  if (accuracy > 0)
-    {
-      maxDiff[1] = '.';
-      for (size_t i = 1; i < accuracy; i++)
-        maxDiff[i + 1] = '0';
-      maxDiff[accuracy] = '1';
-    }
-
   char *n_1 = (char *)calloc (2, 1);
   char *n_2 = (char *)calloc (2, 1);
   n_1[0] = '1';

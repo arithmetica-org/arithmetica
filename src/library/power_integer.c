@@ -7,13 +7,11 @@ char *
 power_integer (const char *x_in, long n, size_t accuracy)
 {
   // Evaluates x^n, where n is an integer.
-  char unity[] = "1";
-  char two[] = "2";
   char *x = (char *)calloc (strlen (x_in) + accuracy + 4, 1);
 
   if (n < 0)
     {
-      divide (unity, x_in, x, accuracy);
+      divide ("1", x_in, x, accuracy);
       n *= -1;
     }
   else

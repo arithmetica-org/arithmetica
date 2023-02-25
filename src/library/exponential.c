@@ -98,6 +98,7 @@ exponential (const char *x_in, size_t accuracy)
   free (prevTerm);
   free (i);
   free (prevAfterDecimal);
+  free(x);
 
   if (accuracyAchieved)
     answer[decimalLocation + accuracy + 1] = 0;

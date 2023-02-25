@@ -18,11 +18,17 @@ power (const char *x_in, const char *n_in, size_t accuracy)
   if (strchr (n, '.') == NULL)
     {
       long n_z = 0;
-      for (size_t i = n_in[0] == '-' ? 1 : 0; i < strlen (n_in); i++)
+      for (size_t i = n_in[0] == '-' ? 1 : 0; i < strlen (n_in); ++i)
         n_z = n_z * 10 + n_in[i] - '0';
       if (n_in[0] == '-')
         n_z *= -1;
-      return power_integer (x, n_z, accuracy);
+
+      char *answer = power_integer (x, n_z, accuracy);
+
+      free(x);
+      free(n);
+
+      return answer;
     }
 
   char *ln = natural_logarithm (x, accuracy);
