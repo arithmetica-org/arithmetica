@@ -1,7 +1,11 @@
+cmake_minimum_required(VERSION 3.16)
+
 project(arithmetica C)
 
 enable_language(C)
 enable_language(CXX)
+
+set(CMAKE_CXX_STANDARD 17)
 
 set(c_cpp_sources
     arccos.c
