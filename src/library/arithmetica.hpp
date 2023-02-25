@@ -344,4 +344,4 @@ to_string (const Fraction &f)
 {
   return f.numerator + "/" + f.denominator;
 }
-}; // namespace arithmetica
+} // namespace arithmetica

@@ -97,7 +97,7 @@ main ()
   for (auto i = 0; i < functions.size (); i++)
     {
       std::cout << "<" << i + 1 << "> "
-                << color (functions[i] + ".h:", "Magenta") << '\n';
+                << color (functions[i] + ":", "Magenta") << '\n';
 
       int currentTest = 0;
       std::ifstream expectedFile (
@@ -112,11 +112,9 @@ main ()
         }
 
       std::string input;
-      size_t linesPrinted = 0;
       double totalTimeMS = 0;
       while (std::getline (inputFile, input))
         {
-          size_t charactersPrinted = 3 + std::to_string (i + 1).length ();
           std::string inputsStr;
           std::string spaces
               = "   " + std::string (std::to_string (i + 1).length (), ' ');
@@ -136,8 +134,6 @@ main ()
           double timeMS;
           std::string res = call_arithmetica (inputs, timeMS);
           totalTimeMS += timeMS;
-          for (auto i = 0; i < linesPrinted; i++)
-            std::cout << "\033[A\33[2K";
           if (std::string (res) != Expected)
             {
               std::cout << spaces << "<" << currentTest << "> "
@@ -158,33 +154,16 @@ main ()
                             + std::to_string ((int)timeMS).length () + 5
                             + functions[i].length () + 1 + inputsStr.length ()
                             + 4 + res.length ();
-              if (cPrint <= width)
-                {
-                  charactersPrinted += cPrint;
-                  std::cout << spaces << "<" << currentTest << "> (" << timeMS
+              std::cout << spaces << "<" << currentTest << "> (" << timeMS
                             << " ms) " << color (functions[i], "Yellow") << "("
                             << color_digits (inputsStr, "Green")
                             << ") = " << color_digits (res, "Green") << '\n';
-                }
-              else
-                {
-                  charactersPrinted += spaces.length () + 1
-                                       + std::to_string (currentTest).length ()
-                                       + 14;
-                  std::cout << spaces << "<" << currentTest
-                            << "> Test passed!\n";
-                }
             }
-
-          linesPrinted = std::ceil ((double)charactersPrinted / width);
         }
-
-      for (auto i = 0; i < linesPrinted + 1; i++)
-        std::cout << "\033[A\33[2K";
 
       std::cout << "<" << i + 1 << "> "
                 << "(" << totalTimeMS << " ms) "
-                << color (functions[i] + ".h:", "Green") << " (" << currentTest
+                << color (functions[i] + ":", "Green") << " (" << currentTest
                 << "/" << currentTest << ")" << '\n';
 
       inputFile.close ();

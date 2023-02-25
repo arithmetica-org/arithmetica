@@ -29,7 +29,7 @@ PointCpp ChooseHigherPoint (BMONum &x_1, BMONum &y_1, BMONum &x_2, BMONum &y_2,
 PointCpp ChooseLowerPoint (BMONum &x_1, BMONum &y_1, BMONum &x_2, BMONum &y_2,
                            PointCpp &prev_pt);
 void ComputeLine (PointCpp &prev_pt, BMONum &m, BMONum &tan_exterior_angle,
-                  BMONum &l, BMONum &s, BMONum &c);
+                   BMONum &s, BMONum &c);
 void ComputeIntersectionPoints (PointCpp &prev_pt, BMONum &s, BMONum &c,
                                 BMONum &l, BMONum &x_1, BMONum &y_1,
                                 BMONum &x_2, BMONum &y_2, size_t accuracy);
@@ -37,7 +37,7 @@ point *
 ConvertToC (const std::vector<PointCpp> &polygon)
 {
   point *points = (point *)malloc (polygon.size () * sizeof (point));
-  for (auto i = 0; i < polygon.size (); i++)
+  for (size_t i = 0; i < polygon.size (); i++)
     {
       auto &x = polygon[i].x.number;
       auto &y = polygon[i].y.number;
@@ -48,7 +48,7 @@ ConvertToC (const std::vector<PointCpp> &polygon)
     }
   return points;
 }
-}; // namespace construct_regular_polygon_helpers
+} // namespace construct_regular_polygon_helpers
 
 point *
 construct_regular_polygon_cpp (int n, const char *length_c, size_t accuracy)
@@ -85,7 +85,7 @@ construct_regular_polygon_cpp (int n, const char *length_c, size_t accuracy)
 
       // Compute slope and intercept of new line.
       BMONum slope_new_line, intercept_new_line;
-      ComputeLine (prev_pt, slope_initial_line, tan_ext_angle, length,
+      ComputeLine (prev_pt, slope_initial_line, tan_ext_angle,
                    slope_new_line, intercept_new_line);
 
       // Compute candidate intersection points.
@@ -163,8 +163,7 @@ construct_regular_polygon_helpers::ChooseLowerPoint (BMONum &x_1, BMONum &y_1,
 // that also passes through the previous point.
 void
 construct_regular_polygon_helpers::ComputeLine (PointCpp &prev_pt, BMONum &m,
-                                                BMONum &tan_exterior_angle,
-                                                BMONum &l, BMONum &s,
+                                                BMONum &tan_exterior_angle, BMONum &s,
                                                 BMONum &c)
 {
   // Since tan(a + b) = (tan(a) + tan(b)) / (1 - tan(a) tan(b)),
