@@ -60,6 +60,7 @@ sine (const char *number, size_t accuracy)
           buf = (char *)realloc (buf, m);
         }
       memset (buf, 0, m);
+      memset(_buf, 0, m);
       divide (x, denominator, _buf, accuracy * 2);
       memset (buf, 0, m);
       toggle ? subtract (answer, _buf, buf) : add (answer, _buf, buf);

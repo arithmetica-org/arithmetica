@@ -1,4 +1,4 @@
-#include "check_accuracy.h"
+#include "arithmetica.h"
 #include <basic_math_operations.h>
 #include <stdlib.h>
 #include <string.h>

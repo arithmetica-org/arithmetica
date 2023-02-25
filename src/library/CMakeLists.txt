@@ -12,6 +12,7 @@ set(c_cpp_sources
     arccos.c
     arcsin.c
     arctan.c
+    check_accuracy.c
     cosine.c
     exponential.c
     factorial.c

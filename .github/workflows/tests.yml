@@ -39,8 +39,8 @@ jobs:
         git submodule update --init --recursive
     - name: Compile tests.
       run: |
-        cmake --no-warn-unused-cli -DENABLE_TESTS=ON -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++ -S . -B build -G "Unix Makefiles"
-        cmake --build build --config Release --target all -j 10 --
+        cmake --no-warn-unused-cli -DENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Debug -S . -B build -G "Unix Makefiles"
+        cmake --build build --config Debug --target all -j 10 --
         chmod +x build/src/tests/tests
     - name: Run tests using valgrind.
       run: |

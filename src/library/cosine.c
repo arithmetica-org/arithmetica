@@ -1,3 +1,4 @@
+#include "arithmetica.h"
 #include "truncate.h"
 #include <basic_math_operations.h>
 #include <stddef.h>
@@ -67,28 +68,14 @@ cosine (const char *number, size_t accuracy)
       char *answer_buf
           = (char *)calloc (strlen (current_term) + strlen (answer) + 3, 1);
       add (answer, current_term, answer_buf);
+
+      bool accuracy_met = check_accuracy(answer, answer_buf, accuracy);
+
       answer = (char *)realloc (answer, strlen (answer_buf) + 1);
       strncpy (answer, answer_buf, strlen (answer_buf) + 1);
 
       prev_term = (char *)realloc (prev_term, strlen (current_term) + 1);
       strncpy (prev_term, current_term, strlen (current_term) + 1);
-
-      char *abs_prev = (char *)calloc (strlen (prev_term) + 1, 1);
-      strcpy (abs_prev, prev_term);
-      if (*abs_prev == '-')
-        {
-          memmove (abs_prev, abs_prev + 1, strlen (abs_prev) - 1);
-          abs_prev = (char *)realloc (abs_prev, strlen (abs_prev));
-        }
-      char *diff
-          = (char *)calloc (strlen (abs_prev) + strlen (maxDiff) + 3, 1);
-      subtract (abs_prev, maxDiff, diff);
-      if (diff[0] == '-')
-        {
-          free (diff);
-          break;
-        }
-      free (diff);
 
       increment_whole (&n_1);
       increment_whole (&n_1);
@@ -100,6 +87,9 @@ cosine (const char *number, size_t accuracy)
       free (buf_3);
       free (current_term);
       free (answer_buf);
+
+      if (accuracy_met)
+        break;
     }
 
   free (x_squared);

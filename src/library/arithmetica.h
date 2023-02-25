@@ -2,6 +2,7 @@
 #define _arithmetica_
 
 #include <stddef.h>
+#include <stdbool.h>
 
 #if defined(__cplusplus)
 #define arithmetica_function_start extern "C"
@@ -296,3 +297,13 @@ square_root_complex (struct complex_arithmetica n, size_t accuracy);
 arithmetica_function_start struct complex_arithmetica
 exponential_complex (struct complex_arithmetica n, size_t accuracy);
 #endif
+
+/// @brief Checks that the number of correct decimals is greater than or equal
+/// to the accuracy.
+/// @param a The first number.
+/// @param b The second number.
+/// @param accuracy The number of correct decimals.
+/// @return Returns true if the number of correct decimals is greater than or
+/// equal to the accuracy, otherwise returns false.
+arithmetica_function_start bool
+check_accuracy (const char *a, const char *b, size_t accuracy);
