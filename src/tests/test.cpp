@@ -1,7 +1,6 @@
 #include "call_arithmetica.hpp"
 #include "color.hpp"
 #include "get_current_directory.hpp"
-#include "get_terminal_size.hpp"
 #include <algorithm>
 #include <cmath>
 #include <fstream>
@@ -81,11 +80,6 @@ main ()
                                          "power_fraction",
                                          "construct_regular_polygon" };
   std::sort (functions.begin (), functions.end ());
-
-  int width = 10, height = 10;
-  get_terminal_size (width, height);
-  if (width < 0 || width > 1000)
-    width = 15;
 
   std::string currentDir = get_current_directory ();
   std::replace (currentDir.begin (), currentDir.end (), '\\', '/');
