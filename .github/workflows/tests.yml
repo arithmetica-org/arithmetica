@@ -44,4 +44,4 @@ jobs:
         chmod +x build/src/tests/tests
     - name: Run tests using valgrind.
       run: |
-        valgrind ./build/src/tests/tests
+        valgrind --error-exitcode=1 ./build/src/tests/tests
