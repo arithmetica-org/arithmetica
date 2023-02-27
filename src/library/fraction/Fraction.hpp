@@ -2,9 +2,11 @@
 
 #pragma once
 
-#include "fraction_include.h"
+#include "fraction_include.hpp"
 #include <string>
 
+namespace arithmetica
+{
 class Fraction
 {
 public:
@@ -36,3 +38,4 @@ public:
   friend bool operator== (const Fraction &LHS, const Fraction &RHS);
   friend bool operator<(const Fraction &LHS, const Fraction &RHS);
 };
+}
