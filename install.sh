@@ -25,7 +25,6 @@ echo "Sucessfully extracted the files."
 
 # Copy the libs to /usr/lib, if they exist then replace them
 cp -r libs/libarithmetica.a /usr/lib
-cp -r libs/libarithmetica.so /usr/lib
 # Copy the header files to /usr/include
 cp -r libs/arithmetica.h /usr/include
 cp -r libs/arithmetica.hpp /usr/include
