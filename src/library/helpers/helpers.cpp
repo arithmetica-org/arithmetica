@@ -100,3 +100,112 @@ arithmetica::helpers::get_matching_bracket (const std::string &str,
     }
   return std::string::npos;
 }
+
+namespace arithmetica
+{
+namespace helpers
+{
+namespace arr_to_string
+{
+template <typename T> std::string to_string (std::vector<T> x);
+template <typename T>
+std::string to_string (std::vector<T> x, std::string split,
+                       std::pair<std::string, std::string> brackets);
+template <typename T>
+std::string
+to_string (T x, std::string split,
+           std::pair<std::string, std::string> brackets)
+{
+  using std::to_string;
+  return to_string (x);
+}
+std::string
+to_string (std::string x)
+{
+  return x;
+}
+std::string
+to_string (std::string x, std::string split,
+           std::pair<std::string, std::string> brackets)
+{
+  return "\"" + x + "\"";
+}
+
+template <typename T>
+std::string
+array_to_string (std::vector<T> arr, std::string split = ", ",
+                 std::pair<std::string, std::string> brackets = { "[", "]" })
+{
+  if (arr.empty ())
+    return brackets.first + brackets.second;
+  std::string result = brackets.first;
+  for (auto i = 0; i < arr.size (); i++)
+    result += to_string (arr[i], split, brackets) + split;
+  return result.substr (0, result.size () - split.length ()) + brackets.second;
+}
+
+template <typename T>
+std::string
+to_string (std::vector<T> x, std::string split,
+           std::pair<std::string, std::string> brackets)
+{
+  return array_to_string (x, split, brackets);
+}
+
+std::string
+array_to_string (std::vector<std::string> arr, std::string split = ", ",
+                 std::pair<std::string, std::string> brackets = { "[", "]" })
+{
+  if (arr.empty ())
+    return brackets.first + brackets.second;
+  std::string result = brackets.first;
+  for (auto i = 0; i < arr.size (); i++)
+    result += "\"" + arr[i] + "\"" + split;
+  return result.substr (0, result.size () - split.length ()) + brackets.second;
+}
+
+std::string
+array_to_string (std::vector<char> arr, std::string split = ", ",
+                 std::pair<std::string, std::string> brackets = { "[", "]" })
+{
+  if (arr.empty ())
+    return brackets.first + brackets.second;
+  std::string result = brackets.first;
+  for (size_t i = 0; i < arr.size (); i++)
+    {
+      result += "'" + std::string (1, arr[i]) + "'" + split;
+    }
+  return result.substr (0, result.size () - split.length ()) + brackets.second;
+}
+
+template <typename T>
+std::string
+subarray_to_string (std::vector<T> arr, size_t start, size_t elements,
+                    std::string split = ", ",
+                    std::pair<std::string, std::string> brackets
+                    = { "[", "]" })
+{
+  if (arr.empty ())
+    {
+      return brackets.first + brackets.second;
+    }
+  std::string result = brackets.first;
+  for (auto i = 0; i < arr.size (); i++)
+    {
+      result += std::to_string (arr[i]) + split;
+    }
+  return result.substr (0, result.size () - split.length ()) + brackets.second;
+}
+}
+}
+}
+
+template <typename T>
+std::string
+arithmetica::helpers::array_to_string (
+    std::vector<T> arr, const std::string &split,
+    const std::pair<std::string, std::string> &brackets)
+{
+  return arithmetica::helpers::arr_to_string::array_to_string (arr, split,
+                                                               brackets);
+}

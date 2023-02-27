@@ -418,6 +418,20 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
 
       return f.get_parsed_info ();
     }
+  if (args[0] == "algebra_term_constructor")
+    {
+      if (args.size () < 2)
+        return "";
+
+      auto start = std::chrono::high_resolution_clock::now ();
+      arithmetica::algebra_term t (args[1]);
+      auto end = std::chrono::high_resolution_clock::now ();
+      timeMS
+          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
+                .count ();
+
+      return t.get_parsed_info ();
+    }
 
   return "function does not exist";
 }

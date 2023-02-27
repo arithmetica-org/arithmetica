@@ -18,11 +18,11 @@ class algebra_term
 private:
   Fraction rational_constant;
   /// @brief The key is the variable name, and the value is the exponent.
-  std::map<std::string, Fraction> variables;
+  std::vector<std::pair<std::string, Fraction> > variables = {};
   /// @brief Example: sin(25), log_2(5), log(12), sqrt(2), etc.
-  std::vector<Function> irrational_constants;
+  std::vector<Function> irrational_constants = {};
   /// @brief Example: sin(a+b), log_2(x^2), log(x+10), etc.
-  std::vector<Function> function_variables;
+  std::vector<Function> function_variables = {};
 
 public:
   algebra_term () = default;
@@ -34,6 +34,7 @@ public:
   bool operator== (const algebra_term &);
 
   std::string to_string ();
+  std::string get_parsed_info ();
 
   algebra_term operator+ (const algebra_term &);
   algebra_term operator- (const algebra_term &);

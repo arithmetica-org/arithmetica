@@ -79,7 +79,8 @@ main ()
                                          "multiply_fraction",
                                          "power_fraction",
                                          "construct_regular_polygon",
-                                         "function_constructor" };
+                                         "function_constructor",
+                                         "algebra_term_constructor" };
   std::sort (functions.begin (), functions.end ());
 
   std::string currentDir = get_current_directory ();

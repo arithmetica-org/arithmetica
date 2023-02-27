@@ -32,6 +32,7 @@ set(c_cpp_sources
     terminating_decimal_to_fraction.c
 
     fraction/fraction.c
+    fraction/Fraction.cpp
     fraction/add_fraction.c
     fraction/multiply_fraction.c
     fraction/parse_fraction.c

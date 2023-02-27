@@ -263,3 +263,9 @@ arithmetica::to_string (const Fraction &f)
 {
   return f.numerator + "/" + f.denominator;
 }
+
+std::string
+arithmetica::to_string (Function f)
+{
+  return f.to_string ();
+}

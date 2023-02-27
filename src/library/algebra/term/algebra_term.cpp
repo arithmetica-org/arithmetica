@@ -1,6 +1,8 @@
 #include "algebra_term.hpp"
 #include <Fraction.hpp>
 #include <helpers.hpp>
+#include <iostream>
+#include <stdexcept>
 
 using namespace arithmetica;
 using namespace arithmetica::helpers;
@@ -46,4 +48,52 @@ algebra_term::algebra_term (const std::string &s)
           str.replace (i, 1, "-1");
         }
     }
+
+  // Remove brackets at the beginning of the string.
+  while (str[0] == '(')
+    {
+      size_t close = get_matching_bracket (str, 0);
+      if (close == std::string::npos)
+        throw std::invalid_argument ("Error: in " + s
+                                     + ", no matching closing bracket for "
+                                       "opening bracket at position 0.");
+      str[close] = '*';
+      str.erase (0, 1);
+    }
+
+  // Remove all subsequent spaces.
+  while (str.find ("  ") != std::string::npos)
+    str.replace (str.find ("  "), 2, " ");
+
+  // Now replace all instances of " " with "*".
+  replace_all (str, " ", "*");
+
+  // Insert a '*' between a number and a variable and between two variables.
+  for (size_t i = 0; i < str.length () - 1; ++i)
+    {
+      if (isalpha (str[i + 1]) && (isdigit (str[i]) || isalpha (str[i])))
+        {
+          str.insert (i + 1, "*");
+        }
+    }
+
+  // Remove all '()' that do not change the
+  // meaning of the expression, i.e. that are not part of a function.
+  // size_t bracket_location = 0;
+  // while ((bracket_location = str.find ('(')) != std::string::npos)
+  //   {
+
+  //   }
+
+  std::cout << "str = " << str << std::endl;
+}
+
+std::string
+algebra_term::get_parsed_info ()
+{
+  // return rational_constant.to_string () + " "
+  //        + array_to_string (irrational_constants, ", ", { "[", "]" }) + " "
+  //        + array_to_string (variables, ", ", { "[", "]" }) + " "
+  //        + array_to_string (function_variables, ", ", { "[", "]" });
+  return "lol no.";
 }

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "fraction_include.h"
+#include "fraction_include.hpp"
 #include <string>
 
 class Fraction
@@ -15,6 +15,8 @@ public:
   Fraction (const std::string &frac);
   Fraction (const char *frac);
   Fraction (const struct fraction &frac);
+
+  std::string to_string ();
 
   /// @brief Adds two fractions.
   /// @param n The right argument to be added to the left argument.

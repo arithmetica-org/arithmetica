@@ -6,6 +6,8 @@
 using namespace arithmetica;
 using namespace arithmetica::helpers;
 
+Function::Function () {}
+
 Function::Function (const std::string &str)
 {
   std::string s = str;

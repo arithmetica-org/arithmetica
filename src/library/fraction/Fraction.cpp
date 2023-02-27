@@ -21,17 +21,23 @@ Fraction::Fraction (const char *frac)
   this->denominator = cfrac.denominator;
   delete_fraction (cfrac);
 }
-Fraction::Fraction (struct fraction frac)
+Fraction::Fraction (const struct fraction &frac)
 {
   numerator = frac.numerator;
   denominator = frac.denominator;
 }
 
+std::string
+Fraction::to_string ()
+{
+  return numerator + "/" + denominator;
+}
+
 /// @brief Adds two fractions.
 /// @param n The right argument to be added to the left argument.
 /// @return Where the addition will be stored.
-Fraction::Fraction
-operator+ (const Fraction &n)
+Fraction
+Fraction::operator+ (const Fraction &n)
 {
   struct fraction i_1;
   struct fraction i_2;
@@ -59,8 +65,8 @@ operator+ (const Fraction &n)
 /// @brief Subtracts two fractions.
 /// @param n The right argument to be subtracted from the left argument.
 /// @return Where the subtraction will be stored.
-Fraction::Fraction
-operator- (const Fraction &n)
+Fraction
+Fraction::operator- (const Fraction &n)
 {
   struct fraction i_1;
   struct fraction i_2;
@@ -88,8 +94,8 @@ operator- (const Fraction &n)
 /// @brief Multiplies two fractions.
 /// @param n The right argument to be multiplied by the left argument.
 /// @return Where the multiplication will be stored.
-Fraction::Fraction
-operator* (const Fraction &n)
+Fraction
+Fraction::operator* (const Fraction &n)
 {
   struct fraction i_1;
   struct fraction i_2;
@@ -117,8 +123,8 @@ operator* (const Fraction &n)
 /// @brief Divides two fractions.
 /// @param n The denominator of the division.
 /// @return Where the division will be stored.
-Fraction::Fraction
-operator/ (const Fraction &n)
+Fraction
+Fraction::operator/ (const Fraction &n)
 {
   struct fraction i_1;
   struct fraction i_2;
@@ -148,13 +154,13 @@ Fraction::operator== (const Fraction &n)
 {
   return this->numerator == n.numerator && this->denominator == n.denominator;
 }
-friend bool
-Fraction::operator== (const Fraction &LHS, const Fraction &RHS)
+bool
+operator== (const Fraction &LHS, const Fraction &RHS)
 {
   return LHS.numerator == RHS.numerator && LHS.denominator == RHS.denominator;
 }
-friend bool
-Fraction::operator<(const Fraction &LHS, const Fraction &RHS)
+bool
+operator<(const Fraction &LHS, const Fraction &RHS)
 {
   // a < b if a - b < 0
   Fraction _LHS = LHS;

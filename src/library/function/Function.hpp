@@ -7,8 +7,9 @@ namespace arithmetica
 class Function
 {
 public:
-  std::string name, argument, power;
+  std::string name = "", argument = "", power = "";
 
+  Function ();
   Function (const std::string &);
 
   std::string to_string ();
