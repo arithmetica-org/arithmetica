@@ -30,7 +30,7 @@ Go to the [project page](https://pypi.org/project/arithmetica-py/) on PyPi and d
 Linux users are in luck! If you're on Linux, then you can automatically copy the '.a', '.so', '.h', and '.hpp' to `/usr/include` with one command! Note that you will also need to [install basic_math_operations](https://github.com/avighnac/basic_math_operations): this can be done similarly.
 
 ```shell
-sudo curl -s https://raw.githubusercontent.com/avighnac/arithmetica/main/install.sh | bash
+curl -s -H "Accept: application/vnd.github.v3.raw" https://api.github.com/repos/avighnac/arithmetica/contents/install.sh | sudo bash
 ```
 
 ### Windows
