@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "fraction_include.hpp"
+#include "fraction_includeCPP.hpp"
 #include <string>
 
 namespace arithmetica
