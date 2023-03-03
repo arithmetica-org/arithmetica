@@ -1,4 +1,4 @@
-name: "Test arithmetica."
+name: "Test memory leaks"
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     - cron: '18 13 * * 6'
 
 jobs:
-  analyze:
+  on-linux-valgrind:
     name: Test arithmetica on Ubuntu.
     runs-on: ubuntu-latest
     permissions:

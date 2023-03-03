@@ -29,6 +29,7 @@ set(c_cpp_sources
     tangent.c
     terminating_decimal_to_fraction.c
 
+    fraction/Fraction.cpp
     fraction/fraction.c
     fraction/add_fraction.c
     fraction/multiply_fraction.c

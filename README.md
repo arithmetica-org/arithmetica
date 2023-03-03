@@ -1,6 +1,14 @@
-# Arithmetica
-> Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benefit other people too.
+<h1 align='center'>Arithmetica</h1>
 
+> Infinite precision arithmetic has always been something that has fascinated me. This is an attempt to direct that fascination into something that might benefit other people too.
+<br>
+<div align='center'>
+  If thou dost find this test passing, thou art assured of a library that doth not suffer from memory leaks.
+  <a href='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml'>
+    <img src='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml/badge.svg'>
+  </a>
+</div>
+<br>
 Arithmetica is a general-purpose infinite precision Linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are C, C++, and Python.
 
 # Installation
@@ -17,6 +25,15 @@ pip install arithmetica-py
 Go to the [project page](https://pypi.org/project/arithmetica-py/) on PyPi and download the built distributions. Use pip to install the .whl file as per your operating system.
 
 ## C/C++
+
+### Linux
+Linux users are in luck! If you're on Linux, then you can automatically copy the '.a', '.so', '.h', and '.hpp' to `/usr/include` with one command! Note that you will also need to [install basic_math_operations](https://github.com/avighnac/basic_math_operations): this can be done similarly.
+
+```shell
+curl -s -H "Accept: application/vnd.github.v3.raw" https://api.github.com/repos/avighnac/arithmetica/contents/install.sh | sudo bash
+```
+
+### Windows
 
 Include the header [arithmetica.h]() and download the `.a` file from the [releases section](https://github.com/avighnac/arithmetica/releases/).
 ```c
