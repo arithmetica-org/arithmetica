@@ -1,4 +1,5 @@
 #include "Fraction.hpp"
+#include <arithmetica.hpp>
 
 using namespace arithmetica;
 
