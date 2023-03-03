@@ -1,30 +1,28 @@
 #include "Fraction.hpp"
-#include <arithmetica.hpp>
+#include "fraction.hpp"
 
-using namespace arithmetica;
-
-Fraction::Fraction (){};
-Fraction::Fraction (const std::string &numerator,
-                    const std::string &denominator)
+arithmetica::Fraction::Fraction (){};
+arithmetica::Fraction::Fraction (const std::string &numerator,
+                                 const std::string &denominator)
 {
   this->numerator = numerator;
   this->denominator = denominator;
 }
-Fraction::Fraction (const std::string &frac)
+arithmetica::Fraction::Fraction (const std::string &frac)
 {
   struct fraction cfrac = parse_fraction (frac.c_str ());
   this->numerator = cfrac.numerator;
   this->denominator = cfrac.denominator;
   delete_fraction (cfrac);
 }
-Fraction::Fraction (const char *frac)
+arithmetica::Fraction::Fraction (const char *frac)
 {
   struct fraction cfrac = parse_fraction (frac);
   this->numerator = cfrac.numerator;
   this->denominator = cfrac.denominator;
   delete_fraction (cfrac);
 }
-Fraction::Fraction (const struct fraction &frac)
+arithmetica::Fraction::Fraction (const struct fraction &frac)
 {
   numerator = frac.numerator;
   denominator = frac.denominator;
@@ -33,8 +31,8 @@ Fraction::Fraction (const struct fraction &frac)
 /// @brief Adds two fractions.
 /// @param n The right argument to be added to the left argument.
 /// @return Where the addition will be stored.
-Fraction
-Fraction::operator+ (const Fraction &n)
+arithmetica::Fraction
+arithmetica::Fraction::operator+ (const Fraction &n)
 {
   struct fraction i_1;
   struct fraction i_2;
@@ -62,8 +60,8 @@ Fraction::operator+ (const Fraction &n)
 /// @brief Subtracts two fractions.
 /// @param n The right argument to be subtracted from the left argument.
 /// @return Where the subtraction will be stored.
-Fraction
-Fraction::operator- (const Fraction &n)
+arithmetica::Fraction
+arithmetica::Fraction::operator- (const arithmetica::Fraction &n)
 {
   struct fraction i_1;
   struct fraction i_2;
@@ -91,8 +89,8 @@ Fraction::operator- (const Fraction &n)
 /// @brief Multiplies two fractions.
 /// @param n The right argument to be multiplied by the left argument.
 /// @return Where the multiplication will be stored.
-Fraction
-Fraction::operator* (const Fraction &n)
+arithmetica::Fraction
+arithmetica::Fraction::operator* (const Fraction &n)
 {
   struct fraction i_1;
   struct fraction i_2;
@@ -120,8 +118,8 @@ Fraction::operator* (const Fraction &n)
 /// @brief Divides two fractions.
 /// @param n The denominator of the division.
 /// @return Where the division will be stored.
-Fraction
-Fraction::operator/ (const Fraction &n)
+arithmetica::Fraction
+arithmetica::Fraction::operator/ (const Fraction &n)
 {
   struct fraction i_1;
   struct fraction i_2;
@@ -147,21 +145,21 @@ Fraction::operator/ (const Fraction &n)
 }
 
 bool
-Fraction::operator== (const Fraction &n)
+arithmetica::Fraction::operator== (const arithmetica::Fraction &n)
 {
   return this->numerator == n.numerator && this->denominator == n.denominator;
 }
 
 bool
-arithmetica::operator== (const Fraction &LHS, const Fraction &RHS)
+operator== (const arithmetica::Fraction &LHS, const arithmetica::Fraction &RHS)
 {
   return LHS.numerator == RHS.numerator && LHS.denominator == RHS.denominator;
 }
 bool
-arithmetica::operator<(const Fraction &LHS, const Fraction &RHS)
+operator<(const arithmetica::Fraction &LHS, const arithmetica::Fraction &RHS)
 {
   // a < b if a - b < 0
-  Fraction _LHS = LHS;
-  Fraction subtraction = _LHS - RHS;
+  arithmetica::Fraction _LHS = LHS;
+  arithmetica::Fraction subtraction = _LHS - RHS;
   return subtraction.numerator[0] == '-';
 }
