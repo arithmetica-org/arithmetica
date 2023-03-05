@@ -294,7 +294,7 @@ arithmetica_construct_regular_polygon (PyObject *self, PyObject *args)
     {
       return NULL;
     }
-  point *points = construct_regular_polygon (n, len, accuracy);
+  struct point *points = construct_regular_polygon (n, len, accuracy);
 
   PyObject *lst = PyList_New (n);
   for (int i = 0; i < n; i++)
