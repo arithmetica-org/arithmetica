@@ -42,6 +42,7 @@ arithmetica_module = Extension(
     sources=['src/python-module/module.c'],
     extra_objects=['src/python-module/libarithmetica.a',
                    'src/python-module/libbasic_math_operations.a'],
+    extra_compile_args=["-fPIC"]
 )
 
 
