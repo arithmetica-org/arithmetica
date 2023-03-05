@@ -1,8 +1,8 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 #include "../library/arithmetica.h"
 
@@ -89,8 +89,8 @@ arithmetica_factorial (PyObject *self, PyObject *args)
     {
       return NULL;
     }
-  char *_factorial = (char *)calloc (
-      number * floor (log10 (number) + 1) + 2, 1);
+  char *_factorial
+      = (char *)calloc (number * floor (log10 (number) + 1) + 2, 1);
   factorial (number, _factorial);
   PyObject *ret = Py_BuildValue ("s", _factorial);
   free (_factorial);
@@ -282,6 +282,31 @@ arithmetica_terminating_decimal_to_fraction (PyObject *self, PyObject *args)
   free (numerator);
   free (denominator);
   return ret;
+}
+
+static PyObject *
+arithmetica_construct_regular_polygon (PyObject *self, PyObject *args)
+{
+  int n;
+  const char *len;
+  size_t accuracy;
+  if (!PyArg_ParseTuple (args, "isn", &n, &len, &accuracy))
+    {
+      return NULL;
+    }
+  point *points = construct_regular_polygon (n, len, accuracy);
+
+  PyObject *lst = PyList_New (n);
+  for (int i = 0; i < n; i++)
+    {
+      PyObject *tup = Py_BuildValue ("(ss)", points[i].x, points[i].y);
+      PyList_SET_ITEM (lst, i, tup);
+      free (points[i].x);
+      free (points[i].y);
+    }
+  free (points);
+
+  return lst;
 }
 
 static PyMethodDef arithmetica_methods[] = {
