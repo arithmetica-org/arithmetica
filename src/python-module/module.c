@@ -349,6 +349,8 @@ static PyMethodDef arithmetica_methods[] = {
   { "terminating_decimal_to_fraction",
     arithmetica_terminating_decimal_to_fraction, METH_VARARGS,
     "Converts a terminating decimal to a rational fraction." },
+  { "construct_regular_polygon", arithmetica_construct_regular_polygon,
+    METH_VARARGS, "Constructs an n-sided regular polygon." },
   { NULL, NULL, 0, NULL }
 };
 

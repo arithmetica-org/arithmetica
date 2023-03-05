@@ -1,8 +1,8 @@
 #ifndef _arithmetica_
 #define _arithmetica_
 
-#include <stddef.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #if defined(__cplusplus)
 #define arithmetica_function_start extern "C"
@@ -193,7 +193,7 @@ arithmetica_function_start void delete_fraction (struct fraction f);
 /// @return The fractional representation of `frac` in its simplest form.
 arithmetica_function_start struct fraction parse_fraction (const char *frac);
 
-/// @brief Subtractss two fractions and reduces the result to its simplest
+/// @brief Subtracts two fractions and reduces the result to its simplest
 /// form.
 /// @param frac1 The first fraction to subtract.
 /// @param frac2 The second fraction to subtract.
@@ -305,5 +305,5 @@ exponential_complex (struct complex_arithmetica n, size_t accuracy);
 /// @param accuracy The number of correct decimals.
 /// @return Returns true if the number of correct decimals is greater than or
 /// equal to the accuracy, otherwise returns false.
-arithmetica_function_start bool
-check_accuracy (const char *a, const char *b, size_t accuracy);
+arithmetica_function_start bool check_accuracy (const char *a, const char *b,
+                                                size_t accuracy);
