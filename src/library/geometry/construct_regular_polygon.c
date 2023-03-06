@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <truncate.h>
 
 struct point *
 construct_regular_polygon (int n, const char *length, size_t accuracy)
@@ -37,12 +38,13 @@ construct_regular_polygon (int n, const char *length, size_t accuracy)
   // Convert [n] to a string. Note that we're assuming that n > 0.
   int n_copy = n;
   size_t num_digits = floor (log10 (n)) + 1;
-  char *n_str = (char *)calloc (num_digits + 1, sizeof (char));
+  char *n_str = (char *)malloc (num_digits + 1);
   for (size_t i = 0; i < num_digits; ++i)
     {
       n_str[num_digits - i - 1] = '0' + n_copy % 10;
       n_copy /= 10;
     }
+  n_str[num_digits] = '\0';
 
   char *pi_by_6 = arcsin ("0.5", accuracy);
   char *two_pi = (char *)calloc (strlen (pi_by_6) + 5, 1);
@@ -123,17 +125,23 @@ construct_regular_polygon (int n, const char *length, size_t accuracy)
           subtract (polygon[i + 1].y, y_1, sub_buf);
           if ((!strcmp (polygon[i + 1].y, y_1)) || sub_buf[0] == '-')
             {
-              polygon[i + 2].x = (char *)calloc (strlen (x_2) + 1, 1);
-              polygon[i + 2].y = (char *)calloc (strlen (y_2) + 1, 1);
-              strcpy (polygon[i + 2].x, x_2);
-              strcpy (polygon[i + 2].y, y_2);
+              size_t x2_buf_size = strlen (x_2) + 1;
+              size_t y2_buf_size = strlen (y_2) + 1;
+
+              polygon[i + 2].x = (char *)malloc (x2_buf_size);
+              polygon[i + 2].y = (char *)malloc (y2_buf_size);
+              memcpy (polygon[i + 2].x, x_2, x2_buf_size);
+              memcpy (polygon[i + 2].y, y_2, y2_buf_size);
             }
           else
             {
-              polygon[i + 2].x = (char *)calloc (strlen (x_1) + 1, 1);
-              polygon[i + 2].y = (char *)calloc (strlen (y_1) + 1, 1);
-              strcpy (polygon[i + 2].x, x_1);
-              strcpy (polygon[i + 2].y, y_1);
+              size_t x1_buf_size = strlen (x_1) + 1;
+              size_t y1_buf_size = strlen (y_1) + 1;
+
+              polygon[i + 2].x = (char *)malloc (x1_buf_size);
+              polygon[i + 2].y = (char *)malloc (y1_buf_size);
+              memcpy (polygon[i + 2].x, x_1, x1_buf_size);
+              memcpy (polygon[i + 2].y, y_1, y1_buf_size);
             }
           free (sub_buf);
         }
@@ -146,17 +154,23 @@ construct_regular_polygon (int n, const char *length, size_t accuracy)
               subtract (x_1, x_2, sub_buf);
               if (sub_buf[0] == '-')
                 {
-                  polygon[i + 2].x = (char *)calloc (strlen (x_1) + 1, 1);
-                  polygon[i + 2].y = (char *)calloc (strlen (y_1) + 1, 1);
-                  strcpy (polygon[i + 2].x, x_1);
-                  strcpy (polygon[i + 2].y, y_1);
+                  size_t x1_buf_size = strlen (x_1) + 1;
+                  size_t y1_buf_size = strlen (y_1) + 1;
+
+                  polygon[i + 2].x = (char *)malloc (x1_buf_size);
+                  polygon[i + 2].y = (char *)malloc (y1_buf_size);
+                  memcpy (polygon[i + 2].x, x_1, x1_buf_size);
+                  memcpy (polygon[i + 2].y, y_1, y1_buf_size);
                 }
               else
                 {
-                  polygon[i + 2].x = (char *)calloc (strlen (x_2) + 1, 1);
-                  polygon[i + 2].y = (char *)calloc (strlen (y_2) + 1, 1);
-                  strcpy (polygon[i + 2].x, x_2);
-                  strcpy (polygon[i + 2].y, y_2);
+                  size_t x2_buf_size = strlen (x_2) + 1;
+                  size_t y2_buf_size = strlen (y_2) + 1;
+
+                  polygon[i + 2].x = (char *)calloc (x2_buf_size, 1);
+                  polygon[i + 2].y = (char *)calloc (y2_buf_size, 1);
+                  memcpy (polygon[i + 2].x, x_2, x2_buf_size);
+                  memcpy (polygon[i + 2].y, y_2, y2_buf_size);
                 }
               free (sub_buf);
             }
@@ -182,6 +196,9 @@ construct_regular_polygon (int n, const char *length, size_t accuracy)
               free (sub_buf);
             }
         }
+
+      truncate (polygon[i + 2].x, accuracy);
+      truncate (polygon[i + 2].y, accuracy);
 
       free (buf_1);
       free (buf_2);

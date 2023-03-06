@@ -55,7 +55,7 @@ color_digits (std::string s, std::string col)
 }
 
 int
-main ()
+main (int argc, char **argv)
 {
   std::cout << "Testing arithmetica:\n\n";
   std::vector<std::string> functions = { "arcsin",
@@ -80,6 +80,17 @@ main ()
                                          "power_fraction",
                                          "construct_regular_polygon" };
   std::sort (functions.begin (), functions.end ());
+
+  bool benchmark = false;
+
+  if (argc > 1)
+    {
+      benchmark = true;
+      std::vector<std::string> _functions;
+      for (auto i = 1; i < argc; i++)
+        _functions.push_back (argv[i]);
+      functions = _functions;
+    }
 
   std::string currentDir = get_current_directory ();
   std::replace (currentDir.begin (), currentDir.end (), '\\', '/');
@@ -107,6 +118,7 @@ main ()
 
       std::string input;
       double totalTimeMS = 0;
+      std::vector<std::vector<std::string> > arithmetica_inputs;
       while (std::getline (inputFile, input))
         {
           std::string inputsStr;
@@ -115,8 +127,8 @@ main ()
           currentTest++;
           auto _inputs = split_string (input, ' ');
           std::vector<std::string> inputs = { functions[i] };
-          for (auto &i : _inputs)
-            inputs.push_back (i);
+          std::copy (_inputs.begin (), _inputs.end (),
+                     std::back_inserter (inputs));
           for (auto i = 0; i < _inputs.size (); i++)
             {
               inputsStr += _inputs[i];
@@ -126,6 +138,7 @@ main ()
           std::string Expected;
           std::getline (expectedFile, Expected);
           double timeMS;
+          arithmetica_inputs.push_back (inputs);
           std::string res = call_arithmetica (inputs, timeMS);
           totalTimeMS += timeMS;
           if (std::string (res) != Expected)
@@ -149,9 +162,9 @@ main ()
                             + functions[i].length () + 1 + inputsStr.length ()
                             + 4 + res.length ();
               std::cout << spaces << "<" << currentTest << "> (" << timeMS
-                            << " ms) " << color (functions[i], "Yellow") << "("
-                            << color_digits (inputsStr, "Green")
-                            << ") = " << color_digits (res, "Green") << '\n';
+                        << " ms) " << color (functions[i], "Yellow") << "("
+                        << color_digits (inputsStr, "Green")
+                        << ") = " << color_digits (res, "Green") << '\n';
             }
         }
 
@@ -162,6 +175,38 @@ main ()
 
       inputFile.close ();
       expectedFile.close ();
+
+      // Benchmark if enabled
+      if (!benchmark)
+        continue;
+
+      std::cout << "Benchmarking " << color (functions[i], "Magenta") << ":\n";
+
+      // Calculate how many times the function runs in 5 seconds.
+      int times = 0;
+      double time_elapsed = 0;
+      while (time_elapsed < 5000)
+        {
+          for (auto &i : arithmetica_inputs)
+            {
+              double timeMS;
+              call_arithmetica (i, timeMS);
+              time_elapsed += timeMS;
+              std::cout << "\r" << color (std::to_string (times), "Green")
+                        << " runs in "
+                        << color (std::to_string (time_elapsed), "Green")
+                        << " ms" << std::flush;
+            }
+          times++;
+        }
+
+      // Print the Hz: this should be the main benchmark.
+      std::cout << "\r" << color (std::to_string (times), "Green")
+                << " runs in "
+                << color (std::to_string (time_elapsed), "Green") << " ms\n"
+                << color (std::to_string (times * 1000 / time_elapsed),
+                          "Green")
+                << " Hz" << std::endl;
     }
 
   std::cout << color ("All tests passed successfully!\n", "Green");

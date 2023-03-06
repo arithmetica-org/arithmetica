@@ -25,8 +25,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       struct fraction _answer = add_fraction (fraction1, fraction2);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = std::string (_answer.denominator) == "1"
                                ? _answer.numerator
                                : std::string (_answer.numerator)
@@ -47,8 +48,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = arccos (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -63,8 +65,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = arcsin (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -79,8 +82,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = arctan (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -95,8 +99,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = cosine (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -111,8 +116,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = exponential (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -128,8 +134,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       factorial (n, _answer);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -144,8 +151,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
                                                       args[2].c_str ());
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -161,8 +169,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       igcd (args[1].c_str (), args[2].c_str (), _answer);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -178,8 +187,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       ilcm (args[1].c_str (), args[2].c_str (), _answer);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -196,8 +206,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       struct fraction _answer = multiply_fraction (fraction1, fraction2);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = std::string (_answer.denominator) == "1"
                                ? _answer.numerator
                                : std::string (_answer.numerator)
@@ -218,8 +229,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = natural_logarithm (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -234,8 +246,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = power (args[1].c_str (), args[2].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -253,8 +266,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       struct fraction _answer = power_fraction (base, exponent, accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = std::string (_answer.denominator) == "1"
                                ? _answer.numerator
                                : std::string (_answer.numerator)
@@ -279,8 +293,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
                                      numerator, denominator);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer
           = std::string (numerator) + "/" + std::string (denominator);
       free (numerator);
@@ -299,8 +314,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
                                                       outputType, accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -315,8 +331,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = sine (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -331,8 +348,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = square_root (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -347,8 +365,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       char *_answer = tangent (args[1].c_str (), accuracy);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer = _answer;
       free (_answer);
       return answer;
@@ -366,8 +385,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
                                        denominator);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
       std::string answer
           = std::string (numerator) + "/" + std::string (denominator);
       free (numerator);
@@ -384,8 +404,9 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
           std::stoi (args[1]), args[2].c_str (), std::stoull (args[3]));
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
-          = std::chrono::duration_cast<std::chrono::milliseconds> (end - start)
-                .count ();
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
 
       std::string answer;
       for (auto i = 0; i < std::stoi (args[1]); i++)
