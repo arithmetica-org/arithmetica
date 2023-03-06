@@ -29,7 +29,7 @@ PointCpp ChooseHigherPoint (BMONum &x_1, BMONum &y_1, BMONum &x_2, BMONum &y_2,
 PointCpp ChooseLowerPoint (BMONum &x_1, BMONum &y_1, BMONum &x_2, BMONum &y_2,
                            PointCpp &prev_pt);
 void ComputeLine (PointCpp &prev_pt, BMONum &m, BMONum &tan_exterior_angle,
-                   BMONum &s, BMONum &c);
+                  BMONum &s, BMONum &c);
 void ComputeIntersectionPoints (PointCpp &prev_pt, BMONum &s, BMONum &c,
                                 BMONum &l, BMONum &x_1, BMONum &y_1,
                                 BMONum &x_2, BMONum &y_2, size_t accuracy);
@@ -75,20 +75,20 @@ construct_regular_polygon_cpp (int n, const char *length_c, size_t accuracy)
   BMONum two_pi = BMONum (two_pi_c) * "12";
   std::string angle_in_radians = (two_pi / std::to_string (n)).number;
   BMONum tan_ext_angle = tangent (angle_in_radians, accuracy);
-  free(two_pi_c);
+  free (two_pi_c);
 
   for (auto i = 0; i < n - 2; i++)
     {
-      PointCpp &A = polygon[polygon.size () - 2];
-      PointCpp &prev_pt = polygon.back ();
+      PointCpp &A = polygon[i];
+      PointCpp &prev_pt = polygon[i + 1];
 
       // Compute slope of initial line.
       BMONum slope_initial_line = (A.y - prev_pt.y) / (A.x - prev_pt.x);
 
       // Compute slope and intercept of new line.
       BMONum slope_new_line, intercept_new_line;
-      ComputeLine (prev_pt, slope_initial_line, tan_ext_angle,
-                   slope_new_line, intercept_new_line);
+      ComputeLine (prev_pt, slope_initial_line, tan_ext_angle, slope_new_line,
+                   intercept_new_line);
 
       // Compute candidate intersection points.
       BMONum x_1, y_1, x_2, y_2;
@@ -116,8 +116,7 @@ construct_regular_polygon_helpers::GetCorrectPoint (BMONum &x_1, BMONum &y_1,
     {
       return ChooseLowerPoint (x_1, y_1, x_2, y_2, prev_pt);
     }
-  bool same_height = y_1 == y_2;
-  if (same_height)
+  if (y_1 == y_2)
     {
       return ChoosePointToLeft (x_1, y_1, x_2, y_2);
     }
@@ -131,8 +130,9 @@ construct_regular_polygon_helpers::ChoosePointToLeft (BMONum &x_1, BMONum &y_1,
   if (x_1 < x_2)
     {
       return PointCpp (x_1, y_1);
+    } else {
+      return PointCpp (x_2, y_2);
     }
-  return PointCpp (x_2, y_2);
 }
 
 construct_regular_polygon_helpers::PointCpp
@@ -140,8 +140,7 @@ construct_regular_polygon_helpers::ChooseHigherPoint (BMONum &x_1, BMONum &y_1,
                                                       BMONum &x_2, BMONum &y_2,
                                                       const PointCpp &prev_pt)
 {
-  bool higher_or_equal = y_1 >= prev_pt.y;
-  if (higher_or_equal)
+  if (y_1 >= prev_pt.y)
     {
       return PointCpp (x_1, y_1);
     }
@@ -153,20 +152,20 @@ construct_regular_polygon_helpers::ChooseLowerPoint (BMONum &x_1, BMONum &y_1,
                                                      BMONum &x_2, BMONum &y_2,
                                                      PointCpp &prev_pt)
 {
-  bool higher_or_equal = y_1 >= prev_pt.y;
-  if (higher_or_equal)
+  if (y_1 >= prev_pt.y)
     {
       return PointCpp (x_2, y_2);
+    } else {
+      return PointCpp (x_1, y_1);
     }
-  return PointCpp (x_1, y_1);
 }
 
 // Computes the slope and intercept of line rotated 360/n degrees to the left
 // that also passes through the previous point.
 void
 construct_regular_polygon_helpers::ComputeLine (PointCpp &prev_pt, BMONum &m,
-                                                BMONum &tan_exterior_angle, BMONum &s,
-                                                BMONum &c)
+                                                BMONum &tan_exterior_angle,
+                                                BMONum &s, BMONum &c)
 {
   // Since tan(a + b) = (tan(a) + tan(b)) / (1 - tan(a) tan(b)),
   // tan(atan(m) + angle) = (m + tan(angle)) / (1 - m tan(angle))
@@ -179,22 +178,20 @@ construct_regular_polygon_helpers::ComputeIntersectionPoints (
     PointCpp &prev_pt, BMONum &s, BMONum &c, BMONum &l, BMONum &x_1,
     BMONum &y_1, BMONum &x_2, BMONum &y_2, size_t accuracy)
 {
-
-  BMONum sqrt_term = arithmetica::square_root (
-      (BMONum ("-1") * c * c
-       + c * (BMONum ("2") * prev_pt.y - BMONum ("2") * s * prev_pt.x)
-       + l * l * (s * s + "1")
-       - arithmetica::power ((prev_pt.y - s * prev_pt.x).number, "2",
-                             accuracy))
-          .number,
-      accuracy);
+  BMONum buf_7 = s*s; // s^2
+  BMONum buf_8 = buf_7 + "1"; // s^2+1
+  BMONum buf_9 = arithmetica::square_root (
+      buf_8.number,
+      accuracy); // sqrt(s^2+1)
+  BMONum buf_10 = l / buf_9;
 
   // We know that one of these is correct.
-  x_1 = (sqrt_term - c * s + s * prev_pt.y + prev_pt.x) / (s * s + "1");
-  x_2 = (BMONum ("-1") * sqrt_term - c * s + s * prev_pt.y + prev_pt.x)
-        / (s * s + "1");
-  y_1 = s * x_1 + c;
-  y_2 = s * x_2 + c;
+  x_1 = prev_pt.x + buf_10;
+  x_2 = prev_pt.x - buf_10;
+  BMONum buf_11 = s * x_1;
+  BMONum buf_12 = s * x_2;
+  y_1 = buf_11 + c;
+  y_2 = buf_12 + c;
 }
 
 extern "C" struct point *
