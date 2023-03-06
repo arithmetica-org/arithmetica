@@ -41,8 +41,7 @@ arithmetica_module = Extension(
     module_name,
     sources=['src/python-module/module.c'],
     extra_objects=['src/python-module/libarithmetica.a',
-                   'src/python-module/libbasic_math_operations.a'],
-    extra_compile_args=["-lstdc++"]
+                   'src/python-module/libbasic_math_operations.a']
 )
 
 

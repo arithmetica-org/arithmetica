@@ -2,7 +2,6 @@
 #include <arithmetica.h>
 #include <basic_math_operations.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -35,15 +34,21 @@ construct_regular_polygon (int n, const char *length, size_t accuracy)
       return polygon;
     }
 
-  // Convert [n] to a string.
-  char *n_str = (char *)calloc (2 + floor (log10 (n)), 1);
-  sprintf (n_str, "%d", n);
+  // Convert [n] to a string. Note that we're assuming that n > 0.
+  int n_copy = n;
+  size_t num_digits = floor (log10 (n)) + 1;
+  char *n_str = (char *)calloc (num_digits + 1, sizeof (char));
+  for (size_t i = 0; i < num_digits; ++i)
+    {
+      n_str[num_digits - i - 1] = '0' + n_copy % 10;
+      n_copy /= 10;
+    }
 
   char *pi_by_6 = arcsin ("0.5", accuracy);
   char *two_pi = (char *)calloc (strlen (pi_by_6) + 5, 1);
   multiply ("12", pi_by_6, two_pi);
   char *angle_in_radians
-      = (char *)calloc (strlen (two_pi) + floor (log10 (n)) + accuracy + 4, 1);
+      = (char *)calloc (strlen (two_pi) + num_digits + accuracy + 3, 1);
   divide (two_pi, n_str, angle_in_radians, accuracy);
   char *tan_ext_angle = tangent (angle_in_radians, accuracy);
   free (pi_by_6);
