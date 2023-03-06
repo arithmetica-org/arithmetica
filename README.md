@@ -4,6 +4,7 @@
 <br>
 <div align='center'>
   If thou dost find this test passing, thou art assured of a library that doth not suffer from memory leaks.
+  <br>
   <a href='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml'>
     <img src='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml/badge.svg'>
   </a>
@@ -11,11 +12,19 @@
 <br>
 Arithmetica is a general-purpose infinite precision Linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are C, C++, and Python.
 
-# Installation
+# Demonstration
+Using [construct_regular_polygon.c](https://github.com/avighnac/arithmetica/blob/main/src/library/geometry/construct_regular_polygon.c), you can create and render polygons.
+<div align='center'>
+  <img width="400" height="400" src='https://user-images.githubusercontent.com/74564976/223171924-53bd642e-425f-4870-aa0e-2da184dd9f52.gif'>
+</div>
+
+The code for this can be found after the usage section.
+<p>(<a href="#Code for demonstration">Code</a>)</p>
 
 ## Python
 
-### Using pip
+### Using pip!
+
 If you're on or above Python 3.10, then pip will work for you. See below if not.
 ```shell
 pip install arithmetica-py
@@ -95,6 +104,75 @@ main ()
 
   return 0;
 }
+```
+
+# Code for demonstration
+```py
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+import arithmetica
+from PIL import Image
+
+sides_init = 3
+sides_max = 25
+delay = 16 # in milliseconds
+
+fig, ax = plt.subplots(figsize=(6, 6))
+ax.set_aspect('equal')
+
+polygon = arithmetica.construct_regular_polygon(sides_init, "1", 20)
+polygon.append(("0", "0"))
+
+x_coords = [float(pt[0]) for pt in polygon]
+y_coords = [float(pt[1]) for pt in polygon]
+
+line, = ax.plot(x_coords, y_coords)
+
+def update(sides):
+    polygon = arithmetica.construct_regular_polygon(sides, "1", 20)
+    polygon.append(("0", "0"))
+
+    x_coords = [float(pt[0]) for pt in polygon]
+    y_coords = [float(pt[1]) for pt in polygon]
+
+    line.set_xdata(x_coords)
+    line.set_ydata(y_coords)
+
+    max_x = max(x_coords)
+    max_y = max(y_coords)
+
+    min_x = min(x_coords)
+    min_y = min(y_coords)
+
+    x_margin = 0.05 * (max_x - min_x)
+    y_margin = 0.05 * (max_y - min_y)
+    ax.set_xlim(min_x - x_margin, max_x + x_margin)
+    ax.set_ylim(min_y - y_margin, max_y + y_margin)
+
+    # Hide the spines and remove the ticks
+    ax.spines['top'].set_color('none')
+    ax.spines['right'].set_color('none')
+    ax.spines['bottom'].set_color('none')
+    ax.spines['left'].set_color('none')
+    ax.tick_params(axis='both', length=0, which='both')
+    ax.set_axis_off()
+
+
+# Create a list of images for each frame of the animation
+images = []
+for sides in range(sides_init, sides_max+1):
+    update(sides)
+    fig.canvas.draw_idle()
+    fig.subplots_adjust
+    img = Image.frombytes('RGB', fig.canvas.get_width_height(),
+                          fig.canvas.tostring_rgb())
+    images.append(img)
+
+# Save the list of images as a GIF file
+images[0].save('polygon.gif', save_all=True, append_images=images[1:], optimize=False, duration=delay, loop=0)
+
 ```
 
 # Contributing
