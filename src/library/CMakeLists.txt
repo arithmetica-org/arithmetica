@@ -48,8 +48,7 @@ set(c_cpp_sources
     complex/square_root_complex.c
     complex/subtract_complex.c
 
-    geometry/construct_regular_polygon.cpp
-    # geometry/construct_regular_polygon.c
+    geometry/construct_regular_polygon.c
 )
 
 set(include_directories
