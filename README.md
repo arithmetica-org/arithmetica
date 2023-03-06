@@ -19,7 +19,7 @@ Using [construct_regular_polygon.c](https://github.com/avighnac/arithmetica/blob
 </div>
 
 The code for this can be found after the usage section.
-<p>(<a href="#Code for demonstration">Code</a>)</p>
+<p>(<a href="#code-for-demonstration">Code</a>)</p>
 
 ## Python
 
