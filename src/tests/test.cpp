@@ -3,6 +3,7 @@
 #include "get_current_directory.hpp"
 #include <algorithm>
 #include <cmath>
+#include <curl/curl.h>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -18,6 +19,13 @@ get_expected_filename (std::string function, std::string currentDir)
 {
   return currentDir + "src/tests/arithmetica_tests/" + function
          + "/expected.txt";
+}
+
+static size_t
+write_callback (char *ptr, size_t size, size_t nmemb, void *userdata)
+{
+  // Do nothing with the received data
+  return size * nmemb;
 }
 
 static std::vector<std::string>
@@ -82,14 +90,24 @@ main (int argc, char **argv)
   std::sort (functions.begin (), functions.end ());
 
   bool benchmark = false;
+  bool all_benchmarks = false;
+  std::vector<double> benchmark_hertz;
 
   if (argc > 1)
     {
       benchmark = true;
       std::vector<std::string> _functions;
       for (auto i = 1; i < argc; i++)
-        _functions.push_back (argv[i]);
-      functions = _functions;
+        {
+          if (std::string (argv[i]) == "--benchmark")
+            {
+              all_benchmarks = true;
+              break;
+            }
+          _functions.push_back (argv[i]);
+        }
+      if (!all_benchmarks)
+        functions = _functions;
     }
 
   std::string currentDir = get_current_directory ();
@@ -200,7 +218,7 @@ main (int argc, char **argv)
           times++;
         }
 
-      // Print the Hz: this should be the main benchmark.
+      benchmark_hertz.push_back (times * 1000 / time_elapsed);
       std::cout << "\r" << color (std::to_string (times), "Green")
                 << " runs in "
                 << color (std::to_string (time_elapsed), "Green") << " ms\n"
@@ -210,4 +228,46 @@ main (int argc, char **argv)
     }
 
   std::cout << color ("All tests passed successfully!\n", "Green");
+
+  if (!benchmark)
+    return 0;
+
+  std::cout << "Uploading benchmark results!\n";
+  std::string json_content = "{";
+  for (auto i = 0; i < functions.size (); i++)
+    {
+      json_content += "\"" + functions[i] + "\":%20"
+                      + std::to_string (benchmark_hertz[i]);
+      if (i != functions.size () - 1)
+        json_content += ",%20%0D%0A";
+    }
+  json_content += "}";
+
+  std::string curl_postfields
+      = "entry.1369257619=" + json_content
+        + "&fvv=1&"
+          "partialResponse=%5Bnull%2Cnull%2C%22-4957582068535559811%22%5D&"
+          "pageHistory=0&fbzx=-4957582068535559811";
+
+  CURL *curl = curl_easy_init ();
+  if (curl)
+    {
+      curl_easy_setopt (curl, CURLOPT_URL,
+                        "https://docs.google.com/forms/d/e/"
+                        "1FAIpQLSc9Qdp2sxBD9sal-0YeoeIg6ys_OJ-"
+                        "yek16CsndcFRvejrt5A/formResponse");
+      curl_easy_setopt (curl, CURLOPT_POSTFIELDS, curl_postfields.c_str ());
+      curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
+
+      CURLcode res = curl_easy_perform (curl);
+      if (res != CURLE_OK)
+        std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror (res)
+                  << std::endl;
+
+      curl_easy_cleanup (curl);
+    }
+
+  std::cout << "Benchmark results uploaded!\n";
+
+  return 0;
 }

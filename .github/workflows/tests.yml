@@ -1,4 +1,4 @@
-name: "Test memory leaks"
+name: "Test memory leaks and benchmark."
 
 on:
   push:
@@ -30,10 +30,11 @@ jobs:
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
         fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
-    - name: Install valgrind.
+    - name: Install valgrind and libcurl.
       run: |
         sudo apt-get update
         sudo apt-get install valgrind
+        sudo apt-get install libcurl4-openssl-dev
     - name: Clone basic_math_operations.
       run: |
         git submodule update --init --recursive
@@ -45,3 +46,6 @@ jobs:
     - name: Run tests using valgrind.
       run: |
         valgrind --error-exitcode=1 --leak-check=full --track-origins=yes ./build/src/tests/tests
+    - name: Benchmark
+      run: |
+        ./build/src/tests/tests --benchmark
