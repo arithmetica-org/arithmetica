@@ -9,6 +9,7 @@ add_subdirectory(src/library)
 
 option(BUILD_BMO "Build basic math operations" ON)
 option(ENABLE_TESTS "Build tests" OFF)
+option(ENABLE_BENCHMARK "Build benchmark" ON)
 
 if(BUILD_BMO)
     add_subdirectory(src/basic_math_operations/src/library)
@@ -16,6 +17,10 @@ endif()
 
 if (ENABLE_TESTS)
     add_subdirectory(src/tests)
+endif()
+
+if (ENABLE_BENCHMARK)
+    add_subdirectory(src/benchmark)
 endif()
 
 set(CMAKE_CXX_STANDARD 17)

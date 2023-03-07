@@ -30,18 +30,19 @@ jobs:
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
         fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
-    - name: Install libcurl.
+    - name: Install libcurl and JSON library headers.
       run: |
         sudo apt-get update
         sudo apt-get install libcurl4-openssl-dev
+        sudo apt-get install nlohmann-json3-dev
     - name: Clone basic_math_operations.
       run: |
         git submodule update --init --recursive
-    - name: Compile tests in release.
+    - name: Compile benchmark in release.
       run: |
-        cmake --no-warn-unused-cli -DBUILD_BMO=ON -DENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release -S . -B build -G "Unix Makefiles"
+        cmake --no-warn-unused-cli -DBUILD_BMO=ON -DENABLE_BENCHMARK=ON -DCMAKE_BUILD_TYPE=Release -S . -B build -G "Unix Makefiles"
         cmake --build build --config Release --target all -j 10 --
-        chmod +x build/src/tests/tests
+        chmod +x build/src/benchmark/benchmark
     - name: Git Version
       id: version
       uses: codacy/git-version@2.7.1
@@ -54,4 +55,4 @@ jobs:
         echo "UID=$(cat uid.txt)" >> $GITHUB_ENV
     - name: Benchmark
       run: |
-        ./build/src/tests/tests --benchmark ${{ env.UID }}
+        ./build/src/benchmark/benchmark --unique-identifier ${{ env.UID }}
