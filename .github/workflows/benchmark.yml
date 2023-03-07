@@ -49,7 +49,7 @@ jobs:
       run: |
         echo ${{ steps.version.outputs.version }} > uid.txt
         echo ${{ steps.version.outputs.version }}
-        g++ src/python-module/fix-version.cpp -O3
+        g++ src/benchmark/get-unique-identifier.cpp -O3
         ./a.out uid.txt
         echo "UID=$(cat uid.txt)" >> $GITHUB_ENV
     - name: Benchmark
