@@ -28,6 +28,45 @@ write_callback (char *ptr, size_t size, size_t nmemb, void *userdata)
   return size * nmemb;
 }
 
+std::string get_cpu_name ();
+
+// Linux
+#ifdef __linux__
+#include <cpuid.h>
+std::string
+get_cpu_name ()
+{
+  char CPUBrandString[0x40];
+  unsigned int CPUInfo[4] = { 0, 0, 0, 0 };
+
+  __cpuid (0x80000000, CPUInfo[0], CPUInfo[1], CPUInfo[2], CPUInfo[3]);
+  unsigned int nExIds = CPUInfo[0];
+
+  memset (CPUBrandString, 0, sizeof (CPUBrandString));
+
+  for (unsigned int i = 0x80000000; i <= nExIds; ++i)
+    {
+      __cpuid (i, CPUInfo[0], CPUInfo[1], CPUInfo[2], CPUInfo[3]);
+
+      if (i == 0x80000002)
+        memcpy (CPUBrandString, CPUInfo, sizeof (CPUInfo));
+      else if (i == 0x80000003)
+        memcpy (CPUBrandString + 16, CPUInfo, sizeof (CPUInfo));
+      else if (i == 0x80000004)
+        memcpy (CPUBrandString + 32, CPUInfo, sizeof (CPUInfo));
+    }
+
+  return CPUBrandString;
+}
+// Windows
+#elif _WIN32
+std::string
+get_cpu_name ()
+{
+  return "some random windows cpu idk (probs intel) use linux";
+}
+#endif
+
 static std::vector<std::string>
 split_string (std::string s, char ch)
 {
@@ -254,6 +293,7 @@ main (int argc, char **argv)
 
   std::cout << "Uploading benchmark results!\n";
   std::string json_content = "{\"identifier\":%20\"" + benchmark_identifier
+                             + "\",%0D%0A\"cpu_name\":\"" + get_cpu_name ()
                              + "\",%0D%0A\"benchmarks\":{";
   for (auto i = 0; i < functions.size (); i++)
     {
