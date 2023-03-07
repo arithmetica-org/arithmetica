@@ -7,10 +7,14 @@ enable_language(CXX)
 
 add_subdirectory(src/library)
 
-option(ENABLE_TESTS "Build tests" ON)
+option(BUILD_BMO "Build basic math operations" ON)
+option(ENABLE_TESTS "Build tests" OFF)
+
+if(BUILD_BMO)
+    add_subdirectory(src/basic_math_operations/src/library)
+endif()
 
 if (ENABLE_TESTS)
-    add_subdirectory(src/basic_math_operations/src/library)
     add_subdirectory(src/tests)
 endif()
 
