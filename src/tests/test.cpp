@@ -93,6 +93,8 @@ main (int argc, char **argv)
   bool all_benchmarks = false;
   std::vector<double> benchmark_hertz;
 
+  std::string benchmark_identifier;
+
   if (argc > 1)
     {
       benchmark = true;
@@ -101,6 +103,16 @@ main (int argc, char **argv)
         {
           if (std::string (argv[i]) == "--benchmark")
             {
+              if (i + 1 < argc)
+                {
+                  benchmark_identifier = argv[i + 1];
+                  i++;
+                }
+              else
+                {
+                  std::cout << "Error: --benchmark requires an identifier.\n";
+                  return 1;
+                }
               all_benchmarks = true;
               break;
             }
@@ -210,10 +222,12 @@ main (int argc, char **argv)
               double timeMS;
               call_arithmetica (i, timeMS);
               time_elapsed += timeMS;
-              std::cout << "\r" << color (std::to_string (times), "Green")
-                        << " runs in "
-                        << color (std::to_string (time_elapsed), "Green")
-                        << " ms" << std::flush;
+              // Since we're using GitHub Actions, we can't keep printing to
+              // stdout, so we'll just print the last result.
+              // std::cout << "\r" << color (std::to_string (times), "Green")
+              //           << " runs in "
+              //           << color (std::to_string (time_elapsed), "Green")
+              //           << " ms" << std::flush;
             }
           times++;
         }
@@ -232,8 +246,15 @@ main (int argc, char **argv)
   if (!benchmark)
     return 0;
 
+  if (benchmark_identifier.empty ())
+    {
+      std::cout << "Enter a unique identifier for this benchmark: ";
+      std::cin >> benchmark_identifier;
+    }
+
   std::cout << "Uploading benchmark results!\n";
-  std::string json_content = "{";
+  std::string json_content = "{\"identifier\":%20\"" + benchmark_identifier
+                             + "\",%0D%0A\"benchmarks\":{";
   for (auto i = 0; i < functions.size (); i++)
     {
       json_content += "\"" + functions[i] + "\":%20"
@@ -241,7 +262,7 @@ main (int argc, char **argv)
       if (i != functions.size () - 1)
         json_content += ",%20%0D%0A";
     }
-  json_content += "}";
+  json_content += "}}";
 
   std::string curl_postfields
       = "entry.1369257619=" + json_content

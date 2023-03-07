@@ -42,6 +42,16 @@ jobs:
         cmake --no-warn-unused-cli -DBUILD_BMO=ON -DENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release -S . -B build -G "Unix Makefiles"
         cmake --build build --config Release --target all -j 10 --
         chmod +x build/src/tests/tests
+    - name: Git Version
+      id: version
+      uses: codacy/git-version@2.7.1
+    - name: Use the version
+      run: |
+        echo ${{ steps.version.outputs.version }} > uid.txt
+        echo ${{ steps.version.outputs.version }}
+        g++ src/python-module/fix-version.cpp -O3
+        ./a.out uid.txt
+        echo "UID=$(cat uid.txt)" >> $GITHUB_ENV
     - name: Benchmark
       run: |
-        ./build/src/tests/tests --benchmark
+        ./build/src/tests/tests --benchmark ${{ env.UID }}
