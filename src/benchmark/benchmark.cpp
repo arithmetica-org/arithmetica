@@ -133,6 +133,11 @@ main (int argc, char **argv)
   std::vector<double> benchmark_hertz;
 
   std::string benchmark_identifier;
+  std::string upload_server = "1FAIpQLSc9Qdp2sxBD9sal-0YeoeIg6ys_OJ-"
+                              "yek16CsndcFRvejrt5A",
+              upload_key = "1369257619",
+              upload_number
+              = "4957582068535559811"; // public upload server, key, and number
 
   if (argc > 1)
     {
@@ -150,6 +155,23 @@ main (int argc, char **argv)
                 {
                   std::cout << "Error: --unique-identifier requires an "
                                "identifier.\n";
+                  return 1;
+                }
+              continue;
+            }
+          if (std::string (argv[i]) == "--upload")
+            {
+              if (i + 3 < argc)
+                {
+                  upload_server = argv[i + 1];
+                  upload_key = argv[i + 2];
+                  upload_number = argv[i + 3];
+                  i += 3;
+                }
+              else
+                {
+                  std::cout
+                      << "Error: --upload requires exactly three arguments.\n";
                   return 1;
                 }
               continue;
@@ -254,19 +276,22 @@ main (int argc, char **argv)
     }
   json_content += "}}";
 
-  std::string curl_postfields
-      = "entry.1369257619=" + json_content
-        + "&fvv=1&"
-          "partialResponse=%5Bnull%2Cnull%2C%22-4957582068535559811%22%5D&"
-          "pageHistory=0&fbzx=-4957582068535559811";
+  std::string curl_postfields = "entry." + upload_key + "=" + json_content
+                                + "&fvv=1&"
+                                  "partialResponse=%5Bnull%2Cnull%2C%22-"
+                                + upload_number
+                                + "%22%5D&"
+                                  "pageHistory=0&fbzx=-"
+                                + upload_number;
+  std::string curl_opturl
+      = "https://docs.google.com/forms/d/e/" + upload_server + "/formResponse";
 
   CURL *curl = curl_easy_init ();
   if (curl)
     {
-      curl_easy_setopt (curl, CURLOPT_URL,
-                        "https://docs.google.com/forms/d/e/"
-                        "1FAIpQLSc9Qdp2sxBD9sal-0YeoeIg6ys_OJ-"
-                        "yek16CsndcFRvejrt5A/formResponse");
+      // 1FAIpQLSfJET2Dte8QYHhaKmDiG9gE0HDVjt3YMtRT6UGU8fE4jnc5DA
+      //
+      curl_easy_setopt (curl, CURLOPT_URL, curl_opturl.c_str ());
       curl_easy_setopt (curl, CURLOPT_POSTFIELDS, curl_postfields.c_str ());
       curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
 
@@ -290,8 +315,8 @@ main (int argc, char **argv)
   std::string previous_commit = "commit-" + std::to_string (commit_number - 1);
 
   std::cout << "Comparing benchmark results to previous commit:\n";
-  for (auto &i :
-       get_percent_improvement (previous_commit, benchmark_identifier))
+  for (auto &i : get_percent_improvement (previous_commit,
+                                          benchmark_identifier, upload_server))
     {
       std::cout << "  " << i.first << ": " << i.second << "% improvement.\n";
     }

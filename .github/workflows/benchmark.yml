@@ -55,4 +55,4 @@ jobs:
         echo "UID=$(cat uid.txt)" >> $GITHUB_ENV
     - name: Benchmark
       run: |
-        ./build/src/benchmark/benchmark --unique-identifier ${{ env.UID }}
+        ./build/src/benchmark/benchmark --unique-identifier ${{ env.UID }} --upload ${{ secrets.PRIVATE_UPLOAD_SERVER }} ${{ secrets.PRIVATE_UPLOAD_KEY }} ${{ secrets.PRIVATE_UPLOAD_NUMBER }}

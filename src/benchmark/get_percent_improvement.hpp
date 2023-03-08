@@ -60,14 +60,14 @@ get_uid_details (std::string uid, std::vector<nlohmann::json> json_objects)
 // Return a vector of percentage improvements / regressions, positive values
 // are improvements, negative values are regressions.
 std::vector<std::pair<std::string, double> >
-get_percent_improvement (std::string uid_1, std::string uid_2)
+get_percent_improvement (std::string uid_1, std::string uid_2,
+                         std::string upload_server)
 {
   CURL *curl = curl_easy_init ();
   std::ostringstream stream;
 
-  std::string url = "https://docs.google.com/forms/d/e/"
-                    "1FAIpQLSc9Qdp2sxBD9sal-0YeoeIg6ys_OJ-yek16CsndcFRvejrt5A/"
-                    "viewanalytics";
+  std::string url = "https://docs.google.com/forms/d/e/" + upload_server
+                    + "/viewanalytics";
 
   curl_easy_setopt (curl, CURLOPT_URL, url.c_str ());
   curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, curl_write_data);
@@ -114,6 +114,12 @@ get_percent_improvement (std::string uid_1, std::string uid_2)
       = get_uid_details (uid_1, json_objects);
   std::vector<std::pair<std::string, double> > uid_2_details
       = get_uid_details (uid_2, json_objects);
+
+  if (uid_1_details.empty () || uid_2_details.empty ())
+    {
+      return { { "Previous commit not found on the specified upload server.",
+                 0 } };
+    }
 
   // Calculate the percentage improvement / regression. Each element in the
   // vector is the number of runs per second (Hz).
