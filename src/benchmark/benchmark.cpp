@@ -4,10 +4,12 @@
 #include <chrono>
 #include <cmath>
 #include <color.hpp>
+#include <ctime>
 #include <curl/curl.h>
 #include <fstream>
 #include <get_current_directory.hpp>
 #include <iostream>
+#include <thread>
 #include <vector>
 
 static std::string
@@ -291,9 +293,13 @@ main (int argc, char **argv)
     }
 
   std::cout << "Uploading benchmark results!\n";
-  std::string json_content = "{\"identifier\":%20\"" + benchmark_identifier
-                             + "\",%0D%0A\"cpu_name\":\"" + get_cpu_name ()
-                             + "\",%0D%0A\"benchmarks\":{%0D%0A";
+  std::string json_content
+      = "{\"identifier\":%20\"" + benchmark_identifier
+        + "\",%0D%0A\"cpu_name\":\"" + get_cpu_name ()
+        + "\",%0D%0A\"cpu_cores\":"
+        + std::to_string (std::thread::hardware_concurrency ())
+        + ",%0D%0A\"time\":" + std::to_string (std::time (nullptr))
+        + ",%0D%0A\"benchmarks\":{%0D%0A";
   for (auto i = 0; i < benchmarks.size (); i++)
     {
       json_content
