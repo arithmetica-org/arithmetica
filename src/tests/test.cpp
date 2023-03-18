@@ -3,7 +3,6 @@
 #include "get_current_directory.hpp"
 #include <algorithm>
 #include <cmath>
-#include <curl/curl.h>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -128,39 +127,6 @@ main (int argc, char **argv)
                                          "construct_regular_polygon" };
   std::sort (functions.begin (), functions.end ());
 
-  bool benchmark = false;
-  bool all_benchmarks = false;
-  std::vector<double> benchmark_hertz;
-
-  std::string benchmark_identifier;
-
-  if (argc > 1)
-    {
-      benchmark = true;
-      std::vector<std::string> _functions;
-      for (auto i = 1; i < argc; i++)
-        {
-          if (std::string (argv[i]) == "--benchmark")
-            {
-              if (i + 1 < argc)
-                {
-                  benchmark_identifier = argv[i + 1];
-                  i++;
-                }
-              else
-                {
-                  std::cout << "Error: --benchmark requires an identifier.\n";
-                  return 1;
-                }
-              all_benchmarks = true;
-              break;
-            }
-          _functions.push_back (argv[i]);
-        }
-      if (!all_benchmarks)
-        functions = _functions;
-    }
-
   std::string currentDir = get_current_directory ();
   std::replace (currentDir.begin (), currentDir.end (), '\\', '/');
   if (currentDir.find ("build") != std::string::npos)
@@ -244,91 +210,9 @@ main (int argc, char **argv)
 
       inputFile.close ();
       expectedFile.close ();
-
-      // Benchmark if enabled
-      if (!benchmark)
-        continue;
-
-      std::cout << "Benchmarking " << color (functions[i], "Magenta") << ":\n";
-
-      // Calculate how many times the function runs in 5 seconds.
-      int times = 0;
-      double time_elapsed = 0;
-      while (time_elapsed < 5000)
-        {
-          for (auto &i : arithmetica_inputs)
-            {
-              double timeMS;
-              call_arithmetica (i, timeMS);
-              time_elapsed += timeMS;
-              // Since we're using GitHub Actions, we can't keep printing to
-              // stdout, so we'll just print the last result.
-              // std::cout << "\r" << color (std::to_string (times), "Green")
-              //           << " runs in "
-              //           << color (std::to_string (time_elapsed), "Green")
-              //           << " ms" << std::flush;
-            }
-          times++;
-        }
-
-      benchmark_hertz.push_back (times * 1000 / time_elapsed);
-      std::cout << "\r" << color (std::to_string (times), "Green")
-                << " runs in "
-                << color (std::to_string (time_elapsed), "Green") << " ms\n"
-                << color (std::to_string (times * 1000 / time_elapsed),
-                          "Green")
-                << " Hz" << std::endl;
     }
 
   std::cout << color ("All tests passed successfully!\n", "Green");
-
-  if (!benchmark)
-    return 0;
-
-  if (benchmark_identifier.empty ())
-    {
-      std::cout << "Enter a unique identifier for this benchmark: ";
-      std::cin >> benchmark_identifier;
-    }
-
-  std::cout << "Uploading benchmark results!\n";
-  std::string json_content = "{\"identifier\":%20\"" + benchmark_identifier
-                             + "\",%0D%0A\"cpu_name\":\"" + get_cpu_name ()
-                             + "\",%0D%0A\"benchmarks\":{";
-  for (auto i = 0; i < functions.size (); i++)
-    {
-      json_content += "\"" + functions[i] + "\":%20"
-                      + std::to_string (benchmark_hertz[i]);
-      if (i != functions.size () - 1)
-        json_content += ",%20%0D%0A";
-    }
-  json_content += "}}";
-
-  std::string curl_postfields
-      = "entry.1369257619=" + json_content
-        + "&fvv=1&"
-          "partialResponse=%5Bnull%2Cnull%2C%22-4957582068535559811%22%5D&"
-          "pageHistory=0&fbzx=-4957582068535559811";
-
-  CURL *curl = curl_easy_init ();
-  if (curl)
-    {
-      curl_easy_setopt (curl, CURLOPT_URL,
-                        "https://docs.google.com/forms/d/e/"
-                        "1FAIpQLSc9Qdp2sxBD9sal-0YeoeIg6ys_OJ-"
-                        "yek16CsndcFRvejrt5A/formResponse");
-      curl_easy_setopt (curl, CURLOPT_POSTFIELDS, curl_postfields.c_str ());
-      curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
-
-      CURLcode res = curl_easy_perform (curl);
-      if (res != CURLE_OK)
-        std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror (res)
-                  << std::endl;
-
-      curl_easy_cleanup (curl);
-    }
-
-  std::cout << "Benchmark results uploaded!\n";
 
   return 0;
 }
