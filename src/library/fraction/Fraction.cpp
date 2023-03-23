@@ -36,7 +36,7 @@ arithmetica::Fraction::operator+ (const Fraction &n)
   struct fraction i_1;
   struct fraction i_2;
 
-  i_1.numerator = (char *)calloc (numerator.length (), 1);
+  i_1.numerator = (char *)calloc (numerator.length () + 1, 1);
   i_1.denominator = (char *)calloc (denominator.length () + 1, 1);
   i_2.numerator = (char *)calloc (n.numerator.length () + 1, 1);
   i_2.denominator = (char *)calloc (n.denominator.length () + 1, 1);
