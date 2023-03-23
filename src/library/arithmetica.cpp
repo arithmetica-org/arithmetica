@@ -250,5 +250,10 @@ public:
 std::string
 arithmetica::to_string (const Fraction &f)
 {
-  return f.numerator + "/" + f.denominator;
+  std::string answer = f.numerator;
+  if (f.denominator != "1")
+  {
+    answer += "/" + f.denominator;
+  }
+  return answer;
 }
