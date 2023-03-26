@@ -106,9 +106,48 @@ arithmetica_fraction_to_continued_fraction (PyObject *self, PyObject *args)
     {
       return NULL;
     }
-  char *answer = fraction_to_continued_fraction (numerator, denominator);
-  PyObject *ret = Py_BuildValue ("s", answer);
+  unsigned long long length;
+  char **answer
+      = fraction_to_continued_fraction (numerator, denominator, length);
+  char *answer_str;
+  if (length > 1)
+    {
+      // [c1; c2, c3, c4, c5, c6, c7, c8, c9, c10, ...]
+      answer_str = (char *)malloc (
+          length * (strlen (numerator) + strlen (denominator) + 5) + 3);
+      // Hopefully this is enough space for everything.
+      // If not, we'll have to reallocate.
+      strcpy (answer_str, "[");
+      size_t characters_available
+          = length * (strlen (numerator) + strlen (denominator) + 5) + 3;
+      strcat (answer_str, answer[0]);
+      strcat (answer_str, "; ");
+      size_t characters_written = strlen (answer[0]) + 2;
+      for (unsigned long long i = 0; i < length; i++)
+        {
+          // If we're out of space, reallocate.
+          if (characters_written + strlen (answer[i]) + 2
+              > characters_available)
+            {
+              characters_available *= 2;
+              answer_str = (char *)realloc (answer_str, characters_available);
+            }
+          characters_written += strlen (answer[i]) + 2;
+          strcat (answer_str, ", ");
+          strcat (answer_str, answer[i]);
+          free (answer[i]);
+        }
+      strcat (answer_str, "]");
+    }
+  else
+    {
+      answer_str = (char *)malloc (strlen (answer[0]) + 1);
+      strcpy (answer_str, answer[0]);
+      free (answer[0]);
+    }
+  PyObject *ret = Py_BuildValue ("s", answer_str);
   free (answer);
+  free (answer_str);
   return ret;
 }
 

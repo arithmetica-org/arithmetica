@@ -147,14 +147,34 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
         return "";
 
       auto start = std::chrono::high_resolution_clock::now ();
-      char *_answer = fraction_to_continued_fraction (args[1].c_str (),
-                                                      args[2].c_str ());
+      unsigned long long cont_frac_len;
+      char **_answer = fraction_to_continued_fraction (
+          args[1].c_str (), args[2].c_str (), &cont_frac_len);
       auto end = std::chrono::high_resolution_clock::now ();
       timeMS
           = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
                 .count ()
             * 1e-6;
-      std::string answer = _answer;
+      std::string answer;
+      if (cont_frac_len > 1)
+        {
+          answer = "[";
+          for (size_t i = 0; i < cont_frac_len; i++)
+            {
+              answer += _answer[i];
+              if (i == 0)
+                answer += "; ";
+              else if (i != cont_frac_len - 1)
+                answer += ", ";
+              free (_answer[i]);
+            }
+          answer += "]";
+        }
+      else
+        {
+          answer = _answer[0];
+          free (_answer[0]);
+        }
       free (_answer);
       return answer;
     }

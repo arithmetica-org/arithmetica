@@ -56,13 +56,19 @@ arithmetica::factorial (unsigned long n)
   return _answer;
 }
 
-std::string
+std::vector<std::string>
 arithmetica::fraction_to_continued_fraction (std::string numerator,
                                              std::string denominator)
 {
-  char *answer = ::fraction_to_continued_fraction (numerator.c_str (),
-                                                   denominator.c_str ());
-  std::string _answer = answer;
+  unsigned long long length;
+  char **answer = ::fraction_to_continued_fraction (
+      numerator.c_str (), denominator.c_str (), &length);
+  std::vector<std::string> _answer;
+  for (unsigned long long i = 0; i < length; i++)
+    {
+      _answer.push_back (answer[i]);
+      free (answer[i]);
+    }
   free (answer);
   return _answer;
 }
@@ -252,8 +258,8 @@ arithmetica::to_string (const Fraction &f)
 {
   std::string answer = f.numerator;
   if (f.denominator != "1")
-  {
-    answer += "/" + f.denominator;
-  }
+    {
+      answer += "/" + f.denominator;
+    }
   return answer;
 }

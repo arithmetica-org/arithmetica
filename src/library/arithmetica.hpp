@@ -52,8 +52,9 @@ std::string factorial (unsigned long n);
 /// @param denominator The denominator of the fraction.
 /// @return An std::string containing the continued fraction
 /// representation of the input fraction. Safe to print.
-std::string fraction_to_continued_fraction (std::string numerator,
-                                            std::string denominator);
+std::vector<std::string>
+fraction_to_continued_fraction (std::string numerator,
+                                std::string denominator);
 
 /// @brief Finds the greatest common divisor of the first and second integral
 /// arguments.
