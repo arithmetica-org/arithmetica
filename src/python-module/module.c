@@ -108,7 +108,7 @@ arithmetica_fraction_to_continued_fraction (PyObject *self, PyObject *args)
     }
   unsigned long long length;
   char **answer
-      = fraction_to_continued_fraction (numerator, denominator, length);
+      = fraction_to_continued_fraction (numerator, denominator, &length);
   char *answer_str;
   if (length > 1)
     {
