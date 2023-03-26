@@ -188,9 +188,11 @@ Currently, arithmetica has the following decimal number functions:
 - `arccos()` complex the [inverse cosine](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
 - `arcsin()` computes the [inverse sine](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
 - `arctan()` computes the [inverse tangent](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
+- `continued_fraction_to_fraction()` converts a [continued fraction](https://en.wikipedia.org/wiki/Continued_fraction) to a non-negative rational fraction.
 - `cosine()` computes the [cosine](https://en.wikipedia.org/wiki/Sine_and_cosine) of an angle in radians to any decimal place.
 - `exponential()` computes e^x, where x is any real number to any decimal place.
 - `factorial()` computes the [factorial](https://en.wikipedia.org/wiki/Factorial) of a non-negative integer.
+- `find_roots_of_polynomial()` finds the **exact** rational roots of a polynomial function.
 - `fraction_to_continued_fraction()` converts a non-negative rational fraction to a [continued fraction](https://en.wikipedia.org/wiki/Continued_fraction).
 - `igcd()` computes the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative integers.
 - `ilcm()` computes the [least common multiple](https://en.wikipedia.org/wiki/Least_common_multiple) of two non-negative integers.

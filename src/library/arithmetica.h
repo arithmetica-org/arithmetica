@@ -31,6 +31,22 @@ arithmetica_function_start char *arcsin (const char *number, size_t accuracy);
 /// it's done being used.
 arithmetica_function_start char *arctan (const char *number, size_t accuracy);
 
+/// @brief This function converts a continued fraction to a fraction.
+/// @param continued_fraction The continued fraction represented as an array of
+/// strings.
+/// @param continued_fraction_length The number of elements in the continued
+/// fraction array.
+/// @param numerator_out This is just a blank pointer. You don't have to
+/// allocate any memory for it.
+/// @param denominator_out Again, this is just a blank pointer. You don't have
+/// to allocate any memory for it.
+/// @return This function does not directly return anything, but it does change
+/// the values of the two pointers passed in.
+arithmetica_function_start void
+continued_fraction_to_fraction (char **continued_fraction,
+                                unsigned long long continued_fraction_length,
+                                char *numerator_out, char *denominator_out);
+
 /// @brief Computes the cosine of the first argument.
 /// @param number The angle to compute the cosine of, in radians.
 /// @param accuracy The number of decimal places to calculate accurately.
@@ -50,6 +66,18 @@ arithmetica_function_start char *exponential (const char *x, size_t accuracy);
 /// @param n The number to find the factorial of.
 /// @param factorial Where the factorial of [n] will be stored.
 arithmetica_function_start void factorial (unsigned long n, char *factorial);
+
+/// @brief Finds the exact rational roots of a polynomial function.
+/// @param coefficients These are the coefficients of the polynomial function,
+/// ordered from highest to lowest power. For example, "x^2+3x+2" would be
+/// ["1", "3", "2"].
+/// @param accuracy This parameter can be a little misleading. The roots
+/// calculated by this function are _exact_, but the higher this number,
+/// the more probable it is that the roots will be _found_. Of course, a higher
+/// accuracy will also slow down the function.
+/// @return Returns the exact roots of the polynomial function.
+arithmetica_function_start char **
+find_roots_of_polynomial (const char **coefficients, size_t accuracy);
 
 /// @brief Converts a non-negative rational fraction to a continued fraction.
 /// @param numerator_in The numerator of the fraction.
