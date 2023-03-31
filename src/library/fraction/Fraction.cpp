@@ -152,6 +152,9 @@ arithmetica::Fraction::operator== (const arithmetica::Fraction &n)
 bool
 operator== (const arithmetica::Fraction &LHS, const arithmetica::Fraction &RHS)
 {
+  if (LHS.numerator == "-0" && RHS.numerator == "0"
+   || LHS.numerator == "0" && RHS.numerator == "-0")
+    return true;
   return LHS.numerator == RHS.numerator && LHS.denominator == RHS.denominator;
 }
 bool
