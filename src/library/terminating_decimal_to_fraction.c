@@ -7,9 +7,10 @@ void
 terminating_decimal_to_fraction (const char *decimal_in, char *numerator_out,
                                  char *denominator_out)
 {
-  char *numerator = (char *)malloc (strlen (decimal_in) + 1);
-  char *denominator = (char *)calloc (strlen (decimal_in) + 1, 1);
-  strcpy (numerator, decimal_in);
+  size_t din_size = strlen (decimal_in);
+  char *numerator = strdup(decimal_in);
+  char *denominator = (char *)calloc (din_size + 1, 1);
+  
 
   size_t decimalPlaces = 0;
   unsigned char inDecimals = 0;

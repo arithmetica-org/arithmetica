@@ -9,8 +9,7 @@ truncate (char *n, size_t accuracy)
   if (find == NULL)
     return;
 
-  size_t location = find - n;
-  size_t cutoff = location + accuracy + 1;
+  size_t cutoff = find - n + accuracy + 1;
   if (cutoff < strlen (n))
     n[cutoff] = 0;
 

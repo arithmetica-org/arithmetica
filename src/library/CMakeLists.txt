@@ -61,7 +61,6 @@ set(include_directories
 
 if (UNIX)
     set(linux_sources
-        linux/strlen_arithmetica.asm
         linux/truncate.asm
     )
 
@@ -77,7 +76,6 @@ endif (UNIX)
 
 if (WIN32)
     set(windows_sources
-        windows/strlen.asm
         windows/truncate.asm
     )
     add_library(arithmetica STATIC ${c_cpp_sources} ${windows_sources})

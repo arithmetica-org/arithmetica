@@ -10,7 +10,7 @@ exponential (const char *x_in, size_t accuracy)
   //     = 1 + x + x^2 / (1 * 2) + x^3 / (1 * 2 * 3) + x^4 / (1 * 2 * 3 * 4) +
   //     ...
 
-  char *x = (char *)calloc (strlen (x_in) + 1, 1);
+  char *x = malloc (strlen (x_in) + 1);
   strcpy (x, x_in);
   remove_zeroes (x);
   if (!strcmp (x, "0"))
@@ -21,11 +21,10 @@ exponential (const char *x_in, size_t accuracy)
       return x;
     }
 
-  char one[] = "1";
   size_t x_in_len = strlen (x_in);
 
   char *answer = (char *)calloc (x_in_len + 2, 1);
-  add (x_in, one, answer);
+  add (x_in, "1", answer);
 
   char *prevTerm = (char *)calloc (x_in_len + 1, 1);
   strcpy (prevTerm, x_in);
@@ -52,7 +51,7 @@ exponential (const char *x_in, size_t accuracy)
       sz = strlen (i) + 2;
       buf = (char *)realloc (buf, sz);
       memset (buf, 0, sz);
-      add (i, one, buf);
+      add (i, "1", buf);
       i = (char *)realloc (i, sz);
       strcpy (i, buf);
       prevTerm = (char *)realloc (prevTerm, strlen (currentTerm) + 1);

@@ -6,7 +6,7 @@
 void
 igcd (const char *a_in, const char *b_in, char *gcd)
 {
-  if (a_in[0] == '\0' || b_in[0] == '\0')
+  if (*a_in || *b_in)
     return;
 
   // gcd(n,1) = 1
@@ -26,11 +26,11 @@ igcd (const char *a_in, const char *b_in, char *gcd)
   char *temp = (char *)calloc (buffer_sizes, 1);
 
   // copy over the input numbers, ignoring sign
-  (*a_in == '-') ? strcpy (a, a_in + 1) : strcpy (a, a_in);
-  (*b_in == '-') ? strcpy (b, b_in + 1) : strcpy (b, b_in);
+  strcpy (a, a_in + (*a_in == '-'));
+  strcpy (b, b_in + (*b_in == '-'));
 
   // euclidean algorithm
-  while (strcmp (b, "0"))
+  while (*b!='0' || *(b+1))
     {
       strcpy (temp, b);
       memset (quotient, 0, buffer_sizes);

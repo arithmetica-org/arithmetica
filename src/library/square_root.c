@@ -7,8 +7,7 @@ square_root (const char *number_in, size_t accuracy)
 {
   size_t shift = 0;
   size_t number_len = strlen (number_in);
-  char *number = (char *)calloc (number_len + 1, 1);
-  strcpy (number, number_in);
+  char *number = strdup(number_in);
   char *_dec_loc = strchr (number, '.');
   if (_dec_loc != NULL)
     {

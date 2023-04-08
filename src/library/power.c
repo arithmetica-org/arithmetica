@@ -9,8 +9,8 @@ power (const char *x_in, const char *n_in, size_t accuracy)
 {
   size_t _accuracy = accuracy;
   accuracy = (size_t)((double)accuracy * 5.0 / 3);
-  char *x = (char *)calloc (strlen (x_in) + 1, 1);
-  char *n = (char *)calloc (strlen (n_in) + 1, 1);
+  char *x = malloc (strlen (x_in) + 1);
+  char *n = malloc (strlen (n_in) + 1);
   strcpy (x, x_in);
   strcpy (n, n_in);
   remove_zeroes (x);

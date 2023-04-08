@@ -26,7 +26,8 @@ natural_logarithm (const char *n, size_t accuracy)
   char *answer = (char *)calloc (strlen (buf) + strlen (two_power_acc) + 3, 1);
   multiply (buf, two_power_acc, answer);
   size_t dec_loc = 0;
-  for (size_t i = 0; i < strlen (answer); i++)
+  size_t sizeof_answ = strlen (answer);
+  for (size_t i = 0; i < sizeof_answ; i++)
     {
       if (answer[i] == '.')
         {
@@ -34,7 +35,7 @@ natural_logarithm (const char *n, size_t accuracy)
           break;
         }
     }
-  if (dec_loc + _accuracy + 1 < strlen (answer))
+  if (dec_loc + _accuracy + 1 < sizeof_answ)
     answer[dec_loc + _accuracy + 1] = 0;
   free (buf);
   free (sqrt);

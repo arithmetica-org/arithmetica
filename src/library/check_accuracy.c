@@ -28,10 +28,9 @@ check_accuracy (const char *a, const char *b, size_t accuracy)
 
   // Next, make sure that the number of correct decimals is greater than or
   // equal to the accuracy.
-  size_t a_length = strlen (a);
-  size_t b_length = strlen (b);
+  size_t length = min(strlen (a),strlen (b));
   size_t common_decimals = 0;
-  for (size_t i = a_decimal_place + 1; i < a_length && i < b_length; i++)
+  for (size_t i = a_decimal_place + 1; i < length; i++)
     {
       if (a[i] != b[i])
         break;

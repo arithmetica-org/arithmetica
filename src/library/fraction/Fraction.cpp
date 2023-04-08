@@ -1,6 +1,6 @@
 #include "FractionCPP.hpp"
 
-arithmetica::Fraction::Fraction (){};
+arithmetica::Fraction::Fraction (){}
 arithmetica::Fraction::Fraction (const std::string &numerator,
                                  const std::string &denominator)
 {
