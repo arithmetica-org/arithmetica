@@ -123,7 +123,8 @@ arithmetica_fraction_to_continued_fraction (PyObject *self, PyObject *args)
       strcat (answer_str, answer[0]);
       strcat (answer_str, "; ");
       size_t characters_written = strlen (answer[0]) + 2;
-      for (unsigned long long i = 0; i < length; i++)
+      free (answer[0]);
+      for (unsigned long long i = 1; i < length; i++)
         {
           // If we're out of space, reallocate.
           if (characters_written + strlen (answer[i]) + 2
@@ -133,8 +134,9 @@ arithmetica_fraction_to_continued_fraction (PyObject *self, PyObject *args)
               answer_str = (char *)realloc (answer_str, characters_available);
             }
           characters_written += strlen (answer[i]) + 2;
-          strcat (answer_str, ", ");
           strcat (answer_str, answer[i]);
+          if (i != length - 1)
+            strcat (answer_str, ", ");
           free (answer[i]);
         }
       strcat (answer_str, "]");

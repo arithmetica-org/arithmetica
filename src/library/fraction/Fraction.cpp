@@ -146,12 +146,18 @@ arithmetica::Fraction::operator/ (const Fraction &n)
 bool
 arithmetica::Fraction::operator== (const arithmetica::Fraction &n)
 {
+  if ((this->numerator == "-0" && n.numerator == "0")
+   || (this->numerator == "0" && n.numerator == "-0"))
+    return true;
   return this->numerator == n.numerator && this->denominator == n.denominator;
 }
 
 bool
 operator== (const arithmetica::Fraction &LHS, const arithmetica::Fraction &RHS)
 {
+  if ((LHS.numerator == "-0" && RHS.numerator == "0")
+   || (LHS.numerator == "0" && RHS.numerator == "-0"))
+    return true;
   return LHS.numerator == RHS.numerator && LHS.denominator == RHS.denominator;
 }
 bool
