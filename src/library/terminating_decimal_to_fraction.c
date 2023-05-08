@@ -7,6 +7,12 @@ void
 terminating_decimal_to_fraction (const char *decimal_in, char *numerator_out,
                                  char *denominator_out)
 {
+  unsigned int negative = 0;
+  if (*decimal_in == '-') {
+    negative = 1;
+    ++decimal_in;
+  }
+
   char *numerator = (char *)malloc (strlen (decimal_in) + 1);
   char *denominator = (char *)calloc (strlen (decimal_in) + 1, 1);
   strcpy (numerator, decimal_in);
@@ -36,6 +42,12 @@ terminating_decimal_to_fraction (const char *decimal_in, char *numerator_out,
   igcd (numerator, denominator, gcd);
   divide (numerator, gcd, numerator_out, 0);
   divide (denominator, gcd, denominator_out, 0);
+
+  if (negative) {
+    numerator_out = realloc (numerator_out, strlen (numerator_out) + 2);
+    memmove (numerator_out + 1, numerator_out, strlen (numerator_out) + 1);
+    numerator_out[0] = '-';
+  }
 
   free (numerator);
   free (denominator);
