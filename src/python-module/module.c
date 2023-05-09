@@ -98,6 +98,69 @@ arithmetica_factorial (PyObject *self, PyObject *args)
 }
 
 static PyObject *
+arithmetica_find_roots_of_polynomial (PyObject *self, PyObject *args)
+{
+  /*
+  find_roots_of_polynomial (const char **coefficients, unsigned long long size,
+                          size_t *exact_roots_found);
+  */
+
+  /*
+   Example call in Python:
+     arithmetica.find_roots_of_polynomial(["1", "2", "3"]) ==> ["-1", "-2"]
+     Input: List
+     Output: Tuple
+   */
+
+  PyObject *coefficients_py;
+  if (!PyArg_ParseTuple (args, "O", &coefficients_py))
+    {
+      return NULL;
+    }
+  const char **coefficients
+      = (const char **)malloc (PyList_Size (coefficients_py) * sizeof (char *));
+  for (size_t i = 0; i < PyList_Size (coefficients_py); i++)
+    {
+      PyObject *item = PyList_GetItem (coefficients_py, i);
+      coefficients[i] = (char *)malloc (strlen (PyUnicode_AsUTF8 (item)) + 1);
+      strcpy (coefficients[i], PyUnicode_AsUTF8 (item));
+    }
+
+  // Get the size of the list.
+  size_t size = PyList_Size (coefficients_py);
+
+  size_t answer_size;
+  struct fraction **answer
+      = find_roots_of_polynomial (coefficients, size, &answer_size);
+
+  // List of strings to return.
+  PyObject *ret = PyList_New (answer_size);
+  for (size_t i = 0; i < answer_size; i++)
+    {
+      char *str = malloc (strlen (answer[i]->numerator)
+                          + strlen (answer[i]->denominator) + 2);
+      strcpy (str, answer[i]->numerator);
+      if (strcmp (answer[i]->denominator, "1") != 0)
+        {
+          strcat (str, "/");
+          strcat (str, answer[i]->denominator);
+        }
+      PyList_SetItem (ret, i, Py_BuildValue ("s", str));
+      free (str);
+      delete_fraction (*answer[i]);
+    }
+  free (answer);
+  // Free the coefficients.
+  for (size_t i = 0; i < size; i++)
+    {
+      free (coefficients[i]);
+    }
+  free (coefficients);
+
+  return ret;
+}
+
+static PyObject *
 arithmetica_fraction_to_continued_fraction (PyObject *self, PyObject *args)
 {
   const char *numerator;
@@ -364,6 +427,8 @@ static PyMethodDef arithmetica_methods[] = {
     "logarithm." },
   { "factorial", arithmetica_factorial, METH_VARARGS,
     "Computes the factorial of a number." },
+  { "find_roots_of_polynomial", arithmetica_find_roots_of_polynomial,
+    METH_VARARGS, "Finds the exact rational roots of a polynomial function." },
   { "fraction_to_continued_fraction",
     arithmetica_fraction_to_continued_fraction, METH_VARARGS,
     "Converts a non-negative rational fraction to a continued fraction." },
