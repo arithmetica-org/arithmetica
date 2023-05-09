@@ -129,6 +129,9 @@ jobs:
       - name: Move version info
         run: |
           cp dist/artifacts/version-info/version.txt version.txt
+      - name: Pull the latest version of basic_math_operations
+        run: |
+          git submodule update --remote
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
