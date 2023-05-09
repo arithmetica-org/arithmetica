@@ -203,7 +203,7 @@ find_roots_of_polynomial (const char **_coefficients, ull size,
       // g_{n+1} = g_n - f(g_n)/f'(g_n)
       char *guess = calloc (2, sizeof (char));
       guess[0] = '1';
-      for (ull j = 0; j < log2 (accuracy) + 10; ++j)
+      for (ull j = 0; j < accuracy; ++j)
         {
           char *f = find_roots_of_polynomial_substitute (
               (const char **)coefficients, size, guess);
@@ -373,6 +373,13 @@ find_roots_of_polynomial (const char **_coefficients, ull size,
   free (fraction_coefficients);
   free (coefficients);
   free (derivative_coefficients);
+
+  // Remove leading zeroes from the roots, if any.
+  for (size_t i = 0; i < *exact_roots_found; ++i)
+    {
+      remove_zeroes (exact_roots[i]->numerator);
+      remove_zeroes (exact_roots[i]->denominator);
+    }
 
   return exact_roots;
 }
