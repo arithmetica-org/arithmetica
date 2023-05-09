@@ -34,6 +34,7 @@ find_roots_of_polynomial_substitute (const char **coefficients, ull size,
       free (_power);
       _power = new_power;
       free (mul);
+      
     }
   free (_power);
   return result;
