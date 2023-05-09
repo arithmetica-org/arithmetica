@@ -69,17 +69,13 @@ arithmetica_function_start void factorial (unsigned long n, char *factorial);
 
 /// @brief Finds the exact rational roots of a polynomial function.
 /// @param coefficients These are the coefficients of the polynomial function,
-/// ordered from highest to lowest power. For example, "x^2+3x+2" would be
+/// ordered from the highest to the lowest power. For example, "x^2+3x+2" would be
 /// ["1", "3", "2"].
 /// @param size The number of elements in the coefficients array.
-/// @param accuracy This parameter can be a little misleading. The roots
-/// calculated by this function are _exact_, but the higher this number,
-/// the more probable it is that the roots will be _found_. Of course, a higher
-/// accuracy will also slow down the function.
 /// @return Returns the exact roots of the polynomial function.
 arithmetica_function_start struct fraction **
 find_roots_of_polynomial (const char **coefficients, unsigned long long size,
-                          size_t accuracy, size_t *exact_roots_found);
+                          size_t *exact_roots_found);
 
 /// @brief Converts a non-negative rational fraction to a continued fraction.
 /// @param numerator_in The numerator of the fraction.

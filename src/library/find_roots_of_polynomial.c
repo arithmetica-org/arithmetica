@@ -98,8 +98,16 @@ find_roots_of_polynomial_divide_polynomial (const char **coefficients,
 
 struct fraction **
 find_roots_of_polynomial (const char **_coefficients, ull size,
-                          size_t accuracy, size_t *exact_roots_found)
+                          size_t *exact_roots_found)
 {
+  // This is an overestimation of the accuracy required which will never miss roots.
+  size_t max = strlen (_coefficients[0]);
+  if (strlen (_coefficients[size - 1]) > max)
+    {
+      max = strlen (_coefficients[size - 1]);
+    }
+  size_t accuracy = 2 * (1 + max);
+
   struct fraction zero = parse_fraction ("0/1");
 
   // Make a regular copy of the coefficients.

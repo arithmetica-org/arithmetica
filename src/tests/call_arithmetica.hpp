@@ -202,7 +202,7 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
     size_t exact_roots_found;
 
     auto start = std::chrono::high_resolution_clock::now();
-    struct fraction **_answer = find_roots_of_polynomial(coeffs, i, accuracy, &exact_roots_found);
+    struct fraction **_answer = find_roots_of_polynomial(coeffs, i, &exact_roots_found);
     auto end = std::chrono::high_resolution_clock::now();
 
     // Free memory
