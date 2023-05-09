@@ -131,6 +131,7 @@ jobs:
           cp dist/artifacts/version-info/version.txt version.txt
       - name: Pull the latest version of basic_math_operations
         run: |
+          git submodule update --init --recursive
           git submodule update --remote
       - name: Set up Python
         uses: actions/setup-python@v3
