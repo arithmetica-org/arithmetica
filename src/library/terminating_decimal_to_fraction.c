@@ -44,7 +44,6 @@ terminating_decimal_to_fraction (const char *decimal_in, char *numerator_out,
   divide (denominator, gcd, denominator_out, 0);
 
   if (negative) {
-    numerator_out = realloc (numerator_out, strlen (numerator_out) + 2);
     memmove (numerator_out + 1, numerator_out, strlen (numerator_out) + 1);
     numerator_out[0] = '-';
   }

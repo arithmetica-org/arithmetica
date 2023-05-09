@@ -45,7 +45,7 @@ arithmetica_function_start char *arctan (const char *number, size_t accuracy);
 arithmetica_function_start void
 continued_fraction_to_fraction (char **continued_fraction,
                                 unsigned long long continued_fraction_length,
-                                char *numerator_out, char *denominator_out);
+                                char **numerator_out, char **denominator_out);
 
 /// @brief Computes the cosine of the first argument.
 /// @param number The angle to compute the cosine of, in radians.
@@ -71,17 +71,21 @@ arithmetica_function_start void factorial (unsigned long n, char *factorial);
 /// @param coefficients These are the coefficients of the polynomial function,
 /// ordered from highest to lowest power. For example, "x^2+3x+2" would be
 /// ["1", "3", "2"].
+/// @param size The number of elements in the coefficients array.
 /// @param accuracy This parameter can be a little misleading. The roots
 /// calculated by this function are _exact_, but the higher this number,
 /// the more probable it is that the roots will be _found_. Of course, a higher
 /// accuracy will also slow down the function.
 /// @return Returns the exact roots of the polynomial function.
-arithmetica_function_start char **
-find_roots_of_polynomial (const char **coefficients, size_t accuracy);
+arithmetica_function_start struct fraction **
+find_roots_of_polynomial (const char **coefficients, unsigned long long size,
+                          size_t accuracy, size_t *exact_roots_found);
 
 /// @brief Converts a non-negative rational fraction to a continued fraction.
 /// @param numerator_in The numerator of the fraction.
 /// @param denominator_in The denominator of the fraction.
+/// @param length The length of the returned char * array i.e. the number of
+/// numbers in the continued fraction.
 /// @return A pointer to an array of char *s containing the continued fraction
 /// representation of the input fraction. Free each element of the array once
 /// it's done being used, then free the array itself.
@@ -240,6 +244,14 @@ subtract_fraction (struct fraction frac1, struct fraction frac2);
 arithmetica_function_start struct fraction
 power_fraction (struct fraction base, struct fraction exponent,
                 size_t accuracy);
+
+/// @brief Checks whether two fractions are equal.
+/// @param _a The first fraction to compare.
+/// @param _b The second fraction to compare.
+/// @return Returns 'true' if the two fractions are equal, and 'false' if they
+/// are not.
+arithmetica_function_start bool equal_fraction (struct fraction _a,
+                                                struct fraction _b);
 
 // Geometry functions
 #ifndef _point_h_

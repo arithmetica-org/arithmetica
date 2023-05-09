@@ -15,9 +15,11 @@ set(c_cpp_sources
     arcsin.c
     arctan.c
     check_accuracy.c
+    continued_fraction_to_fraction.c
     cosine.c
     exponential.c
     factorial.c
+    find_roots_of_polynomial.c
     fraction_to_continued_fraction.c
     igcd.c
     ilcm.c
@@ -39,6 +41,7 @@ set(c_cpp_sources
     fraction/power_fraction.c
     fraction/simplify_parsed_fraction.c
     fraction/subtract_fraction.c
+    fraction/equal_fraction.c
 
     complex/complex_arithmetica.c
     complex/add_complex.c

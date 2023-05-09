@@ -124,7 +124,18 @@ main (int argc, char **argv)
                                          "add_fraction",
                                          "multiply_fraction",
                                          "power_fraction",
-                                         "construct_regular_polygon" };
+                                         "construct_regular_polygon",
+                                         "continued_fraction_to_fraction",
+                                         "find_roots_of_polynomial" };
+
+  if (argc > 1)
+    {
+      std::vector<std::string> newFunctions;
+      for (auto i = 1; i < argc; i++)
+        newFunctions.push_back (argv[i]);
+      functions = newFunctions;
+    }
+
   std::sort (functions.begin (), functions.end ());
 
   std::string currentDir = get_current_directory ();

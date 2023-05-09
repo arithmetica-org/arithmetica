@@ -8,7 +8,7 @@ enable_language(CXX)
 add_subdirectory(src/library)
 
 option(BUILD_BMO "Build basic math operations" ON)
-option(ENABLE_TESTS "Build tests" OFF)
+option(ENABLE_TESTS "Build tests" ON)
 option(ENABLE_BENCHMARK "Build benchmark" OFF)
 
 if(BUILD_BMO)

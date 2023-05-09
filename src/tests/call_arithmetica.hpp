@@ -2,6 +2,7 @@
 
 #include <arithmetica.h>
 #include <chrono>
+#include <cstring>
 #include <geometry/point.h>
 #include <string>
 #include <truncate.h>
@@ -89,6 +90,44 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       free (_answer);
       return answer;
     }
+  if (args[0] == "continued_fraction_to_fraction")
+    {
+      if (args.size () < 2)
+        return "";
+
+      char **cont_frac = (char **)calloc (args.size () - 1, sizeof (char *));
+      for (size_t i = 1; i < args.size (); i++)
+        {
+          cont_frac[i - 1]
+              = (char *)calloc (args[i].size () + 1, sizeof (char));
+          strcpy (cont_frac[i - 1], args[i].c_str ());
+        }
+      char *numerator;
+      char *denominator;
+      auto start = std::chrono::high_resolution_clock::now ();
+      continued_fraction_to_fraction (cont_frac, args.size () - 1, &numerator,
+                                      &denominator);
+      auto end = std::chrono::high_resolution_clock::now ();
+
+      // Free memory
+      for (size_t i = 0; i < args.size () - 1; i++)
+        {
+          free (cont_frac[i]);
+        }
+      free (cont_frac);
+
+      timeMS
+          = std::chrono::duration_cast<std::chrono::nanoseconds> (end - start)
+                .count ()
+            * 1e-6;
+      std::string answer = std::string (numerator) + std::string ("/")
+                           + std::string (denominator);
+
+      free (numerator);
+      free (denominator);
+
+      return answer;
+    }
   if (args[0] == "cosine")
     {
       if (args.size () < 3)
@@ -141,6 +180,59 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       free (_answer);
       return answer;
     }
+  if (args[0] == "find_roots_of_polynomial") {
+    if (args.size() < 3) return "Not enough arguments! Check your input!";
+
+    size_t accuracy = std::stoul(args[2]);
+    std::string coefficients = args[1];
+    // remove '[' and ']' front and back
+    coefficients.erase(0, 1);
+    coefficients.erase(coefficients.size() - 1, 1);
+    // tokenize on ',' making a char **
+    const char **coeffs = (const char **)calloc(coefficients.size(), sizeof(char *));
+    unsigned long long i = 0;
+    char *token = strtok((char *)coefficients.c_str(), ",");
+    while (token != NULL) {
+      coeffs[i] = (char *)calloc(strlen(token) + 1, sizeof(char));
+      strcpy(const_cast<char*>(coeffs[i]), token);
+      token = strtok(NULL, ",");
+      i++;
+    }
+
+    size_t exact_roots_found;
+
+    auto start = std::chrono::high_resolution_clock::now();
+    struct fraction **_answer = find_roots_of_polynomial(coeffs, i, accuracy, &exact_roots_found);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    // Free memory
+    for (size_t i = 0; i < coefficients.size(); i++) {
+      free(const_cast<char*>(coeffs[i]));
+    }
+    free(coeffs);
+
+    timeMS = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)
+                 .count() *
+             1e-6;
+
+    std::string answer; // [a],[b],[c], ...
+    for (size_t i = 0; i < exact_roots_found; i++) {
+      answer += std::string(_answer[i]->numerator);
+      if (std::string(_answer[i]->denominator) != "1") {
+        answer += "/" + std::string(_answer[i]->denominator);
+      }
+      if (i != exact_roots_found - 1) answer += ",";
+    }
+
+    // Free memory
+    for (size_t i = 0; i < exact_roots_found; i++) {
+      delete_fraction(*_answer[i]);
+      free(_answer[i]);
+    }
+    free(_answer);
+
+    return answer;
+  }
   if (args[0] == "fraction_to_continued_fraction")
     {
       if (args.size () < 3)
