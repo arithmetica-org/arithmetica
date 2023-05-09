@@ -33,6 +33,7 @@ find_roots_of_polynomial_substitute (const char **coefficients, ull size,
       multiply (_power, guess, new_power);
       free (_power);
       _power = new_power;
+      free (mul);
     }
   free (_power);
   return result;
@@ -61,7 +62,9 @@ find_roots_of_polynomial_substitute_fraction (struct fraction **coefficients,
       free (power.denominator);
       power.numerator = new_power.numerator;
       power.denominator = new_power.denominator;
+      delete_fraction (mul);
     }
+  delete_fraction (power);
   return answer;
 }
 
@@ -166,6 +169,7 @@ find_roots_of_polynomial (const char **_coefficients, ull size,
           fraction_coefficients[i]->numerator = new_fraction.numerator;
           fraction_coefficients[i]->denominator = new_fraction.denominator;
         }
+      delete_fraction (first);
     }
 
   // First we need to find the approximate roots of the polynomial.
@@ -251,6 +255,7 @@ find_roots_of_polynomial (const char **_coefficients, ull size,
                      < strlen (exact_guess->denominator) - guess_negative
               || divisible_test_1 || divisible_test_2)
             {
+              delete_fraction (*exact_guess);
               free (exact_guess);
               continue;
             }
@@ -268,6 +273,7 @@ find_roots_of_polynomial (const char **_coefficients, ull size,
 
           if (duplicate)
             {
+              delete_fraction (*exact_guess);
               free (exact_guess);
               continue;
             }
@@ -276,7 +282,10 @@ find_roots_of_polynomial (const char **_coefficients, ull size,
           struct fraction *check
               = find_roots_of_polynomial_substitute_fraction (
                   fraction_coefficients, _size, exact_guess);
-          if (equal_fraction (*check, zero))
+          unsigned int root_found = equal_fraction (*check, zero);
+          delete_fraction (*check);
+          free (check);
+          if (root_found)
             {
               exact_roots[*exact_roots_found] = exact_guess;
               ++*exact_roots_found;
@@ -323,10 +332,9 @@ find_roots_of_polynomial (const char **_coefficients, ull size,
             }
           else
             {
+              delete_fraction (*exact_guess);
               free (exact_guess);
             }
-
-          free (check);
         }
 
       for (size_t i = 0; i < cont_frac_len; ++i)
