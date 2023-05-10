@@ -4,6 +4,40 @@
 #include <stdlib.h>
 #include <string.h>
 
+void
+arithmetica_power_fraction_round_decimal (char **in, size_t n)
+{
+  char *dot_pos = strchr (*in, '.');
+  if (dot_pos == NULL)
+    {
+      return;
+    }
+  char *end_pos = dot_pos + n + 1;
+  if (*end_pos >= '5')
+    {
+      char *pos = end_pos - 1;
+      while (*pos == '9')
+        {
+          *pos = '0';
+          pos--;
+        }
+      if (*pos == '.')
+        {
+          pos--;
+        }
+      (*pos)++;
+    }
+  *end_pos = '\0';
+  while (end_pos > dot_pos && *(end_pos - 1) == '0')
+    {
+      *(--end_pos) = '\0';
+    }
+  if (*(end_pos - 1) == '.')
+    {
+      *(--end_pos) = '\0';
+    }
+}
+
 struct fraction
 power_fraction (struct fraction base_in, struct fraction exponent_in,
                 size_t accuracy)
@@ -57,12 +91,16 @@ power_fraction (struct fraction base_in, struct fraction exponent_in,
 
   char *exponentDecimal
       = (char *)calloc (strlen (exponent.numerator)
-                            + strlen (exponent.denominator) + accuracy + 3,
+                            + strlen (exponent.denominator) + accuracy + 6,
                         1);
-  divide (exponent.numerator, exponent.denominator, exponentDecimal, accuracy);
+  divide (exponent.numerator, exponent.denominator, exponentDecimal,
+          accuracy + 3);
 
-  char *powerNumerator = power (base.numerator, exponentDecimal, accuracy);
-  char *powerDenominator = power (base.denominator, exponentDecimal, accuracy);
+  char *powerNumerator = power (base.numerator, exponentDecimal, accuracy + 3);
+  char *powerDenominator
+      = power (base.denominator, exponentDecimal, accuracy + 3);
+  arithmetica_power_fraction_round_decimal (&powerNumerator, accuracy);
+  arithmetica_power_fraction_round_decimal (&powerDenominator, accuracy);
 
   char *parseFractionArgument = (char *)calloc (
       strlen (powerNumerator) + strlen (powerDenominator) + 2, 1);
