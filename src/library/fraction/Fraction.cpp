@@ -27,6 +27,10 @@ arithmetica::Fraction::Fraction (const struct fraction &frac)
   denominator = frac.denominator;
 }
 
+std::string arithmetica::Fraction::to_string() {
+  return numerator + "/" + denominator;
+}
+
 /// @brief Adds two fractions.
 /// @param n The right argument to be added to the left argument.
 /// @return Where the addition will be stored.
