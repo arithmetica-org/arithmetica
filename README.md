@@ -12,6 +12,9 @@
 <br>
 Arithmetica is a general-purpose infinite precision Linux and windows math library with a wide variety of mathematical functions and features. Currently supported languages are C, C++, and Python.
 
+# Documentation
+The documentation for arithmetica can be found [here](https://avighnac.github.io/arithmetica-docs/)!
+
 # Demonstration
 Using [construct_regular_polygon.c](https://github.com/avighnac/arithmetica/blob/main/src/library/geometry/construct_regular_polygon.c), you can create and render polygons.
 <div align='center'>
