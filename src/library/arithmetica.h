@@ -72,9 +72,10 @@ arithmetica_function_start void factorial (unsigned long n, char *factorial);
 /// ordered from the highest to the lowest power. For example, "x^2+3x+2" would be
 /// ["1", "3", "2"].
 /// @param size The number of elements in the coefficients array.
+/// @param exact_roots_found The output size of the array of roots returned.
 /// @return Returns the exact roots of the polynomial function.
 arithmetica_function_start struct fraction **
-find_roots_of_polynomial (const char **coefficients, unsigned long long size,
+find_roots_of_polynomial (const char **coefficients, size_t size,
                           size_t *exact_roots_found);
 
 /// @brief Converts a non-negative rational fraction to a continued fraction.

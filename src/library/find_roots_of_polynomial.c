@@ -97,7 +97,7 @@ find_roots_of_polynomial_divide_polynomial (const char **coefficients,
 }
 
 struct fraction **
-find_roots_of_polynomial (const char **_coefficients, ull size,
+find_roots_of_polynomial (const char **_coefficients, size_t size,
                           size_t *exact_roots_found)
 {
   // This is an overestimation of the accuracy required which will never miss roots.
