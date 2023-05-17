@@ -10,6 +10,7 @@ add_executable(benchmark benchmark.cpp)
 
 target_link_libraries(benchmark arithmetica)
 target_link_libraries(benchmark basic_math_operations)
+target_link_libraries(benchmark gmp)
 target_link_libraries(benchmark curl)
 
 target_include_directories(benchmark PRIVATE "../library")

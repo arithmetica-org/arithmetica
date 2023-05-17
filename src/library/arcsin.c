@@ -1,84 +1,121 @@
 #include "arithmetica.h"
 #include <basic_math_operations.h>
+#include <gmp.h>
 #include <stdlib.h>
 #include <string.h>
+
+char *arcsin_mpf_to_char(const mpf_t number, size_t accuracy) {
+    // Determine the required size for the string representation
+    size_t str_size = accuracy + 20; // Initial buffer size
+    char* str = (char*)malloc(str_size * sizeof(char));
+
+    // Convert the mpf_t to a string
+    mp_exp_t exponent;
+    int actual_size;
+    char format[256] = "";
+
+    char ac_str[256] = "";
+    snprintf(ac_str, sizeof(ac_str), "%zu", accuracy);
+    strcat(format, "%.");
+    strcat(format, ac_str);
+    strcat(format, "Ff");
+
+    do {
+        actual_size = gmp_sprintf(str, format, number);
+        if (actual_size >= str_size) {
+            str_size *= 2; // Double the buffer size
+            str = (char*)realloc(str, str_size * sizeof(char));
+        }
+    } while (actual_size >= str_size);
+
+    return str;
+}
 
 char *
 arcsin (const char *number, size_t accuracy)
 {
   accuracy += 5;
 
-  char *prev_term = (char *)calloc (strlen (number) + 1, 1);
-  char *answer = (char *)calloc (strlen (number) + 1, 1);
-  strcpy (prev_term, number);
-  strcpy (answer, number);
+  mpf_set_default_prec (accuracy * 3.32192809488736234787 + 1);
+
+  mpf_t number_mpf;
+  mpf_init (number_mpf);
+  mpf_set_str (number_mpf, number, 10);
+  mpf_t prev_term;
+  mpf_t answer;
+  mpf_init (prev_term);
+  mpf_init (answer);
+  mpf_set_str (answer, number, 10);
+  mpf_set_str (prev_term, number, 10);
 
   // t_{n+1} = t_n * (2n - 1) / (2 n) * x^2 * (2n - 1) / (2n + 1)
   //         = t_n (x (2n - 1))^2 / (2n (2n + 1))
 
-  char *two_n_plus_one = (char *)calloc (2, 1);
-  char *two_n = (char *)calloc (2, 1);
-  char *two_n_minus_one = (char *)calloc (2, 1);
-  two_n_plus_one[0] = '3';
-  two_n[0] = '2';
-  two_n_minus_one[0] = '1';
+  mpf_t two_n_plus_one;
+  mpf_t two_n;
+  mpf_t two_n_minus_one;
+  mpf_init (two_n_plus_one);
+  mpf_init (two_n);
+  mpf_init (two_n_minus_one);
+  mpf_set_ui (two_n_plus_one, 3);
+  mpf_set_ui (two_n, 2);
+  mpf_set_ui (two_n_minus_one, 1);
 
   while (1)
     {
-      char *denominator
-          = (char *)calloc (strlen (two_n) + strlen (two_n_plus_one) + 3, 1);
-      multiply (two_n, two_n_plus_one, denominator);
-      char *numerator__
-          = (char *)calloc (strlen (two_n_minus_one) + strlen (number) + 3, 1);
-      multiply (two_n_minus_one, number, numerator__);
-      char *numerator_ = (char *)calloc (
-          strlen (numerator__) + strlen (numerator__) + 3, 1);
-      multiply (numerator__, numerator__, numerator_);
-      char *numerator
-          = (char *)calloc (strlen (numerator_) + strlen (prev_term) + 3, 1);
-      multiply (numerator_, prev_term, numerator);
+      mpf_t denominator;
+      mpf_init (denominator);
+      mpf_mul (denominator, two_n, two_n_plus_one);
+      mpf_t numerator__;
+      mpf_init (numerator__);
+      mpf_mul (numerator__, two_n_minus_one, number_mpf);
+      mpf_t numerator_;
+      mpf_init (numerator_);
+      mpf_mul (numerator_, numerator__, numerator__);
+      mpf_t numerator;
+      mpf_init (numerator);
+      mpf_mul (numerator, numerator_, prev_term);
 
-      char *term = (char *)calloc (
-          strlen (numerator) + strlen (denominator) + accuracy + 3, 1);
-      divide (numerator, denominator, term, accuracy);
+      mpf_t term;
+      mpf_init (term);
+      mpf_div (term, numerator, denominator);
 
       // answer += term
-      char *answer_ = (char *)calloc (strlen (answer) + strlen (term) + 3, 1);
-      add (answer, term, answer_);
+      mpf_t answer_;
+      mpf_init (answer_);
+      mpf_add (answer_, answer, term);
 
-      increment_whole (&two_n_plus_one);
-      increment_whole (&two_n_plus_one);
-      increment_whole (&two_n);
-      increment_whole (&two_n);
-      increment_whole (&two_n_minus_one);
-      increment_whole (&two_n_minus_one);
+      mpf_add_ui (two_n_plus_one, two_n_plus_one, 2);
+      mpf_add_ui (two_n, two_n, 2);
+      mpf_add_ui (two_n_minus_one, two_n_minus_one, 2);
 
-      free (numerator__);
-      free (numerator_);
-      free (numerator);
-      free (denominator);
+      mpf_clear (numerator__);
+      mpf_clear (numerator_);
+      mpf_clear (numerator);
+      mpf_clear (denominator);
 
-      if (check_accuracy (answer, answer_, accuracy))
+      if (mpf_cmp (answer, answer_) == 0)
         {
-          free (answer_);
-          free (term);
+          mpf_clear (answer_);
+          mpf_clear (term);
           break;
         }
 
-      answer = (char *)realloc (answer, strlen (answer_) + 1);
-      strcpy (answer, answer_);
-      free (answer_);
-      prev_term = (char *)realloc (prev_term, strlen (term) + 1);
-      strcpy (prev_term, term);
-      free (term);
+      mpf_set (answer, answer_);
+      mpf_clear (answer_);
+      mpf_set (prev_term, term);
+      mpf_clear (term);
     }
 
-  free (prev_term);
-  free (two_n_minus_one);
-  free (two_n);
-  free (two_n_plus_one);
+  mpf_clear (prev_term);
+  mpf_clear (two_n_minus_one);
+  mpf_clear (two_n);
+  mpf_clear (two_n_plus_one);
+  mpf_clear (number_mpf);
 
-  size_t decimalLocation = strchr (answer, '.') - answer;
-  answer[decimalLocation + accuracy - 4] = 0; // since we did accuracy += 5
-  return answer;
+  char *answer_str = arcsin_mpf_to_char (answer, accuracy);
+  mpf_clear (answer);
+  size_t decimalLocation = strchr (answer_str, '.') - answer_str;
+  answer_str[decimalLocation + accuracy - 4] = 0; // since we did accuracy += 5
+  return answer_str;
 }

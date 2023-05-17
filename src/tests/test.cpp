@@ -104,29 +104,30 @@ int
 main (int argc, char **argv)
 {
   std::cout << "Testing arithmetica:\n\n";
-  std::vector<std::string> functions = { "arcsin",
-                                         "arccos",
-                                         "arctan",
-                                         "cosine",
-                                         "factorial",
-                                         "exponential",
-                                         "fraction_to_continued_fraction",
-                                         "igcd",
-                                         "ilcm",
-                                         "natural_logarithm",
-                                         "power",
-                                         "repeating_decimal_to_fraction",
-                                         "simplify_arithmetic_expression",
-                                         "sine",
-                                         "square_root",
-                                         "tangent",
-                                         "terminating_decimal_to_fraction",
-                                         "add_fraction",
-                                         "multiply_fraction",
-                                         "power_fraction",
-                                         "construct_regular_polygon",
-                                         "continued_fraction_to_fraction",
-                                         "find_roots_of_polynomial" };
+  // std::vector<std::string> functions = { "arcsin",
+  //                                        "arccos",
+  //                                        "arctan",
+  //                                        "cosine",
+  //                                        "factorial",
+  //                                        "exponential",
+  //                                        "fraction_to_continued_fraction",
+  //                                        "igcd",
+  //                                        "ilcm",
+  //                                        "natural_logarithm",
+  //                                        "power",
+  //                                        "repeating_decimal_to_fraction",
+  //                                        "simplify_arithmetic_expression",
+  //                                        "sine",
+  //                                        "square_root",
+  //                                        "tangent",
+  //                                        "terminating_decimal_to_fraction",
+  //                                        "add_fraction",
+  //                                        "multiply_fraction",
+  //                                        "power_fraction",
+  //                                        "construct_regular_polygon",
+  //                                        "continued_fraction_to_fraction",
+  //                                        "find_roots_of_polynomial" };
+  std::vector<std::string> functions = {"arcsin"};
 
   if (argc > 1)
     {
