@@ -110,14 +110,6 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
 
   struct fraction zero = parse_fraction ("0/1");
 
-  // Make a regular copy of the coefficients.
-  char **coefficients = malloc (size * sizeof (char *));
-  for (size_t i = 0; i < size; ++i)
-    {
-      coefficients[i] = malloc (strlen (_coefficients[i]) + 1);
-      strcpy (coefficients[i], _coefficients[i]);
-    }
-
   // Make a fraction copy of the coefficients. Ensure that the leading
   // coefficient is 1.
   struct fraction **fraction_coefficients
@@ -125,13 +117,9 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
   for (size_t i = 0; i < size; ++i)
     {
       fraction_coefficients[i] = malloc (sizeof (struct fraction));
-      fraction_coefficients[i]->numerator
-          = calloc (2 * strlen (coefficients[i]) + 1, sizeof (char));
-      fraction_coefficients[i]->denominator
-          = calloc (2 * strlen (coefficients[i]) + 1, sizeof (char));
-      terminating_decimal_to_fraction (coefficients[i],
-                                       fraction_coefficients[i]->numerator,
-                                       fraction_coefficients[i]->denominator);
+      struct fraction f = parse_fraction (_coefficients[i]);
+      fraction_coefficients[i]->numerator = f.numerator;
+      fraction_coefficients[i]->denominator = f.denominator;
     }
   if (size != 0)
     {
@@ -180,6 +168,57 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
       delete_fraction (first);
     }
 
+  // Make a regular copy of the coefficients by dividing the fractions.
+  // Note that this regular copy will also have the leading coefficient as 1. (as it should)
+  // But at the same time (for the quick elimination), obtain two copies of the first and last coefficients,
+  // multiplied by the denominator of each of the other coefficients.
+
+  char *first_for_check = malloc (strlen(fraction_coefficients[size - 1]->numerator) + 1);
+  strcpy (first_for_check, fraction_coefficients[size - 1]->numerator);
+  char *last_for_check = malloc (strlen(fraction_coefficients[size - 1]->denominator) + 1); 
+  strcpy (last_for_check, fraction_coefficients[size - 1]->denominator);
+
+  for (size_t i = 0; i < size; ++i)
+    {
+      if (strcmp(fraction_coefficients[i]->denominator, "1"))
+        {
+          // Multiply first_for_check and last_for_check by the denominator of this coefficient.
+          char *temp = calloc (strlen (fraction_coefficients[i]->denominator) + strlen (first_for_check) + 3, sizeof (char));
+          multiply (fraction_coefficients[i]->denominator, first_for_check, temp);
+          free (first_for_check);
+          first_for_check = temp;
+          temp = calloc (strlen (fraction_coefficients[i]->denominator) + strlen (last_for_check) + 3, sizeof (char));
+          multiply (fraction_coefficients[i]->denominator, last_for_check, temp);
+          free (last_for_check);
+          last_for_check = temp;
+        }
+    }
+
+  char **coefficients = malloc (size * sizeof (char *));
+  bool division_in_original_coefficients = false;
+  for (size_t i = 0; i < size; ++i)
+    {
+      // Check if there's a division sign in the original coefficients.
+      if (strchr (_coefficients[i], '/'))
+        {
+          division_in_original_coefficients = true;
+        }
+    }
+  if (!division_in_original_coefficients) {
+    // If there's no division sign in the original coefficients, then we can just use the original coefficients.
+    for (size_t i = 0; i < size; ++i)
+      {
+        coefficients[i] = malloc (strlen (_coefficients[i]) + 1);
+        strcpy (coefficients[i], _coefficients[i]);
+      }
+  } else {
+    for (size_t i = 0; i < size; ++i)
+      {
+        coefficients[i] = calloc (strlen (fraction_coefficients[i]->numerator) + strlen (fraction_coefficients[i]->denominator) + accuracy + 3, sizeof (char));
+        divide (fraction_coefficients[i]->numerator, fraction_coefficients[i]->denominator, coefficients[i], accuracy);
+      }
+  }
+
   // First we need to find the approximate roots of the polynomial.
   char **derivative_coefficients = calloc (size - 1, sizeof (char *));
   // 5x^2-3x+1 -> 10x-3
@@ -201,10 +240,17 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
   for (ull i = 0; i < _size - 1; ++i)
     {
       // g_{n+1} = g_n - f(g_n)/f'(g_n)
+      char *prev_guess = calloc (2, sizeof (char));
       char *guess = calloc (2, sizeof (char));
       guess[0] = '1';
+      prev_guess[0] = '0';
       for (ull j = 0; j < accuracy; ++j)
         {
+          if (!strcmp (guess, prev_guess))
+            {
+              break;
+            }
+
           char *f = find_roots_of_polynomial_substitute (
               (const char **)coefficients, size, guess);
           char *f_prime = find_roots_of_polynomial_substitute (
@@ -213,12 +259,15 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
           divide (f, f_prime, div, accuracy);
           char *new_guess = calloc (strlen (guess) + strlen (div) + 3, 1);
           subtract (guess, div, new_guess);
-          free (guess);
+          free (prev_guess);
+          prev_guess = guess;
           guess = new_guess;
           free (f);
           free (f_prime);
           free (div);
         }
+
+      free (prev_guess);
 
       unsigned int guess_negative = guess[0] == '-';
       if (guess_negative)
@@ -250,9 +299,9 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
             }
           // Quick elimination
           char *remainder_1
-              = abs_mod (_coefficients[_size - 1], exact_guess->numerator);
+              = abs_mod (first_for_check, exact_guess->numerator);
           char *remainder_2
-              = abs_mod (_coefficients[0], exact_guess->denominator);
+              = abs_mod (last_for_check, exact_guess->denominator);
           unsigned int divisible_test_1 = strcmp (remainder_1, "0");
           unsigned int divisible_test_2 = strcmp (remainder_2, "0");
           free (remainder_1);
@@ -380,6 +429,9 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
       remove_zeroes (exact_roots[i]->numerator);
       remove_zeroes (exact_roots[i]->denominator);
     }
+
+  free (first_for_check);
+  free (last_for_check);
 
   return exact_roots;
 }

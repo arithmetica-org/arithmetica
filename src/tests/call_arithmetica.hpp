@@ -181,9 +181,8 @@ call_arithmetica (std::vector<std::string> args, double &timeMS)
       return answer;
     }
   if (args[0] == "find_roots_of_polynomial") {
-    if (args.size() < 3) return "Not enough arguments! Check your input!";
+    if (args.size() < 2) return "Not enough arguments! Check your input!";
 
-    size_t accuracy = std::stoul(args[2]);
     std::string coefficients = args[1];
     // remove '[' and ']' front and back
     coefficients.erase(0, 1);
