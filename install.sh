@@ -38,7 +38,7 @@ fi
 
 mkdir arithmetica-install
 cd arithmetica-install
-curl -s https://api.github.com/repos/avighnac/arithmetica/releases/latest \
+curl -s https://api.github.com/repos/arithmetica-org/arithmetica/releases/latest \
 | grep "browser_download_url.*zip" \
 | cut -d : -f 2,3 \
 | tr -d \" \
