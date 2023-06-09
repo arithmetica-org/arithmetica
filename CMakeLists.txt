@@ -12,7 +12,20 @@ option(ENABLE_TESTS "Build tests" ON)
 option(ENABLE_BENCHMARK "Build benchmark" OFF)
 
 if(BUILD_BMO)
-    add_subdirectory(src/basic_math_operations/src/library)
+    include(FetchContent)
+
+    message(STATUS "Fetching basic_math_operations...")
+    FetchContent_Declare(bmo
+        GIT_REPOSITORY https://github.com/avighnac/basic_math_operations
+        GIT_TAG v1.0.0
+    )
+    FetchContent_GetProperties(bmo)
+    if(NOT bmo_POPULATED)
+        message(STATUS "Populating basic_math_operations...")
+        FetchContent_Populate(bmo)
+    endif()
+
+    add_subdirectory(${bmo_SOURCE_DIR}/src/library)
 endif()
 
 if (ENABLE_TESTS)
