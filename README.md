@@ -5,8 +5,8 @@
 <div align='center'>
   If thou dost find this test passing, thou art assured of a library that doth not suffer from memory leaks.
   <br>
-  <a href='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml'>
-    <img src='https://github.com/avighnac/arithmetica/actions/workflows/tests.yml/badge.svg'>
+  <a href='https://github.com/arithmetica-org/arithmetica/actions/workflows/tests.yml'>
+    <img src='https://github.com/arithmetica-org/arithmetica/actions/workflows/tests.yml/badge.svg'>
   </a>
 </div>
 <br>
@@ -42,12 +42,12 @@ Go to the [project page](https://pypi.org/project/arithmetica-py/) on PyPi and d
 Linux users are in luck! If you're on Linux, then you can automatically copy the '.a', '.so', '.h', and '.hpp' to `/usr/include` with one command! Note that you will also need to [install basic_math_operations](https://github.com/avighnac/basic_math_operations): this can be done similarly.
 
 ```shell
-curl -s -H "Accept: application/vnd.github.v3.raw" https://api.github.com/repos/avighnac/arithmetica/contents/install.sh | sudo bash
+curl -s -H "Accept: application/vnd.github.v3.raw" https://api.github.com/repos/arithmetica-org/arithmetica/contents/install.sh | sudo bash
 ```
 
 ### Windows
 
-Include the header [arithmetica.h]() and download the `.a` file from the [releases section](https://github.com/avighnac/arithmetica/releases/).
+Include the header [arithmetica.h]() and download the `.a` file from the [releases section](https://github.com/arithmetica-org/arithmetica/releases/).
 ```c
 #include "arithmetica.h"
 
@@ -55,12 +55,12 @@ Include the header [arithmetica.h]() and download the `.a` file from the [releas
 // ...
 ```
 This library uses [basic_math_operations](https://github.com/avighnac/basic_math_operations) for infinite precision arithmetic.
-To compile a program using [arithmetica](https://github.com/avighnac/arithmetica), do the following:
+To compile a program using [arithmetica](https://github.com/arithmetica-org/arithmetica), do the following:
 ## Command line
 [Download basic_math_operations](https://github.com/avighnac/basic_math_operations/releases/) in a similar manner. However, you do not have to include any headers for [basic_math_operations](https://github.com/avighnac/basic_math_operations). Use the following command to compile:
 `gcc/g++ filename.cpp/c [your arguments] -L. -larithmetica -lbasic_math_operations`
 ## CMake
-Clone [basic_math_operations](https://github.com/avighnac/basic_math_operations) and [arithmetica](https://github.com/avighnac/arithmetica) using `git`, or download the repositories. If your project is on GitHub, then use [submodules](https://github.blog/2016-02-01-working-with-submodules/) to prevent cluttering your language statistics. In either case, the repositories should be present in your project's base folder (or any subfolders in that base folder).
+Clone [basic_math_operations](https://github.com/avighnac/basic_math_operations) and [arithmetica](https://github.com/arithmetica-org/arithmetica) using `git`, or download the repositories. If your project is on GitHub, then use [submodules](https://github.blog/2016-02-01-working-with-submodules/) to prevent cluttering your language statistics. In either case, the repositories should be present in your project's base folder (or any subfolders in that base folder).
 
 In your _base_ `CMakeLists.txt` file, include the following lines of code:
 ```cmake
