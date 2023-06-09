@@ -10,6 +10,7 @@ add_subdirectory(src/library)
 option(BUILD_BMO "Build basic math operations" ON)
 option(ENABLE_TESTS "Build tests" ON)
 option(ENABLE_BENCHMARK "Build benchmark" OFF)
+option(ARITHMETICA_BUILD_SHARED "Build shared library" ON)
 
 if(BUILD_BMO)
     include(FetchContent)
