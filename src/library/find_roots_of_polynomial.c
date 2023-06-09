@@ -244,12 +244,30 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
       char *guess = calloc (2, sizeof (char));
       guess[0] = '1';
       prev_guess[0] = '0';
-      for (ull j = 0; j < accuracy; ++j)
+      char *prev_diff = calloc (2, sizeof (char));
+      prev_diff[0] = '1';
+      bool diff_decreasing = false;
+      for (ull j = 0; j < accuracy || diff_decreasing; ++j)
         {
           if (!strcmp (guess, prev_guess))
             {
               break;
             }
+
+          char *diff = calloc (strlen (guess) + strlen (prev_guess) + 3, 1);
+          subtract (guess, prev_guess, diff);
+          bool diff_abs = diff[0] == '-';
+          if (diff_abs) {
+            ++diff;
+          }
+          // if diff - prev_diff < 0
+          char *diff_of_diff = calloc (strlen (diff) + strlen (prev_diff) + 3, 1);
+          subtract (diff, prev_diff, diff_of_diff);
+          if (diff_of_diff[0] == '-') {
+            diff_decreasing = true;
+          }
+          free (diff - diff_abs);
+          free (diff_of_diff);
 
           char *f = find_roots_of_polynomial_substitute (
               (const char **)coefficients, size, guess);
@@ -268,6 +286,7 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
         }
 
       free (prev_guess);
+      free (prev_diff);
 
       unsigned int guess_negative = guess[0] == '-';
       if (guess_negative)
