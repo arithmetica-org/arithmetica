@@ -5,12 +5,12 @@ project(arithmetica C)
 enable_language(ASM_NASM)
 enable_language(CXX)
 
-add_subdirectory(src/library)
-
 option(BUILD_BMO "Build basic math operations" ON)
 option(ENABLE_TESTS "Build tests" ON)
 option(ENABLE_BENCHMARK "Build benchmark" OFF)
-option(ARITHMETICA_BUILD_SHARED "Build shared library" ON)
+option(ARITHMETICA_BUILD_SHARED "Build shared library" OFF)
+
+set(BMO_SOURCE_DIR "")
 
 if(BUILD_BMO)
     include(FetchContent)
@@ -26,8 +26,11 @@ if(BUILD_BMO)
         FetchContent_Populate(bmo)
     endif()
 
-    add_subdirectory(${bmo_SOURCE_DIR}/src/library)
+    set(BMO_SOURCE_DIR "${bmo_SOURCE_DIR}/src/library")
+    add_subdirectory(${BMO_SOURCE_DIR})
 endif()
+
+add_subdirectory(src/library)
 
 if (ENABLE_TESTS)
     add_subdirectory(src/tests)

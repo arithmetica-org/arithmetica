@@ -55,7 +55,7 @@ set(c_cpp_sources
 )
 
 set(include_directories
-    ${bmo_SOURCE_DIR}/src/library
+    ${BMO_SOURCE_DIR}
     "geometry"
     "fraction"
     "complex"
