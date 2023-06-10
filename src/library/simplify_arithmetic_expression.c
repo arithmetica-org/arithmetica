@@ -216,7 +216,22 @@ get_numerical_arguments (const char *expression, bool fromLeft,
                  && !encounteredMinusSign)
             {
               if (expression[signIndex] == '-')
-                encounteredMinusSign = true;
+                {
+                  // Check if this minus sign is an operator or a sign
+                  bool is_not_operator = signIndex == 0
+                                     || expression[signIndex - 1] == '('
+                                     || expression[signIndex - 1] == '['
+                                     || expression[signIndex - 1] == '{'
+                                     || expression[signIndex - 1] == '^'
+                                     || expression[signIndex - 1] == '*'
+                                     || expression[signIndex - 1] == '/'
+                                     || expression[signIndex - 1] == '+'
+                                     || expression[signIndex - 1] == '-';
+                  if (!is_not_operator)
+                    {
+                      encounteredMinusSign = true;
+                    }
+                }
               length++;
               signIndex--;
             }
@@ -421,7 +436,7 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
           // Change division to multiplication.
           expression[start - 1] = '*';
 
-          delete_fraction(innerExpressionFraction);
+          delete_fraction (innerExpressionFraction);
         }
       bool haveToChangeBrackets
           = (end + 1 < strlen (expression) && expression[end + 1] == '^')
@@ -439,8 +454,8 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
                                              simplifiedInnerExpression);
       _loc = strchr (expression, '(');
 
-      free(simplifiedInnerExpression);
-      free(innerExpression);
+      free (simplifiedInnerExpression);
+      free (innerExpression);
     }
 
   remove_misplaced_and_redundant_signs (&expression);
@@ -666,10 +681,11 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
       return expression;
     }
 
-  if (!outputMixedFraction) {
-    delete_fraction (frac);
-    return expression;
-  }
+  if (!outputMixedFraction)
+    {
+      delete_fraction (frac);
+      return expression;
+    }
 
   char sign = frac.numerator[0] == '-' ? '-' : '+';
   // Ignore sign.
@@ -697,11 +713,10 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
   divide_whole_with_remainder (frac.numerator, frac.denominator, quotient,
                                remainder);
 
-  size_t expression_buf_len = strlen (quotient) + strlen (remainder)
-                              + strlen (frac.denominator) + 6;
+  size_t expression_buf_len
+      = strlen (quotient) + strlen (remainder) + strlen (frac.denominator) + 6;
 
-  expression
-      = (char *)realloc (expression, expression_buf_len);
+  expression = (char *)realloc (expression, expression_buf_len);
   size_t charactersWritten = 0;
   if (sign == '-')
     expression[charactersWritten++] = '-';
@@ -718,7 +733,8 @@ simplify_arithmetic_expression (const char *expression_in, int outputType,
       expression[charactersWritten++] = '/';
       strncpy (expression + charactersWritten, frac.denominator,
                strlen (frac.denominator));
-      expression[charactersWritten+strlen(frac.denominator)] = 0; // Final null terminator.
+      expression[charactersWritten + strlen (frac.denominator)]
+          = 0; // Final null terminator.
     }
 
   free (quotient);
