@@ -25,6 +25,11 @@ arithmetica_power_fraction_round_decimal (char **in, size_t n)
         {
           pos--;
         }
+      while (*pos == '9')
+        {
+          *pos = '0';
+          pos--;
+        }
       (*pos)++;
     }
   *end_pos = '\0';
