@@ -18,7 +18,7 @@ if(BUILD_BMO)
     message(STATUS "Fetching basic_math_operations...")
     FetchContent_Declare(bmo
         GIT_REPOSITORY https://github.com/avighnac/basic_math_operations
-        GIT_TAG v1.0.0
+        GIT_TAG main
     )
     FetchContent_GetProperties(bmo)
     if(NOT bmo_POPULATED)
