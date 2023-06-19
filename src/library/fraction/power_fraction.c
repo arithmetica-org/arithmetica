@@ -101,9 +101,19 @@ power_fraction (struct fraction base_in, struct fraction exponent_in,
   divide (exponent.numerator, exponent.denominator, exponentDecimal,
           accuracy + 3);
 
-  char *powerNumerator = power (base.numerator, exponentDecimal, accuracy + 3);
-  char *powerDenominator
-      = power (base.denominator, exponentDecimal, accuracy + 3);
+  char *powerNumerator;
+  char *powerDenominator;
+
+  if (!strcmp(exponentDecimal, "0.5")) {
+    // This is a square root, so use the square root function.
+    // This speeds up the calculation by a lot.
+    powerNumerator = square_root (base.numerator, accuracy + 3);
+    powerDenominator = square_root (base.denominator, accuracy + 3);
+  } else {
+    powerNumerator = power (base.numerator, exponentDecimal, accuracy + 3);
+    powerDenominator = power (base.denominator, exponentDecimal, accuracy + 3);
+  }
+
   arithmetica_power_fraction_round_decimal (&powerNumerator, accuracy);
   arithmetica_power_fraction_round_decimal (&powerDenominator, accuracy);
 
