@@ -15,6 +15,20 @@ power (const char *x_in, const char *n_in, size_t accuracy)
   strcpy (n, n_in);
   remove_zeroes (x);
   remove_zeroes (n);
+
+  // 0^n = 0, except when n = 0
+  if (!strcmp(x, "0")) {
+    char *answer = (char *)calloc (2, 1);
+    if (!strcmp(n, "0")) {
+      strcpy (answer, "1");
+    } else {
+      strcpy (answer, "0");
+    }
+    free(x);
+    free(n);
+    return answer;
+  }
+
   if (strchr (n, '.') == NULL)
     {
       long n_z = 0;
