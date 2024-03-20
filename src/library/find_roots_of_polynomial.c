@@ -240,10 +240,21 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
   for (ull i = 0; i < _size - 1; ++i)
     {
       // g_{n+1} = g_n - f(g_n)/f'(g_n)
-      char *prev_guess = calloc (2, sizeof (char));
       char *guess = calloc (2, sizeof (char));
-      guess[0] = '1';
-      prev_guess[0] = '0';
+      guess[0] = '0'; // Our initial guess is 1. This might lead to divisons by 0 sometimes: we need to choose a value that doesn't divide by 0.
+      bool good_division = false;
+      do {
+        // Check if f'(guess) is 0: if it is, increment guess and check again, otherwise, break.
+        char *check = find_roots_of_polynomial_substitute ((const char **)derivative_coefficients, size - 1, guess);
+        if (!strcmp (check, "0")) {
+          increment_whole (&guess);
+        } else {
+          good_division = true;
+        }
+        free (check);
+      } while (!good_division);
+      char *prev_guess = calloc (strlen(guess) + 4, sizeof (char));
+      subtract (guess, "1", prev_guess);
       char *prev_diff = calloc (2, sizeof (char));
       prev_diff[0] = '1';
       bool diff_decreasing = false;
