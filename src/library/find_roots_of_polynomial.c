@@ -241,7 +241,7 @@ find_roots_of_polynomial (const char **_coefficients, size_t size,
     {
       // g_{n+1} = g_n - f(g_n)/f'(g_n)
       char *guess = calloc (2, sizeof (char));
-      guess[0] = '0'; // Our initial guess is 1. This might lead to divisons by 0 sometimes: we need to choose a value that doesn't divide by 0.
+      guess[0] = '0'; // Our initial guess is 0. This might lead to divisons by 0 sometimes: we need to choose a value that doesn't divide by 0.
       bool good_division = false;
       do {
         // Check if f'(guess) is 0: if it is, increment guess and check again, otherwise, break.
