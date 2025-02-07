@@ -6,7 +6,12 @@ enable_language(C)
 enable_language(CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
+
+if(APPLE)
+    set(CMAKE_ASM_NASM_FLAGS "${CMAKE_ASM_NASM_FLAGS} -D__MACH__")
+endif()
 
 set(c_cpp_sources
     arithmetica.cpp
@@ -67,6 +72,7 @@ if (UNIX)
         linux/strlen_arithmetica.asm
         linux/truncate.asm
     )
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/linux)
 
     add_library(objlib OBJECT ${c_cpp_sources} ${linux_sources})
     set_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE 1)

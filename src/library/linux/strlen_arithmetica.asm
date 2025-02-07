@@ -1,10 +1,11 @@
+%include "defines.asm"
+
 section .text
-global strlen_arithmetica
-strlen_arithmetica:
+global Strlen_arithmetica
+Strlen_arithmetica:
   ; Input:
   ;   - char *str -> rdi
 
-  ; Registers used:
   ;   - rcx
 
   xor    ecx, ecx

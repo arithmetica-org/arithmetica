@@ -5,6 +5,9 @@ project(arithmetica C)
 enable_language(ASM_NASM)
 enable_language(CXX)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 option(BUILD_BMO "Build basic math operations" ON)
 option(ENABLE_TESTS "Build tests" ON)
 option(ENABLE_BENCHMARK "Build benchmark" OFF)

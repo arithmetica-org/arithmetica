@@ -1,8 +1,10 @@
-extern strlen_arithmetica
+%include "defines.asm"
+
+extern Strlen_arithmetica
 
 section .text
-global  truncate
-truncate:
+global  Truncate
+Truncate:
   ; Input:
   ;   - rdi -> char *n, the number to truncate.
   ;   - rsi -> size_t accuracy, the amount to truncate.
@@ -14,7 +16,7 @@ truncate:
   ;   - rdx
   
   push  rbx
-  call  strlen_arithmetica wrt ..plt
+  CALL(Strlen_arithmetica)
   mov   rcx, rax ; rcx = strlen(n)
   inc   rsi ; increase accuracy by 1 for zeroing
   xor   eax, eax ; Set al to 0
