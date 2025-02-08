@@ -21,12 +21,7 @@ arithmetica::Fraction::Fraction (const std::string &frac)
 }
 arithmetica::Fraction::Fraction (const char *frac)
 {
-  std::string frac_str = frac;
-  frac_str.erase (
-      std::remove_if (frac_str.begin (), frac_str.end (), [] (char c) {
-        return c == ' ' || c == '\t' || c == '\n';
-      }));
-  struct fraction cfrac = parse_fraction (frac_str.c_str ());
+  struct fraction cfrac = parse_fraction (frac);
   this->numerator = cfrac.numerator;
   this->denominator = cfrac.denominator;
   delete_fraction (cfrac);
