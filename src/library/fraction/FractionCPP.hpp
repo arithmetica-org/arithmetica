@@ -3,6 +3,7 @@
 #pragma once
 
 #include "fraction_includeCPP.hpp"
+#include <algorithm>
 #include <string>
 
 namespace arithmetica
@@ -18,7 +19,7 @@ public:
   Fraction (const char *frac);
   Fraction (const struct fraction &frac);
 
-  std::string to_string();
+  std::string to_string ();
 
   /// @brief Adds two fractions.
   /// @param n The right argument to be added to the left argument.
@@ -38,6 +39,6 @@ public:
   Fraction operator/ (const Fraction &n);
   bool operator== (const Fraction &n);
   friend bool operator== (const Fraction &LHS, const Fraction &RHS);
-  friend bool operator<(const Fraction &LHS, const Fraction &RHS);
+  friend bool operator< (const Fraction &LHS, const Fraction &RHS);
 };
 }

@@ -1,6 +1,6 @@
 #include "FractionCPP.hpp"
 
-arithmetica::Fraction::Fraction (){};
+arithmetica::Fraction::Fraction () {};
 arithmetica::Fraction::Fraction (const std::string &numerator,
                                  const std::string &denominator)
 {
@@ -9,14 +9,24 @@ arithmetica::Fraction::Fraction (const std::string &numerator,
 }
 arithmetica::Fraction::Fraction (const std::string &frac)
 {
-  struct fraction cfrac = parse_fraction (frac.c_str ());
+  std::string frac_str = frac;
+  frac_str.erase (
+      std::remove_if (frac_str.begin (), frac_str.end (), [] (char c) {
+        return c == ' ' || c == '\t' || c == '\n';
+      }));
+  struct fraction cfrac = parse_fraction (frac_str.c_str ());
   this->numerator = cfrac.numerator;
   this->denominator = cfrac.denominator;
   delete_fraction (cfrac);
 }
 arithmetica::Fraction::Fraction (const char *frac)
 {
-  struct fraction cfrac = parse_fraction (frac);
+  std::string frac_str = frac;
+  frac_str.erase (
+      std::remove_if (frac_str.begin (), frac_str.end (), [] (char c) {
+        return c == ' ' || c == '\t' || c == '\n';
+      }));
+  struct fraction cfrac = parse_fraction (frac_str.c_str ());
   this->numerator = cfrac.numerator;
   this->denominator = cfrac.denominator;
   delete_fraction (cfrac);
@@ -27,7 +37,9 @@ arithmetica::Fraction::Fraction (const struct fraction &frac)
   denominator = frac.denominator;
 }
 
-std::string arithmetica::Fraction::to_string() {
+std::string
+arithmetica::Fraction::to_string ()
+{
   std::string answer = numerator;
   if (denominator != "1")
     answer += "/" + denominator;
@@ -154,21 +166,23 @@ bool
 arithmetica::Fraction::operator== (const arithmetica::Fraction &n)
 {
   if ((this->numerator == "-0" && n.numerator == "0")
-   || (this->numerator == "0" && n.numerator == "-0"))
+      || (this->numerator == "0" && n.numerator == "-0"))
     return true;
   return this->numerator == n.numerator && this->denominator == n.denominator;
 }
 
 bool
-arithmetica::operator== (const arithmetica::Fraction &LHS, const arithmetica::Fraction &RHS)
+arithmetica::operator== (const arithmetica::Fraction &LHS,
+                         const arithmetica::Fraction &RHS)
 {
   if ((LHS.numerator == "-0" && RHS.numerator == "0")
-   || (LHS.numerator == "0" && RHS.numerator == "-0"))
+      || (LHS.numerator == "0" && RHS.numerator == "-0"))
     return true;
   return LHS.numerator == RHS.numerator && LHS.denominator == RHS.denominator;
 }
 bool
-arithmetica::operator<(const arithmetica::Fraction &LHS, const arithmetica::Fraction &RHS)
+arithmetica::operator< (const arithmetica::Fraction &LHS,
+                        const arithmetica::Fraction &RHS)
 {
   // a < b if a - b < 0
   arithmetica::Fraction _LHS = LHS;
