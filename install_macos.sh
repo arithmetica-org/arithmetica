@@ -1,26 +1,30 @@
 #!/bin/bash
 
-set -e  # Exit on error
+set -e  # Exit immediately if a command exits with a non-zero status
 
-# Define variables
-TMP_DIR=$(mktemp -d)
-ZIP_URL="https://github.com/arithmetica-org/arithmetica-tui/releases/latest/download/libarithmetica-macos-x86_64.zip"
-INSTALL_LIB_DIR="/usr/local/lib"
-INSTALL_INCLUDE_DIR="/usr/local/include"
+INSTALL_DIR="/tmp/arithmetica_install"
+ZIP_URL="https://github.com/arithmetica-org/arithmetica/releases/latest/download/libarithmetica-macos-x86_64.zip"
+ZIP_FILE="arithmetica.zip"
 
-echo "Downloading Arithmetica..."
-curl -L "$ZIP_URL" -o "$TMP_DIR/arithmetica.zip"
+# Create a temporary directory
+mkdir -p "$INSTALL_DIR"
+cd "$INSTALL_DIR"
 
-echo "Extracting..."
-unzip -q "$TMP_DIR/arithmetica.zip" -d "$TMP_DIR"
+# Download the zip file
+curl -L -o "$ZIP_FILE" "$ZIP_URL"
 
-echo "Installing..."
-mkdir -p "$INSTALL_LIB_DIR" "$INSTALL_INCLUDE_DIR"
-mv "$TMP_DIR/libarithmetica.a" "$INSTALL_LIB_DIR/"
-mv "$TMP_DIR/"*.h "$INSTALL_INCLUDE_DIR/" || true
-mv "$TMP_DIR/"*.hpp "$INSTALL_INCLUDE_DIR/" || true
+# Extract the zip file
+unzip "$ZIP_FILE"
 
-echo "Cleaning up..."
-rm -rf "$TMP_DIR"
+# Move the library to /usr/local/lib
+sudo mv libarithmetica.a /usr/local/lib/
+
+# Move the headers to /usr/local/include
+sudo mv arithmetica.h /usr/local/include/
+sudo mv arithmetica.hpp /usr/local/include/
+
+# Cleanup
+cd ~
+rm -rf "$INSTALL_DIR"
 
 echo "Installation complete!"
