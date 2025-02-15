@@ -3,7 +3,7 @@
 set -e  # Exit immediately if a command exits with a non-zero status
 
 INSTALL_DIR="/tmp/arithmetica_install"
-ZIP_URL="https://github.com/arithmetica-org/arithmetica-tui/releases/latest/download/libarithmetica-macos-x86_64.zip"
+ZIP_URL="https://github.com/arithmetica-org/arithmetica/releases/latest/download/libarithmetica-macos-x86_64.zip"
 ZIP_FILE="arithmetica.zip"
 
 # Create a temporary directory
