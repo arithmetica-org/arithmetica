@@ -34,7 +34,7 @@ jobs:
         path: version.txt
 
   make-linux:
-    name: Make libarithmetica for Linux.
+    name: Linux build
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -75,14 +75,53 @@ jobs:
         name: linux-bmo
         path: build/build/_deps/bmo-src/src/library/libbasic_math_operations.a
 
+  make-macos:
+    name: macOS build
+    runs-on: macos-latest
+    permissions:
+      actions: write
+      contents: write
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'cpp' ]
+    steps:
+    - name: Set up NASM
+      uses: ilammy/setup-nasm@v1.3.0
+    - name: Install Rosetta 2, x86 Brew and CMake
+      run: |
+        /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+        file $(which cmake)
+        arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        arch -x86_64 /usr/local/bin/brew reinstall cmake
+    - name: Checkout repo.
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+    - run: |
+        arch -x86_64 /usr/local/bin/cmake -S. -B build
+        arch -x86_64 /usr/local/bin/cmake --build build --config Release --target all -j 10 --
+        mkdir macos-build
+        mv build/src/library/libarithmetica.a macos-build/libarithmetica.a
+        cp src/library/arithmetica.h macos-build/arithmetica.h
+        cp src/library/arithmetica.hpp macos-build/arithmetica.hpp
+        cd macos-build
+        zip -r libarithmetica-macos-x86_64.zip ./
+    - name: Upload compiled binaries.
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-build
+        path: macos-build/libarithmetica-macos-x86_64.zip
+
   make-windows:
-    name: Make libarithmetica-windows.a
+    name: Windows build
     runs-on: windows-latest
     permissions:
       actions: write
       contents: write
       security-events: write
-
     strategy:
       fail-fast: false
       matrix:
@@ -196,6 +235,7 @@ jobs:
       - make-linux
       - make-wheel-linux
       - make-windows
+      - make-macos
       - make-wheel-windows
     runs-on: ubuntu-latest
     steps:
@@ -230,6 +270,33 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/artifacts/linux-build/libarithmetica-linux.zip
           asset_name: libarithmetica-linux.zip
+          asset_content_type: application/zip
+      - name: Upload asset for Linux.
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/artifacts/linux-build/libarithmetica-linux.zip
+          asset_name: libarithmetica-linux.zip
+          asset_content_type: application/zip
+      - name: Upload asset for Linux.
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/artifacts/linux-build/libarithmetica-linux.zip
+          asset_name: libarithmetica-linux.zip
+          asset_content_type: application/zip
+      - name: Upload asset for macOS.
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/artifacts/macos-build/libarithmetica-macos-x86_64.zip
+          asset_name: libarithmetica-macos-x86_64.zip
           asset_content_type: application/zip
       - name: Upload asset for Windows.
         uses: actions/upload-release-asset@v1
