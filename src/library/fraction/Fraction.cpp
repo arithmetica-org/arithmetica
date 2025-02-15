@@ -42,6 +42,10 @@ arithmetica::Fraction::Fraction (const struct fraction &frac)
 std::string
 arithmetica::Fraction::to_string ()
 {
+  if (numerator.empty () and denominator.empty ())
+    {
+      return "";
+    }
   std::string answer = numerator;
   if (denominator != "1")
     answer += "/" + denominator;
