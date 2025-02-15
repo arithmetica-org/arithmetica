@@ -29,7 +29,7 @@ write_callback (char *ptr, size_t size, size_t nmemb, void *userdata)
 std::string get_cpu_name ();
 
 // Linux
-#ifdef __linux__
+#if defined(__linux) or (__MACH__)
 #include <cpuid.h>
 std::string
 get_cpu_name ()

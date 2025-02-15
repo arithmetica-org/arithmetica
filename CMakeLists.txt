@@ -15,21 +15,27 @@ option(ARITHMETICA_BUILD_SHARED "Build shared library" OFF)
 
 set(BMO_SOURCE_DIR "")
 
-if(BUILD_BMO)
-    include(FetchContent)
+if (BUILD_BMO)
+    set(BMO_LOCAL_DIR "${CMAKE_SOURCE_DIR}/deps/basic_math_operations")
 
-    message(STATUS "Fetching basic_math_operations...")
-    FetchContent_Declare(bmo
-        GIT_REPOSITORY https://github.com/avighnac/basic_math_operations
-        GIT_TAG main
-    )
-    FetchContent_GetProperties(bmo)
-    if(NOT bmo_POPULATED)
-        message(STATUS "Populating basic_math_operations...")
-        FetchContent_Populate(bmo)
+    if (EXISTS "${BMO_LOCAL_DIR}/CMakeLists.txt")
+        message(STATUS "Using local basic_math_operations from ${BMO_LOCAL_DIR}")
+        set(BMO_SOURCE_DIR "${BMO_LOCAL_DIR}/src/library")
+    else()
+        include(FetchContent)
+        message(STATUS "Fetching basic_math_operations from GitHub...")
+        FetchContent_Declare(bmo
+            GIT_REPOSITORY https://github.com/avighnac/basic_math_operations
+            GIT_TAG main
+        )
+        FetchContent_GetProperties(bmo)
+        if (NOT bmo_POPULATED)
+            message(STATUS "Populating basic_math_operations...")
+            FetchContent_Populate(bmo)
+        endif()
+
+        set(BMO_SOURCE_DIR "${bmo_SOURCE_DIR}/src/library")
     endif()
-
-    set(BMO_SOURCE_DIR "${bmo_SOURCE_DIR}/src/library")
     add_subdirectory(${BMO_SOURCE_DIR})
 endif()
 

@@ -14,3 +14,6 @@ target_link_libraries(benchmark curl)
 
 target_include_directories(benchmark PRIVATE "../library")
 target_include_directories(benchmark PRIVATE "../tests")
+if (APPLE)
+    target_include_directories(benchmark PRIVATE "/opt/homebrew/include")
+endif()

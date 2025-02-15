@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
+#include <sstream>
 #include <vector>
 
 static void
