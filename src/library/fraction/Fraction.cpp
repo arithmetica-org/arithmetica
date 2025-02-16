@@ -40,7 +40,7 @@ arithmetica::Fraction::Fraction (const struct fraction &frac)
 }
 
 std::string
-arithmetica::Fraction::to_string ()
+arithmetica::Fraction::to_string () const
 {
   if (numerator.empty () and denominator.empty ())
     {
