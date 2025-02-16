@@ -147,7 +147,7 @@ public:
   Fraction (const char *frac);
   Fraction (const struct fraction &frac);
 
-  std::string to_string();
+  std::string to_string() const;
 
   /// @brief Adds two fractions.
   /// @param n The right argument to be added to the left argument.
