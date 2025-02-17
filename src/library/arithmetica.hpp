@@ -271,6 +271,8 @@ public:
   void invert();
   bool invertible();
   Matrix inverse();
+
+  std::string to_string() const;
 };
 
 std::optional<Matrix> operator*(Matrix &a, Matrix &b);

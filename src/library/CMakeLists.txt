@@ -74,9 +74,10 @@ set(c_cpp_sources
     algparser/simplify.cpp
     algparser/to_string.cpp
 
-    linalg/Matrix.cpp
-    linalg/multiply_matrix.cpp
-    linalg/invert_matrix.cpp
+    matrix/Matrix.cpp
+    matrix/multiply.cpp
+    matrix/invert.cpp
+    matrix/to_string.cpp
 
     check_accuracy.c
 )
