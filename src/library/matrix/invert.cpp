@@ -3,8 +3,13 @@
 namespace arithmetica {
 void Matrix::invert() {
   called_invert = true;
+  m_inv.clear();
   if (rows() != cols()) {
     is_invertible = false;
+    return;
+  }
+  if (rows() == 0) {
+    is_invertible = true;
     return;
   }
 

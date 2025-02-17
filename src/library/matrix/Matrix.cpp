@@ -1,10 +1,16 @@
 #include "Matrix.hpp"
 
 namespace arithmetica {
-Matrix::Matrix() {}
+Matrix::Matrix() : called_invert(false), is_invertible(true) {}
 
 Matrix::Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m)
-    : m(m) {}
+    : m(m), called_invert(false), is_invertible(true) {
+  for (const auto &row : m) {
+    if (row.size() != m[0].size()) {
+      throw std::invalid_argument("Error: Inconsistent row sizes in matrix!");
+    }
+  }
+}
 
 std::vector<arithmetica::Fraction> &Matrix::operator[](std::size_t r) {
   if (r >= rows()) {

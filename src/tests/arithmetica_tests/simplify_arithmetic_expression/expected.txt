@@ -61,7 +61,3 @@
 3
 60
 5/3
-undefined
-undefined
-undefined
-undefined
