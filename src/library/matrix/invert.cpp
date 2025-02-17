@@ -84,11 +84,11 @@ bool Matrix::invertible() { return called_invert and is_invertible; }
 
 Matrix Matrix::inverse() {
   if (!called_invert) {
-    throw std::runtime_error(
-        "Error: you need to call invert() before invoking this function");
+    // throw std::runtime_error(
+    //     "Error: you need to call invert() before invoking this function");
   }
   if (!is_invertible) {
-    throw std::runtime_error("Error: the matrix is not invertible");
+    // throw std::runtime_error("Error: the matrix is not invertible");
   }
   return Matrix(m_inv);
 }

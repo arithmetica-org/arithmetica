@@ -10,7 +10,7 @@ std::optional<Matrix> operator*(Matrix &a, Matrix &b) {
   for (int i = 0; i < a.rows(); ++i) {
     for (int j = 0; j < b.cols(); ++j) {
       for (int k = 0; k < a.cols(); ++k) {
-        ans[i][j] = ans[i][j] + a[i][k] * b[k][j];
+        ans.m[i][j] = ans.m[i][j] + a.m[i][k] * b.m[k][j];
       }
     }
   }
