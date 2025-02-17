@@ -6,13 +6,13 @@ std::string Matrix::to_string() const {
   for (std::size_t i = 0; i < m.size(); ++i) {
     ans += "{";
     for (std::size_t j = 0; j < m[i].size(); ++j) {
-      ans += a[i][j].to_string();
-      if (j != a[i].size() - 1) {
+      ans += m[i][j].to_string();
+      if (j != m[i].size() - 1) {
         ans += ", ";
       }
     }
     ans += "}";
-    if (i != a.size() - 1) {
+    if (i != m.size() - 1) {
       ans += ", ";
     }
   }
