@@ -9,3 +9,4 @@ src/python-module/*.egg-info/
 wheels.sh
 dist/
 deps/
+.DS_Store

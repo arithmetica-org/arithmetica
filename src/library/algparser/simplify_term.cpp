@@ -1,4 +1,6 @@
-#include <arithmetica.hpp>
+#include "algexpr.hpp"
+#include <FractionCPP.hpp>
+#include <map>
 
 namespace arithmetica {
 algexpr algexpr::simplify_term(bool bring_coeff_to_front) {

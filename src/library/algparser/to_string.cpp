@@ -1,4 +1,5 @@
-#include <arithmetica.hpp>
+#include "algexpr.hpp"
+#include <FractionCPP.hpp>
 
 namespace arithmetica {
 bool algexpr::has_non_number(const std::string &s) const {

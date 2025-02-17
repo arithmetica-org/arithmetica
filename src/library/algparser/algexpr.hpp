@@ -1,7 +1,7 @@
 #pragma once
 
+#include <FractionCPP.hpp>
 #include <algorithm>
-#include <arithmetica.hpp>
 #include <functional>
 #include <string>
 #include <unordered_map>

@@ -1,4 +1,5 @@
-#include <arithmetica.hpp>
+#include "algexpr.hpp"
+#include <FractionCPP.hpp>
 
 namespace arithmetica {
 algexpr algexpr::divide() {

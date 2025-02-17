@@ -1,4 +1,6 @@
-#include <arithmetica.hpp>
+#include "algexpr.hpp"
+#include <FractionCPP.hpp>
+#include <map>
 
 namespace arithmetica {
 // run after running simplify_term ==> each term becomes *(coeff, variable)

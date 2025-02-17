@@ -184,23 +184,6 @@ public:
 std::string to_string(const Fraction &f);
 
 class algexpr {
-private:
-  bool has_non_number(const std::string &s) const;
-  std::string add_parentheses_if_needed(const std::string &s,
-                                        const std::string &f) const;
-  std::string stringify_function_call(const std::string &f,
-                                      const std::string &l,
-                                      const std::string &r) const;
-  bool is_opening_bracket(const char &c) const;
-  bool is_closing_bracket(const char &c) const;
-  int find_sign(const std::string &s, const char &c, bool backward,
-                bool exclude_first = true) const;
-  int closing_bracket(const std::string &s, int st);
-  std::pair<int, int> get_first_bracket_pair(const std::string &s);
-  bool is_function(const std::string &s);
-  int find_letter(const std::string &s);
-  int variable_end(const std::string &s, int st);
-
 public:
   algexpr *l;
   algexpr *r;
@@ -216,23 +199,64 @@ public:
   algexpr(const algexpr &other);
   algexpr(std::string s);
 
+  /// @brief Converts the algebraic expression to a string for printing.
+  /// @return Returns the string form of the algebraic expression.
   std::string to_string() const;
 
+  /// @brief Returns whether the current expression is a number
+  /// without any variables.
+  /// @return True or false depending on the above condition.
   bool is_numeric();
-  bool is_natural_number(); // [0,1,...,inf)
+  /// @brief Returns whether the current expression is a natural number: here we
+  /// define 0 to also be a natural number. [0, 1, 2, ..., inf).
+  /// @return True or false depending on the above condition.
+  bool is_natural_number();
 
   algexpr deep_copy() const;
+  /// @brief Splits the expression at '+' and '-' signs, and returns the
+  /// sub-expressions formed in an std::vector.
+  /// @return Returns the 'terms' (that is, parts after splitting at '+' and
+  /// '-') in the algebraic expression.
   std::vector<algexpr> terms();
+  /// @brief Splits the expression at '*' signs, and returns the sub-expressions
+  /// formed in an std::vector.
+  /// @return Returns the individual products of the expression.
   std::vector<algexpr> products();
 
+  /// @brief Combines like terms with integer coefficients. Note: this does not
+  /// factor.
+  /// @return Returns the algebraic expression obtained after performing
+  /// additions.
   algexpr add();
-  algexpr multiply(); // you need func == "*"
-  algexpr divide();   // func == "/"
+  /// @brief If the expression represents a multiplication of two
+  /// sub-expressions, this multiplies them.
+  /// @return Returns the result after performing a single multiplication of two
+  /// sub-expressions.
+  algexpr multiply();
+  /// @brief Performs polynomial division if the expression represents a
+  /// division of two expressions.
+  /// @return Evaluates and returns the result of the first division operation,
+  /// if present.
+  algexpr divide();
+  /// @brief Distributes the exponent across all products in a term: for
+  /// example, (uv)^n ==> u^n * v^n
+  /// @return Returns the modified expression.
   algexpr exponent_product();
-  algexpr exponent_sum();                                  // expands (...)^n
-  algexpr simplify_term(bool bring_coeff_to_front = true); // single product
+  /// @brief Expands (x_1 + x_2 + ... + x_k)^n: distributes the exponent across
+  /// all terms.
+  /// @return Returns the modified expression.
+  algexpr exponent_sum();
+  /// @brief Simplifies a single product by combining powers (x^a*x^b ==> x^(a +
+  /// b)), and ordering variables.
+  /// @param bring_coeff_to_front Decides whether to bring the coefficient to
+  /// the front of the expression or not.
+  /// @return Returns the simplified term.
+  algexpr simplify_term(bool bring_coeff_to_front = true);
 
-  void simplify_in_place(); // simplifies, using all the functions above
+  /// @brief Simplifies the algebraic expression in place.
+  void simplify_in_place();
+  /// @brief Simplifies the algebraic experssion.
+  /// @return Returns the simplified expression.
   algexpr simplify();
 };
 
