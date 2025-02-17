@@ -107,7 +107,8 @@ int algexpr::variable_end(const std::string &s, int st) {
   return s.length() - 1;
 }
 
-algexpr::algexpr() : l(nullptr), r(nullptr) {}
+algexpr::algexpr()
+    : l(nullptr), r(nullptr), func(""), coeff(""), variable("") {}
 
 algexpr::algexpr(const algexpr &other) {
   func = other.func;
@@ -117,7 +118,8 @@ algexpr::algexpr(const algexpr &other) {
   r = other.r;
 }
 
-algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
+algexpr::algexpr(std::string s)
+    : l(nullptr), r(nullptr), func(""), coeff(""), variable("") {
   {
     // ((1)) ==> 1
     int l = 0, r = s.length() - 1;

@@ -3,6 +3,9 @@
 namespace arithmetica {
 Matrix::Matrix() {}
 
+Matrix::Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m)
+    : m(m) {}
+
 std::vector<arithmetica::Fraction> &Matrix::operator[](std::size_t r) {
   if (r >= rows()) {
     throw std::out_of_range("Error: matrix row index out of range!");
