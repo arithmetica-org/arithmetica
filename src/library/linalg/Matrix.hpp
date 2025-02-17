@@ -1,7 +1,9 @@
 #pragma once
 
 #include <FractionCPP.hpp>
+#include <algorithm>
 #include <optional>
+#include <stdexcept>
 #include <vector>
 
 namespace arithmetica {

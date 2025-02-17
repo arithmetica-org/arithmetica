@@ -186,16 +186,6 @@ std::string to_string(const Fraction &f);
 
 class algexpr {
 public:
-  algexpr *l;
-  algexpr *r;
-
-  // funtion applied on children
-  std::string func;
-
-  // leaf (one variable active per leaf)
-  arithmetica::Fraction coeff;
-  std::string variable;
-
   algexpr();
   algexpr(const algexpr &other);
   algexpr(std::string s);
@@ -267,8 +257,6 @@ algexpr operator*(const algexpr &a, const algexpr &b);
 algexpr operator/(const algexpr &a, const algexpr &b);
 algexpr operator^(const algexpr &a, const algexpr &b);
 bool operator==(const algexpr &a, const algexpr &b);
-
-std::pair<algexpr, algexpr> divide_polynomial(algexpr f, algexpr g);
 
 class Matrix {
 public:

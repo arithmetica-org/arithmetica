@@ -1,5 +1,4 @@
 #include "Matrix.hpp"
-#include <algorithm>
 
 namespace arithmetica {
 void Matrix::invert() {
