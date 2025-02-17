@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <arithmetica.hpp>
+#include <array>
 
 namespace arithmetica {
 bool algexpr::is_opening_bracket(const char &c) const {
@@ -40,7 +42,7 @@ std::pair<int, int> algexpr::get_first_bracket_pair(const std::string &s) {
   std::pair<int, int> ans = {-1, -1};
   for (std::size_t i = 0, bal = 0; i < s.length(); ++i) {
     bal += is_opening_bracket(s[i]);
-    if (i - 1 >= 0 and s[i - 1] == '_') {
+    if (i >= 1 and s[i - 1] == '_') {
       i = closing_bracket(s, i);
       bal--;
       continue;
