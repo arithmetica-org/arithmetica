@@ -58,6 +58,22 @@ set(c_cpp_sources
 
     geometry/construct_regular_polygon.c
 
+    algparser/algexpr.cpp
+    algparser/deep_copy.cpp
+    algparser/add.cpp
+    algparser/multiply.cpp
+    algparser/divide.cpp
+    algparser/simplify_term.cpp
+    algparser/divide_polynomial.cpp
+    algparser/exponent_product.cpp
+    algparser/exponent_sum.cpp
+    algparser/numeric_checks.cpp
+    algparser/operators.cpp
+    algparser/products.cpp
+    algparser/terms.cpp
+    algparser/simplify.cpp
+    algparser/to_string.cpp
+
     check_accuracy.c
 )
 
@@ -66,6 +82,7 @@ set(include_directories
     "geometry"
     "fraction"
     "complex"
+    "algparser"
     "."
 )
 
