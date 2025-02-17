@@ -1,4 +1,4 @@
-#include "arithmetica.h"
+#include <arithmetica.h>
 #include <basic_math_operations.h>
 #include <math.h>
 #include <stdlib.h>

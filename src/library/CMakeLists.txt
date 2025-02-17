@@ -16,27 +16,27 @@ endif()
 set(c_cpp_sources
     arithmetica.cpp
 
-    arccos.c
-    arcsin.c
-    arctan.c
-    check_accuracy.c
-    continued_fraction_to_fraction.c
-    cosine.c
-    exponential.c
-    factorial.c
-    find_roots_of_polynomial.c
-    fraction_to_continued_fraction.c
-    igcd.c
-    ilcm.c
-    natural_logarithm.c
-    power.c
-    power_integer.c
-    repeating_decimal_to_fraction.c
-    simplify_arithmetic_expression.c
-    sine.c
-    square_root.c
-    tangent.c
-    terminating_decimal_to_fraction.c
+    func/arccos.c
+    func/arcsin.c
+    func/arctan.c
+    func/natural_logarithm.c
+    func/cosine.c
+    func/exponential.c
+    func/sine.c
+    func/square_root.c
+    func/tangent.c
+
+    numeric/continued_fraction_to_fraction.c
+    numeric/factorial.c
+    numeric/find_roots_of_polynomial.c
+    numeric/fraction_to_continued_fraction.c
+    numeric/igcd.c
+    numeric/ilcm.c
+    numeric/power.c
+    numeric/power_integer.c
+    numeric/repeating_decimal_to_fraction.c
+    numeric/simplify_arithmetic_expression.c
+    numeric/terminating_decimal_to_fraction.c
 
     fraction/Fraction.cpp
     fraction/fraction.c
@@ -57,6 +57,8 @@ set(c_cpp_sources
     complex/subtract_complex.c
 
     geometry/construct_regular_polygon.c
+
+    check_accuracy.c
 )
 
 set(include_directories

@@ -1,4 +1,4 @@
-#include "truncate.h"
+#include <truncate.h>
 #include <basic_math_operations.h>
 #include <stdlib.h>
 #include <string.h>
