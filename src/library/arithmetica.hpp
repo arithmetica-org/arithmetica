@@ -203,6 +203,16 @@ private:
   int variable_end(const std::string &s, int st);
 
 public:
+  algexpr *l;
+  algexpr *r;
+
+  // funtion applied on children
+  std::string func;
+
+  // leaf (one variable active per leaf)
+  arithmetica::Fraction coeff;
+  std::string variable;
+
   algexpr();
   algexpr(const algexpr &other);
   algexpr(std::string s);
@@ -285,6 +295,7 @@ public:
   Matrix();
   Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m);
 
+  std::vector<std::vector<arithmetica::Fraction>> m;
   std::vector<arithmetica::Fraction> &operator[](std::size_t r);
 
   std::size_t rows() const;
