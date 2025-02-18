@@ -87,7 +87,8 @@ static std::string color_digits(std::string s, std::string col) {
 
 int main(int argc, char **argv) {
   std::cout << "Testing arithmetica:\n\n";
-  std::vector<std::string> functions = {"arcsin",
+  std::vector<std::string> functions = {"invert_matrix",
+                                        "arcsin",
                                         "arccos",
                                         "arctan",
                                         "cosine",
@@ -109,8 +110,7 @@ int main(int argc, char **argv) {
                                         "power_fraction",
                                         "construct_regular_polygon",
                                         "continued_fraction_to_fraction",
-                                        "find_roots_of_polynomial",
-                                        "invert_matrix"};
+                                        "find_roots_of_polynomial"};
 
   if (argc > 1) {
     std::vector<std::string> newFunctions;
@@ -118,8 +118,6 @@ int main(int argc, char **argv) {
       newFunctions.push_back(argv[i]);
     functions = newFunctions;
   }
-
-  std::sort(functions.begin(), functions.end());
 
   std::string currentDir = get_current_directory();
   std::replace(currentDir.begin(), currentDir.end(), '\\', '/');
