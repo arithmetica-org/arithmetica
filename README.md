@@ -230,3 +230,14 @@ Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex
 - `multiply_complex()` multiplies two complex numbers.
 - `square_root_complex()` finds the [square root](https://en.wikipedia.org/wiki/Square_root) of a complex number to any decimal place.
 - `subtract_complex()` subtracts two complex numbers.
+
+Arithmetica can do some geometry:
+## Geometry functions
+- `construct_regular_polygon()` constructs an n-sided regular polygon, with a specified length and accuracy.
+
+## To-do List
+- Port complex functions other than `operator+` to C++
+- Rename `FractionCPP.hpp` and `Fraction.cpp` to better file names
+- Fix the algebraic parser (Memory leaks + add division)
+- Differentiation and (numerical, no one has the time to implement Risch algorithm) integration
+- Latex support for algebraic parser?

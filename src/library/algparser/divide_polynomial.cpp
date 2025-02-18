@@ -1,6 +1,7 @@
 #include "algexpr.hpp"
 #include <FractionCPP.hpp>
 #include <map>
+#include <stdexcept>
 
 namespace arithmetica {
 std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
