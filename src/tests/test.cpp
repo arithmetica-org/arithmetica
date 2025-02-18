@@ -87,7 +87,7 @@ static std::string color_digits(std::string s, std::string col) {
 
 int main(int argc, char **argv) {
   std::cout << "Testing arithmetica:\n\n";
-  std::vector<std::string> functions = {"algexpr::simplify",
+  std::vector<std::string> functions = {"algexpr_simplify",
                                         "multiply_fraction",
                                         "invert_matrix",
                                         "arcsin",
