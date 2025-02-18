@@ -315,45 +315,45 @@ jobs:
           asset_name: ${{ env.WIN_WHEEL }}
           asset_content_type: application/octet-stream
     
-  pypi-upload:
-    needs:
-      - make-wheel-linux
-      - make-wheel-windows
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: dist/artifacts
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.10.x'
-      - name: Git Version
-        id: version
-        uses: codacy/git-version@2.7.1
-      - name: Use the version
-        run: |
-          echo ${{ steps.version.outputs.version }} > version.txt
-          g++ src/python-module/fix-version.cpp -O3
-          ./a.out version.txt
-          echo ${{ steps.version.outputs.version }}
-      - name: Install Twine and create SDIST
-        run: |
-          sudo apt-get install rename -y
-          python -m pip install twine
-          python setup.py sdist --formats=gztar
-          mkdir -p build/dist/ && mv dist/artifacts build/dist
-          mv build/dist/artifacts/windows-whl/* dist/
-          mv build/dist/artifacts/linux-whl/* dist/
-          echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-      - name: Run Twine
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          twine upload --verbose dist/*
+  # pypi-upload:
+  #   needs:
+  #     - make-wheel-linux
+  #     - make-wheel-windows
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Download artifacts
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         path: dist/artifacts
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v3
+  #       with:
+  #         python-version: '3.10.x'
+  #     - name: Git Version
+  #       id: version
+  #       uses: codacy/git-version@2.7.1
+  #     - name: Use the version
+  #       run: |
+  #         echo ${{ steps.version.outputs.version }} > version.txt
+  #         g++ src/python-module/fix-version.cpp -O3
+  #         ./a.out version.txt
+  #         echo ${{ steps.version.outputs.version }}
+  #     - name: Install Twine and create SDIST
+  #       run: |
+  #         sudo apt-get install rename -y
+  #         python -m pip install twine
+  #         python setup.py sdist --formats=gztar
+  #         mkdir -p build/dist/ && mv dist/artifacts build/dist
+  #         mv build/dist/artifacts/windows-whl/* dist/
+  #         mv build/dist/artifacts/linux-whl/* dist/
+  #         echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+  #     - name: Run Twine
+  #       env:
+  #         TWINE_USERNAME: __token__
+  #         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+  #       run: |
+  #         twine upload --verbose dist/*
