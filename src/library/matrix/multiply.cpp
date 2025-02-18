@@ -7,9 +7,9 @@ std::optional<Matrix> operator*(Matrix &a, Matrix &b) {
   }
   Matrix ans(
       std::vector(a.rows(), std::vector<arithmetica::Fraction>(b.cols(), "0")));
-  for (int i = 0; i < a.rows(); ++i) {
-    for (int j = 0; j < b.cols(); ++j) {
-      for (int k = 0; k < a.cols(); ++k) {
+  for (std::size_t i = 0; i < a.rows(); ++i) {
+    for (std::size_t j = 0; j < b.cols(); ++j) {
+      for (std::size_t k = 0; k < a.cols(); ++k) {
         ans.m[i][j] = ans.m[i][j] + a.m[i][k] * b.m[k][j];
       }
     }

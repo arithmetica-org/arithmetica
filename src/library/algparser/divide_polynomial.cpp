@@ -54,5 +54,6 @@ std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
       return {algexpr("0"), e1};
     }
   }
+  throw std::runtime_error("Unimplemented function!");
 }
 } // namespace arithmetica

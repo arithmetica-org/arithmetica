@@ -26,6 +26,7 @@ private:
   bool is_function(const std::string &s);
   int find_letter(const std::string &s);
   int variable_end(const std::string &s, int st);
+  std::string debug_string(int i) const;
 
 public:
   algexpr *l;
@@ -38,11 +39,15 @@ public:
   frac coeff;
   std::string variable;
 
+  ~algexpr();
+  algexpr &operator=(const algexpr &other);
+
   algexpr();
   algexpr(const algexpr &other);
   algexpr(std::string s);
 
   std::string to_string() const;
+  std::string debug_string() const;
 
   bool is_numeric();
   bool is_natural_number(); // [0,1,...,inf)

@@ -81,4 +81,14 @@ std::string algexpr::to_string() const {
   }
   return stringify_function_call(func, left, right);
 }
+
+std::string algexpr::debug_string() const { return debug_string(0); }
+
+std::string algexpr::debug_string(int i) const {
+  std::string s = "i = " + std::to_string(i) + ", var = " + variable +
+                  ", coeff = " + coeff.to_string() + " func = " + func;
+  return s + "\n" + std::string(i, '\t') + (l ? l->debug_string(i + 1) : "") +
+         "\n" + std::string(i, '\t') + (r ? r->debug_string(i + 1) : "");
+}
+
 } // namespace arithmetica

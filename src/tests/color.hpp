@@ -30,5 +30,5 @@ std::string color(std::string text, std::string color) {
   else if (color == "White")
     return White + text + Reset;
 
-  return "no not a color";
+  throw std::runtime_error("Invalid color!");
 }

@@ -164,8 +164,8 @@ public:
   /// @return Where the division will be stored.
   Fraction operator/(const Fraction &n);
   bool operator==(const Fraction &n);
-  friend bool operator==(const Fraction &LHS, const Fraction &RHS);
-  friend bool operator<(const Fraction &LHS, const Fraction &RHS);
+  bool operator<(const Fraction &n);
+  bool operator>(const Fraction &n);
 };
 
 class Complex {
@@ -180,6 +180,11 @@ public:
   /// @param n The right argument to be added to the left argument.
   /// @return Where the addition will be stored.
   Complex operator+(Complex n);
+  Complex operator-(Complex n);
+  Complex operator*(Complex n);
+  Complex operator/(Complex n);
+  std::string abs(Complex n);
+  Complex conj(Complex n);
 };
 
 std::string to_string(const Fraction &f);
@@ -201,6 +206,7 @@ private:
   bool is_function(const std::string &s);
   int find_letter(const std::string &s);
   int variable_end(const std::string &s, int st);
+  std::string debug_string(int i) const;
 
 public:
   algexpr *l;
@@ -213,6 +219,9 @@ public:
   arithmetica::Fraction coeff;
   std::string variable;
 
+  ~algexpr();
+  algexpr &operator=(const algexpr &other);
+
   algexpr();
   algexpr(const algexpr &other);
   algexpr(std::string s);
@@ -220,7 +229,9 @@ public:
   /// @brief Converts the algebraic expression to a string for printing.
   /// @return Returns the string form of the algebraic expression.
   std::string to_string() const;
-
+  /// @brief Converts the algebraic expression to a debug string for printing.
+  /// @return Returns the debug form of the algebraic expression.
+  std::string debug_string() const;
   /// @brief Returns whether the current expression is a number
   /// without any variables.
   /// @return True or false depending on the above condition.

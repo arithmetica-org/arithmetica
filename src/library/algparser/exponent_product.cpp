@@ -6,7 +6,7 @@ namespace arithmetica {
 algexpr algexpr::exponent_product() {
   bool ans_given_value = false;
   algexpr ans("1");
-  for (auto &i : products()) {
+  for (const auto &i : products()) {
     if (i.func != "^") {
       if (!ans_given_value) {
         ans_given_value = true;
@@ -29,7 +29,7 @@ algexpr algexpr::exponent_product() {
     for (auto &term : terms) {
       if (!ans_given_value) {
         ans_given_value = true;
-        ans = (term ^ *i.r);
+        ans = term ^ *i.r;
       } else {
         ans = ans * (term ^ *i.r);
       }

@@ -19,7 +19,7 @@ void Matrix::invert() {
   }
 
   for (std::size_t s = 0; s < rows(); ++s) {
-    int nonzero_idx = rows();
+    std::size_t nonzero_idx = rows();
     for (std::size_t i = s; i < rows(); ++i) {
       if (!(m[i][s] == "0")) {
         nonzero_idx = i;
@@ -45,7 +45,7 @@ void Matrix::invert() {
     }
   }
 
-  for (int s = int(rows()) - 1; s >= 0; --s) {
+  for (long long s = int(rows()) - 1; s >= 0; --s) {
     for (std::size_t i = s + 1; i < rows(); ++i) {
       auto k = m[s][i];
       for (std::size_t j = 0; j < rows(); ++j) {
@@ -64,7 +64,7 @@ void Matrix::invert() {
       is_invertible = false;
       return;
     }
-    if (nonzero_idx != s) {
+    if (nonzero_idx != std::size_t(s)) {
       for (std::size_t i = 0; i < rows(); ++i) {
         m[s][i] = m[s][i] + m[nonzero_idx][i];
         m_inv[s][i] = m_inv[s][i] + m_inv[nonzero_idx][i];

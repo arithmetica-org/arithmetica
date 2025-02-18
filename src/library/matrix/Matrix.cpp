@@ -4,7 +4,7 @@ namespace arithmetica {
 Matrix::Matrix() : called_invert(false), is_invertible(true) {}
 
 Matrix::Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m)
-    : m(m), called_invert(false), is_invertible(true) {
+    : called_invert(false), is_invertible(true), m(m) {
   for (const auto &row : m) {
     if (row.size() != m[0].size()) {
       throw std::invalid_argument("Error: Inconsistent row sizes in matrix!");
