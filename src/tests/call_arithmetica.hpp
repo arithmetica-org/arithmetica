@@ -561,7 +561,8 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
     if (!m.invertible()) {
       return "N/A";
     }
-    answer = m.inverse().to_string();
+    auto inv = m.inverse();
+    answer = inv.to_string();
     auto end = std::chrono::high_resolution_clock::now();
     timeMS = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)
                  .count() *
