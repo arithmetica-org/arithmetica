@@ -87,7 +87,8 @@ static std::string color_digits(std::string s, std::string col) {
 
 int main(int argc, char **argv) {
   std::cout << "Testing arithmetica:\n\n";
-  std::vector<std::string> functions = {"invert_matrix",
+  std::vector<std::string> functions = {"multiply_fraction",
+                                        "invert_matrix",
                                         "arcsin",
                                         "arccos",
                                         "arctan",
@@ -106,7 +107,6 @@ int main(int argc, char **argv) {
                                         "tangent",
                                         "terminating_decimal_to_fraction",
                                         "add_fraction",
-                                        "multiply_fraction",
                                         "power_fraction",
                                         "construct_regular_polygon",
                                         "continued_fraction_to_fraction",

@@ -7,27 +7,30 @@
 struct fraction
 simplify_parsed_fraction (struct fraction _frac)
 {
-  struct fraction answer;
-  if (strlen (_frac.numerator) == 0 || strlen (_frac.denominator) == 0)
+struct fraction answer;
+size_t num_len = strlen(_frac.numerator);
+  if (num_len == 0 || strlen (_frac.denominator) == 0 ||
+      (num_len >= 1 && strcmp("-0", _frac.numerator) == 0))
     {
       answer = create_fraction ("0", "1");
       return answer;
     }
   struct fraction frac;
-  frac.numerator = (char *)malloc(strlen(_frac.numerator) + 1);
+  frac.numerator = (char *)malloc(num_len + 1);
   frac.denominator = (char *)malloc(strlen(_frac.denominator) + 1);
   strcpy(frac.numerator, _frac.numerator);
   strcpy(frac.denominator, _frac.denominator);
   if (frac.numerator[0] != '-' && frac.denominator[0] == '-')
     {
-      size_t n = strlen (frac.numerator);
-      frac.numerator = (char *)realloc (frac.numerator, n + 2);
-      memmove (frac.numerator + 1, frac.numerator, n);
-      frac.numerator[0] = '-';
-      frac.numerator[n + 1] = 0;
-      n = strlen (frac.denominator);
-      memmove (frac.denominator, frac.denominator + 1, n - 1);
-      frac.denominator[n - 1] = 0;
+      if (strcmp("0", frac.numerator) != 0) {
+        size_t n = strlen (frac.numerator);
+        frac.numerator = (char *)realloc (frac.numerator, n + 2);
+        memmove (frac.numerator + 1, frac.numerator, n);
+        frac.numerator[0] = '-';
+        frac.numerator[n + 1] = 0;
+      }
+      size_t n = strlen (frac.denominator);
+      memmove (frac.denominator, frac.denominator + 1, n);
     }
   if (frac.numerator[0] == '-' && frac.denominator[0] == '-')
     {

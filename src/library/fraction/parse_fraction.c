@@ -53,6 +53,7 @@ parse_fraction (const char *frac)
           answer.numerator = (char *)realloc (answer.numerator, n + 2);
           memmove (answer.numerator + 1, answer.numerator, n + 1);
           answer.numerator[0] = '-';
+          answer.numerator[n + 1] = 0;
         }
     }
   long d1 = return_decimals_and_remove_decimal_point (&answer.numerator),
