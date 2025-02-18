@@ -24,6 +24,7 @@ simplify_parsed_fraction (struct fraction _frac)
       frac.numerator = (char *)realloc (frac.numerator, n + 2);
       memmove (frac.numerator + 1, frac.numerator, n);
       frac.numerator[0] = '-';
+      frac.numerator[n + 1] = 0;
       n = strlen (frac.denominator);
       memmove (frac.denominator, frac.denominator + 1, n - 1);
       frac.denominator[n - 1] = 0;

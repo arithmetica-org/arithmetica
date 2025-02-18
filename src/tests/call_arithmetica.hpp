@@ -553,7 +553,8 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
       }
       return a;
     };
-    arithmetica::Matrix m = parse_matrix(args[1]);
+    auto v = parse_matrix(args[1]);
+    arithmetica::Matrix m(v);
     std::string answer;
     auto start = std::chrono::high_resolution_clock::now();
     m.invert();
