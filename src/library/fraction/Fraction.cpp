@@ -46,7 +46,8 @@ std::string arithmetica::Fraction::to_string() const {
 /// @brief Adds two fractions.
 /// @param n The right argument to be added to the left argument.
 /// @return Where the addition will be stored.
-arithmetica::Fraction arithmetica::Fraction::operator+(const Fraction &n) {
+arithmetica::Fraction
+arithmetica::Fraction::operator+(const Fraction &n) const {
   struct fraction i_1;
   struct fraction i_2;
 
@@ -74,7 +75,7 @@ arithmetica::Fraction arithmetica::Fraction::operator+(const Fraction &n) {
 /// @param n The right argument to be subtracted from the left argument.
 /// @return Where the subtraction will be stored.
 arithmetica::Fraction
-arithmetica::Fraction::operator-(const arithmetica::Fraction &n) {
+arithmetica::Fraction::operator-(const arithmetica::Fraction &n) const {
   struct fraction i_1;
   struct fraction i_2;
 
@@ -101,7 +102,8 @@ arithmetica::Fraction::operator-(const arithmetica::Fraction &n) {
 /// @brief Multiplies two fractions.
 /// @param n The right argument to be multiplied by the left argument.
 /// @return Where the multiplication will be stored.
-arithmetica::Fraction arithmetica::Fraction::operator*(const Fraction &n) {
+arithmetica::Fraction
+arithmetica::Fraction::operator*(const Fraction &n) const {
   struct fraction i_1;
   struct fraction i_2;
 
@@ -128,7 +130,8 @@ arithmetica::Fraction arithmetica::Fraction::operator*(const Fraction &n) {
 /// @brief Divides two fractions.
 /// @param n The denominator of the division.
 /// @return Where the division will be stored.
-arithmetica::Fraction arithmetica::Fraction::operator/(const Fraction &n) {
+arithmetica::Fraction
+arithmetica::Fraction::operator/(const Fraction &n) const {
   struct fraction i_1;
   struct fraction i_2;
 
@@ -152,18 +155,18 @@ arithmetica::Fraction arithmetica::Fraction::operator/(const Fraction &n) {
   return answer;
 }
 
-bool arithmetica::Fraction::operator==(const arithmetica::Fraction &n) {
+bool arithmetica::Fraction::operator==(const arithmetica::Fraction &n) const {
   if ((this->numerator == "-0" && n.numerator == "0") ||
       (this->numerator == "0" && n.numerator == "-0"))
     return true;
   return this->numerator == n.numerator && this->denominator == n.denominator;
 }
-bool arithmetica::Fraction::operator<(const arithmetica::Fraction &n) {
+bool arithmetica::Fraction::operator<(const arithmetica::Fraction &n) const {
   // a < b if a - b < 0
   arithmetica::Fraction subtraction = *this - n;
   return subtraction.numerator[0] == '-';
 }
-bool arithmetica::Fraction::operator>(const arithmetica::Fraction &n) {
+bool arithmetica::Fraction::operator>(const arithmetica::Fraction &n) const {
   // a > b if b-a < 0
   arithmetica::Fraction subtraction = n - *this;
   return subtraction.numerator[0] == '-';
