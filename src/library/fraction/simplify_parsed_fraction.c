@@ -5,14 +5,19 @@
 #include <string.h>
 
 struct fraction
-simplify_parsed_fraction (struct fraction frac)
+simplify_parsed_fraction (struct fraction _frac)
 {
   struct fraction answer;
-  if (strlen (frac.numerator) == 0 || strlen (frac.denominator) == 0)
+  if (strlen (_frac.numerator) == 0 || strlen (_frac.denominator) == 0)
     {
       answer = create_fraction ("0", "1");
       return answer;
     }
+  struct fraction frac;
+  frac.numerator = (char *)malloc(strlen(_frac.numerator) + 1);
+  frac.denominator = (char *)malloc(strlen(_frac.denominator) + 1);
+  strcpy(frac.numerator, _frac.numerator);
+  strcpy(frac.denominator, _frac.denominator);
   if (frac.numerator[0] != '-' && frac.denominator[0] == '-')
     {
       size_t n = strlen (frac.numerator);
@@ -45,6 +50,7 @@ simplify_parsed_fraction (struct fraction frac)
   divide (frac.denominator, hcf, answer.denominator, 0);
 
   free (hcf);
+  delete_fraction(frac);
 
   return answer;
 }

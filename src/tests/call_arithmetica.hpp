@@ -534,13 +534,13 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
       str = str.substr(1, str.length() - 2);
       std::string cur;
       for (int i = 0, bal = 0; i < str.length(); ++i) {
-        bal += str[i] == '(';
-        bal -= str[i] == ')';
-        if (bal == 1 and str[i] == '(') {
+        bal += str[i] == '{';
+        bal -= str[i] == '}';
+        if (bal == 1 and str[i] == '{') {
           cur.clear();
           continue;
         }
-        if (bal == 0 and str[i] == ')') {
+        if (bal == 0 and str[i] == '}') {
           auto t = tokenize(cur, ',');
           std::vector<arithmetica::Fraction> v;
           for (auto &i : t) {

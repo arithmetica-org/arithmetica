@@ -18,7 +18,7 @@ public:
   Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m);
 
   std::vector<std::vector<arithmetica::Fraction>> m;
-  // std::vector<arithmetica::Fraction> &operator[](std::size_t r);
+  std::vector<arithmetica::Fraction> &operator[](std::size_t r);
 
   std::size_t rows() const;
   std::size_t cols() const;

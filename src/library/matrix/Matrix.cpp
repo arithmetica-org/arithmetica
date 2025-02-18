@@ -7,18 +7,17 @@ Matrix::Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m)
     : m(m), called_invert(false), is_invertible(true) {
   for (const auto &row : m) {
     if (row.size() != m[0].size()) {
-      // throw std::invalid_argument("Error: Inconsistent row sizes in
-      // matrix!");
+      throw std::invalid_argument("Error: Inconsistent row sizes in matrix!");
     }
   }
 }
 
-// std::vector<arithmetica::Fraction> &Matrix::operator[](std::size_t r) {
-//   if (r >= rows()) {
-//     throw std::out_of_range("Error: matrix row index out of range!");
-//   }
-//   return m[r];
-// }
+std::vector<arithmetica::Fraction> &Matrix::operator[](std::size_t r) {
+  if (r >= rows()) {
+    throw std::out_of_range("Error: matrix row index out of range!");
+  }
+  return m[r];
+}
 
 std::size_t Matrix::rows() const { return m.size(); }
 std::size_t Matrix::cols() const {

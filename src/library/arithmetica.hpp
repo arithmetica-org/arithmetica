@@ -185,6 +185,23 @@ public:
 std::string to_string(const Fraction &f);
 
 class algexpr {
+private:
+  bool has_non_number(const std::string &s) const;
+  std::string add_parentheses_if_needed(const std::string &s,
+                                        const std::string &f) const;
+  std::string stringify_function_call(const std::string &f,
+                                      const std::string &l,
+                                      const std::string &r) const;
+  bool is_opening_bracket(const char &c) const;
+  bool is_closing_bracket(const char &c) const;
+  int find_sign(const std::string &s, const char &c, bool backward,
+                bool exclude_first = true) const;
+  int closing_bracket(const std::string &s, int st);
+  std::pair<int, int> get_first_bracket_pair(const std::string &s);
+  bool is_function(const std::string &s);
+  int find_letter(const std::string &s);
+  int variable_end(const std::string &s, int st);
+
 public:
   algexpr();
   algexpr(const algexpr &other);
@@ -259,6 +276,11 @@ algexpr operator^(const algexpr &a, const algexpr &b);
 bool operator==(const algexpr &a, const algexpr &b);
 
 class Matrix {
+private:
+  bool called_invert;
+  bool is_invertible;
+  std::vector<std::vector<arithmetica::Fraction>> m_inv;
+
 public:
   Matrix();
   Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m);
