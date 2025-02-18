@@ -569,7 +569,7 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
              1e-6;
     return answer;
   }
-  if (args[0] == "algexpr::simplify") {
+  if (args[0] == "algexpr_simplify") {
     if (args.size() < 2) {
       return "";
     }
