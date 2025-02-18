@@ -52,7 +52,6 @@ public:
   bool is_numeric();
   bool is_natural_number(); // [0,1,...,inf)
 
-  algexpr deep_copy() const;
   std::vector<algexpr> terms();
   std::vector<algexpr> products();
 

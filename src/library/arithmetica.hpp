@@ -241,7 +241,6 @@ public:
   /// @return True or false depending on the above condition.
   bool is_natural_number();
 
-  algexpr deep_copy() const;
   /// @brief Splits the expression at '+' and '-' signs, and returns the
   /// sub-expressions formed in an std::vector.
   /// @return Returns the 'terms' (that is, parts after splitting at '+' and

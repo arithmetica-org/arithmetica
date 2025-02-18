@@ -59,7 +59,6 @@ set(c_cpp_sources
     geometry/construct_regular_polygon.c
 
     algparser/algexpr.cpp
-    algparser/deep_copy.cpp
     algparser/add.cpp
     algparser/multiply.cpp
     algparser/divide.cpp

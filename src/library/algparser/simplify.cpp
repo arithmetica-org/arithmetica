@@ -4,25 +4,29 @@
 namespace arithmetica {
 void algexpr::simplify_in_place() {
   if (l != nullptr) {
+    auto t = l;
     l = new algexpr(l->simplify());
+    delete t;
   }
   if (r != nullptr) {
+    auto t = l;
     r = new algexpr(r->simplify());
+    delete t;
   }
   if (func == "^") {
-    *this = std::move(exponent_sum());
-    *this = std::move(exponent_product());
+    *this = exponent_sum();
+    *this = exponent_product();
   } else if (func == "*") {
-    *this = std::move(multiply());
+    *this = multiply();
   } else if (func == "/") {
-    *this = std::move(divide());
+    *this = divide();
   } else {
-    *this = std::move(add());
+    *this = add();
   }
 }
 
 algexpr algexpr::simplify() {
-  algexpr ans = std::move(this->deep_copy());
+  algexpr ans = *this;
   ans.simplify_in_place();
   return ans;
 }

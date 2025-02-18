@@ -108,24 +108,20 @@ int algexpr::variable_end(const std::string &s, int st) {
 }
 
 algexpr::~algexpr() {
-  if (l != nullptr) {
-    delete l;
-  }
-  if (r != nullptr) {
-    delete r;
-  }
+  delete l;
+  delete r;
 }
 
 algexpr &algexpr::operator=(const algexpr &other) {
   if (this == &other) {
     return *this;
   }
-  this->~algexpr();
-  func = other.func;
-  coeff = other.coeff;
-  variable = other.variable;
-  l = other.l ? new algexpr(other.l->deep_copy()) : nullptr;
-  r = other.r ? new algexpr(other.r->deep_copy()) : nullptr;
+  algexpr t(other);
+  std::swap(func, t.func);
+  std::swap(coeff, t.coeff);
+  std::swap(variable, t.variable);
+  std::swap(l, t.l);
+  std::swap(r, t.r);
   return *this;
 }
 
@@ -135,8 +131,8 @@ algexpr::algexpr(const algexpr &other) {
   func = other.func;
   coeff = other.coeff;
   variable = other.variable;
-  l = other.l;
-  r = other.r;
+  l = other.l ? new algexpr(*other.l) : nullptr;
+  r = other.r ? new algexpr(*other.r) : nullptr;
 }
 
 algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
