@@ -9,7 +9,7 @@ void algexpr::simplify_in_place() {
     delete t;
   }
   if (r != nullptr) {
-    auto t = l;
+    auto t = r;
     r = new algexpr(r->simplify());
     delete t;
   }
