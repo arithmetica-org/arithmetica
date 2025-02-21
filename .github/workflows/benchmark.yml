@@ -53,6 +53,11 @@ jobs:
         g++ src/benchmark/get-unique-identifier.cpp -O3
         ./a.out uid.txt
         echo "UID=$(cat uid.txt)" >> $GITHUB_ENV
-    - name: Benchmark
+    - name: Benchmark (pull request)
+      if: github.event_name == 'pull_request'
+      run: |
+        ./build/src/benchmark/benchmark --no-live-updates --unique-identifier ${{ env.UID }}
+    - name: Benchmark (normal)
+      if: github.event_name != 'pull_request'
       run: |
         ./build/src/benchmark/benchmark --no-live-updates --unique-identifier ${{ env.UID }} --upload ${{ secrets.PRIVATE_UPLOAD_SERVER }} ${{ secrets.PRIVATE_UPLOAD_KEY }} ${{ secrets.PRIVATE_UPLOAD_NUMBER }}
