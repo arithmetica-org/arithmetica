@@ -198,6 +198,17 @@ algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
   // remove spaces
   s.erase(std::remove(s.begin(), s.end(), ' '), s.end());
   {
+    // remove consecutive +'s and -'s
+    std::string _s;
+    for (std::size_t i = 0; i < s.length(); ++i) {
+      if (i != 0 and (s[i] == '+' or s[i] == '-') and s[i] == s[i - 1]) {
+        continue;
+      }
+      _s.push_back(s[i]);
+    }
+    s = _s;
+  }
+  {
     // ((1)) ==> 1
     int l = 0, r = s.length() - 1;
     while (l < r and is_opening_bracket(s[l]) and closing_bracket(s, l) == r) {
