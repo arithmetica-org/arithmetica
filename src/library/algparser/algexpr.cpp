@@ -210,7 +210,7 @@ algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
         len++;
         continue;
       } else {
-        if (len % 2 == 1) {
+        if (len % 2 == 1 and len != 1) {
           _s.pop_back();
         }
         _s.push_back(s[i]);
