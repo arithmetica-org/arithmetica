@@ -15,6 +15,8 @@ private:
 
 public:
   Matrix();
+  Matrix(const int &x);
+  Matrix(const int &x, const int &y);
   Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m);
 
   std::vector<std::vector<arithmetica::Fraction>> m;

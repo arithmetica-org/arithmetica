@@ -63,7 +63,6 @@ set(c_cpp_sources
     algparser/multiply.cpp
     algparser/divide.cpp
     algparser/simplify_term.cpp
-    algparser/divide_polynomial.cpp
     algparser/exponent_product.cpp
     algparser/exponent_sum.cpp
     algparser/numeric_checks.cpp
@@ -87,6 +86,7 @@ set(include_directories
     "fraction"
     "complex"
     "algparser"
+    "matrix"
     "."
 )
 

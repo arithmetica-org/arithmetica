@@ -3,6 +3,14 @@
 namespace arithmetica {
 Matrix::Matrix() : called_invert(false), is_invertible(true) {}
 
+Matrix::Matrix(const int &x)
+    : called_invert(false), is_invertible(true),
+      m(std::vector(x, std::vector<arithmetica::Fraction>(x, "0"))) {}
+
+Matrix::Matrix(const int &x, const int &y)
+    : called_invert(false), is_invertible(true),
+      m(std::vector(x, std::vector<arithmetica::Fraction>(y, "0"))) {}
+
 Matrix::Matrix(const std::vector<std::vector<arithmetica::Fraction>> &m)
     : called_invert(false), is_invertible(true), m(m) {
   for (const auto &row : m) {
