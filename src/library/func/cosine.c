@@ -62,10 +62,10 @@ cosine (const char *number, size_t accuracy)
       bool accuracy_met = check_accuracy(answer, answer_buf, accuracy);
 
       answer = (char *)realloc (answer, strlen (answer_buf) + 1);
-      strncpy (answer, answer_buf, strlen (answer_buf) + 1);
+      strcpy (answer, answer_buf);
 
       prev_term = (char *)realloc (prev_term, strlen (current_term) + 1);
-      strncpy (prev_term, current_term, strlen (current_term) + 1);
+      strcpy (prev_term, current_term);
 
       increment_whole (&n_1);
       increment_whole (&n_1);
