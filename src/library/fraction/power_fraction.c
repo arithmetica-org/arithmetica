@@ -119,10 +119,10 @@ power_fraction (struct fraction base_in, struct fraction exponent_in,
 
   char *parseFractionArgument = (char *)calloc (
       strlen (powerNumerator) + strlen (powerDenominator) + 2, 1);
-  strncpy (parseFractionArgument, powerNumerator, strlen (powerNumerator));
+  strcpy (parseFractionArgument, powerNumerator);
   parseFractionArgument[strlen (powerNumerator)] = '/';
-  strncpy (parseFractionArgument + strlen (powerNumerator) + 1,
-           powerDenominator, strlen (powerDenominator) + 1);
+  strcpy (parseFractionArgument + strlen (powerNumerator) + 1,
+           powerDenominator);
   struct fraction answer = parse_fraction (parseFractionArgument);
 
   free (exponentDecimal);
