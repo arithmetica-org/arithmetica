@@ -3,10 +3,8 @@
 #include <map>
 
 using namespace arithmetica;
-// #include <iostream>
 namespace arithmetica {
 std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
-  // std::cout << "f: " << e1.to_string() << ", g: " << e2.to_string() << '\n';
   // note: i havent coded division where the powers for any of the variables
   // involve variables
 
@@ -98,7 +96,6 @@ std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
   }
 
   auto k = (max_f * (max_g ^ algexpr("-1"))).simplify();
-  // std::cout << "k: " << k.to_string() << '\n';
   auto ans = divide_polynomial((e1 - (k * e2).multiply()).add(), e2);
   if (ans.second == algexpr("0")) {
     return {(k + ans.first).add(), ans.second};

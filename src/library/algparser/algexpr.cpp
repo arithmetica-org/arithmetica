@@ -1,7 +1,6 @@
 #include "algexpr.hpp"
 #include <algorithm>
 #include <array>
-#include <iostream>
 
 namespace arithmetica {
 std::vector<std::string> algexpr::get_funcs() const {
@@ -19,6 +18,10 @@ bool algexpr::is_opening_bracket(const char &c) const {
 
 bool algexpr::is_closing_bracket(const char &c) const {
   return c == ')' or c == ']' or c == '}';
+}
+
+bool algexpr::is_bracket(const char &c) const {
+  return is_opening_bracket(c) or is_closing_bracket(c);
 }
 
 int algexpr::find_sign(const std::string &s, const char &c, bool backward,
@@ -155,7 +158,7 @@ int algexpr::bound(const std::string &s, long long i, int incr) {
   }
   i += incr;
   for (; 0 <= i and i < (long long)s.length(); i += incr) {
-    if (std::isalpha(s[i]) or is_sign(s[i])) {
+    if (std::isalpha(s[i]) or is_sign(s[i]) or is_bracket(s[i])) {
       return i - incr;
     }
   }
@@ -211,10 +214,11 @@ algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
     std::size_t i = -1;
     while ((i = s.find(c, i + 1)) != std::string::npos) {
       auto br = bound(s, i, 1), bl = bound(s, i, -1);
-      if (br != (long long)s.length() - 1 and !is_sign(s[br + 1])) {
+      if (br != (long long)s.length() - 1 and !is_sign(s[br + 1]) and
+          !is_bracket(s[br + 1])) {
         s.insert(br + 1, "*"); // add ahead
       }
-      if (bl != 0 and !is_sign(s[bl - 1])) {
+      if (bl != 0 and !is_sign(s[bl - 1]) and !is_bracket(s[bl - 1])) {
         s.insert(bl, "*"); // add behind}
       }
     }

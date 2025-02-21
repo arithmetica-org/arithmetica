@@ -28,6 +28,7 @@ private:
   std::string debug_string(int i) const;
   bool is_opening_bracket(const char &c) const;
   bool is_closing_bracket(const char &c) const;
+  bool is_bracket(const char &c) const;
   bool is_function(const std::string &s);
   bool is_sign(const char &c) const;
   int bound(const std::string &s, long long i, int incr);
