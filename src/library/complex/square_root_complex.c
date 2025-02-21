@@ -11,8 +11,8 @@ square_root_complex (struct complex_arithmetica n, size_t accuracy)
     {
       char *sqrt = square_root (n.real, accuracy);
       struct complex_arithmetica answer;
-      answer.imaginary = (char *)realloc (answer.imaginary, 2);
-      answer.real = (char *)realloc (answer.real, strlen (sqrt) + 1);
+      answer.imaginary = (char *)malloc (2);
+      answer.real = (char *)malloc (strlen (sqrt) + 1);
       strcpy (answer.imaginary, n.imaginary);
       strcpy (answer.real, sqrt);
       free (sqrt);

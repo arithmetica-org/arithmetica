@@ -6,16 +6,12 @@
 void
 ilcm (const char *a_in, const char *b_in, char *lcm)
 {
-#define max(a, b)                                                             \
-  ({                                                                          \
-    __typeof__ (a) _a = (a);                                                  \
-    __typeof__ (b) _b = (b);                                                  \
-    _a > _b ? _a : _b;                                                        \
-  })
-
   // lcm(a, b) = ab / gcd(a, b)
-  char *product = (char *)calloc (strlen (a_in) + strlen (b_in) + 1, 1);
-  char *gcd = (char *)malloc (max (strlen (a_in), strlen (b_in)) + 1);
+  size_t a_in_len = strlen (a_in);
+  size_t b_in_len = strlen (b_in);
+  
+  char *product = (char *)calloc (a_in_len + b_in_len + 1, 1);
+  char *gcd = (char *)malloc (((a_in_len > b_in_len)? a_in_len : b_in_len) + 1);
 
   multiply (a_in, b_in, product);
   igcd (a_in, b_in, gcd);

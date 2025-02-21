@@ -45,7 +45,7 @@ repeating_decimal_to_fraction (const char *non_repeating_part_in,
   for (size_t i = 0; i < decimalsRemoved; i++)
     nines[strlen (repeating_part) + i] = '0';
 
-  int max = strlen (repeating_part) + decimalsRemoved;
+  size_t max = strlen (repeating_part) + decimalsRemoved;
   if (strlen (_numerator) > max)
     max = strlen (_numerator);
   char *gcd = (char *)calloc (max + 1, 1);

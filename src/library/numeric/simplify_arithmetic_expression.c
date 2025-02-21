@@ -247,7 +247,7 @@ get_numerical_arguments (const char *expression, bool fromLeft,
           numberOfOperators++;
         }
       signIndex++;
-      if (signIndex < strlen (expression) && expression[signIndex] == '[')
+      if (signIndex < (long long)strlen (expression) && expression[signIndex] == '[')
         {
           size_t corresponding_closing_bracket
               = get_corresponding_closing_bracket (expression, signIndex);
@@ -258,7 +258,7 @@ get_numerical_arguments (const char *expression, bool fromLeft,
       else
         {
           start = signIndex;
-          while (signIndex < strlen (expression)
+          while (signIndex < (long long)strlen (expression)
                  && !equal_to_any_from (operators, expression[signIndex],
                                         numberOfOperators)
                  && !(expression[signIndex] == '-' && encounteredNumber))
@@ -282,9 +282,6 @@ get_numerical_arguments (const char *expression, bool fromLeft,
 static void
 get_chain_division_location (char *expression, long *sign1In, long *sign2In)
 {
-  long sign1 = *sign1In;
-  long sign2 = *sign2In;
-
   long divisionSignLocation = find_operational_sign (expression, '/');
   while (divisionSignLocation >= 0)
     {
@@ -295,7 +292,7 @@ get_chain_division_location (char *expression, long *sign1In, long *sign2In)
       char *rightArgument
           = get_numerical_arguments (expression, false, &rightArgumentEnd, 1);
       expression[divisionSignLocation] = '/';
-      if (rightArgumentEnd + 1 < strlen (expression)
+      if (rightArgumentEnd + 1 < (long long)strlen (expression)
           && expression[rightArgumentEnd + 1] == '/')
         {
           free (rightArgument);

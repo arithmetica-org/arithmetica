@@ -391,7 +391,7 @@ arithmetica_terminating_decimal_to_fraction (PyObject *self, PyObject *args)
 static PyObject *
 arithmetica_construct_regular_polygon (PyObject *self, PyObject *args)
 {
-  int n;
+  size_t n;
   const char *len;
   size_t accuracy;
   if (!PyArg_ParseTuple (args, "isn", &n, &len, &accuracy))

@@ -70,18 +70,6 @@ sine (const char *number, size_t accuracy)
       free (buf);
       free (_buf);
 
-      unsigned char found = 0;
-      size_t location = 0;
-      for (size_t i = 0; i < strlen (answer); i++)
-        {
-          if (answer[i] == '.')
-            {
-              location = i;
-              found = 1;
-              break;
-            }
-        }
-
       char *diff = (char *)calloc (strlen (prev) + strlen (answer) + 3, 1);
       subtract (answer, prev, diff);
       if (diff[0] == '-')

@@ -7,7 +7,7 @@
 #include <truncate.h>
 
 struct point *
-construct_regular_polygon (int n, const char *length, size_t accuracy)
+construct_regular_polygon (size_t n, const char *length, size_t accuracy)
 {
   struct point *polygon = malloc (n * sizeof (struct point));
 
@@ -36,7 +36,7 @@ construct_regular_polygon (int n, const char *length, size_t accuracy)
     }
 
   // Convert [n] to a string. Note that we're assuming that n > 0.
-  int n_copy = n;
+  size_t n_copy = n;
   size_t num_digits = floor (log10 (n)) + 1;
   char *n_str = (char *)malloc (num_digits + 1);
   for (size_t i = 0; i < num_digits; ++i)
