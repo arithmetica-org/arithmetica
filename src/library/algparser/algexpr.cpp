@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <array>
 
-// #include <iostream>
 namespace arithmetica {
 std::vector<std::string> algexpr::get_funcs() const {
   std::vector<std::string> funcs = {
@@ -10,6 +9,10 @@ std::vector<std::string> algexpr::get_funcs() const {
       "atan",  "acos", "sec",   "csc",  "cot",   "acsc",  "asec",  "acot",
       "fact",  "ceil", "floor", "sinh", "cosh",  "tanh",  "asinh", "acosh",
       "atanh", "csch", "sech",  "coth", "acsch", "asech", "acoth"};
+  std::sort(funcs.begin(), funcs.end(),
+            [](const std::string &a, const std::string &b) {
+              return a.length() > b.length();
+            });
   return funcs;
 }
 

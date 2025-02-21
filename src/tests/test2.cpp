@@ -8,7 +8,7 @@ int main() {
     std::cout << "Enter an expression: ";
     std::string s;
     std::getline(std::cin, s);
-    // std::cout << algexpr(s).debug_string() << '\n';
+    std::cout << algexpr(s).debug_string() << '\n';
     std::cout << "==> " << algexpr(s).simplify().to_string() << '\n';
   }
 
