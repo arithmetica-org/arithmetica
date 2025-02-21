@@ -200,11 +200,17 @@ algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
   {
     // remove consecutive +'s and -'s
     std::string _s;
-    for (std::size_t i = 0; i < s.length(); ++i) {
+    for (std::size_t i = 0, len = 0; i < s.length(); ++i) {
       if (i != 0 and (s[i] == '+' or s[i] == '-') and s[i] == s[i - 1]) {
+        len++;
         continue;
+      } else {
+        if (len % 2 == 1) {
+          _s.pop_back();
+        }
+        _s.push_back(s[i]);
+        len = 0;
       }
-      _s.push_back(s[i]);
     }
     s = _s;
   }
