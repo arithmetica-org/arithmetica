@@ -1,5 +1,4 @@
 #include "algexpr.hpp"
-#include <FractionCPP.hpp>
 
 namespace arithmetica {
 std::vector<algexpr> algexpr::products() {

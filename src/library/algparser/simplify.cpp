@@ -16,6 +16,7 @@ void algexpr::simplify_in_place() {
   if (func == "^") {
     *this = exponent_sum();
     *this = exponent_product();
+    *this = exponent_exponent();
   } else if (func == "*") {
     *this = multiply();
   } else if (func == "/") {

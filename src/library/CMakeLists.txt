@@ -65,6 +65,7 @@ set(c_cpp_sources
     algparser/simplify_term.cpp
     algparser/exponent_product.cpp
     algparser/exponent_sum.cpp
+    algparser/exponent_exponent.cpp
     algparser/numeric_checks.cpp
     algparser/operators.cpp
     algparser/products.cpp

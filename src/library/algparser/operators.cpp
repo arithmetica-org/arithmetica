@@ -1,5 +1,4 @@
 #include "algexpr.hpp"
-#include <FractionCPP.hpp>
 
 namespace arithmetica {
 algexpr operator+(const algexpr &a, const algexpr &b) {

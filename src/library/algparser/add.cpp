@@ -1,5 +1,4 @@
 #include "algexpr.hpp"
-#include <FractionCPP.hpp>
 #include <map>
 
 namespace arithmetica {

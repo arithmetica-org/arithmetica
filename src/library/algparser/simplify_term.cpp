@@ -1,5 +1,4 @@
 #include "algexpr.hpp"
-#include <FractionCPP.hpp>
 #include <map>
 
 namespace arithmetica {
@@ -12,6 +11,7 @@ algexpr algexpr::simplify_term(bool bring_coeff_to_front) {
   std::map<algexpr, algexpr, decltype(comp)> mp(comp); // base, exponent
   Fraction constants("1");
   for (auto &term : prods) {
+    term = term.exponent_exponent();
     if (term.is_numeric()) {
       constants = constants * term.coeff;
       continue;
@@ -23,6 +23,13 @@ algexpr algexpr::simplify_term(bool bring_coeff_to_front) {
         mp[term] = algexpr("1");
       }
       continue;
+    }
+    if (term.l->is_numeric()) {
+      auto t = term.exponent_sum();
+      if (t.is_numeric()) {
+        constants = constants * t.coeff;
+        continue;
+      }
     }
     if (mp.count(*term.l)) {
       mp[*term.l] = mp[*term.l] + *term.r;

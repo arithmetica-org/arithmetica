@@ -1,5 +1,4 @@
 #include "algexpr.hpp"
-#include <FractionCPP.hpp>
 #include <algorithm>
 #include <array>
 

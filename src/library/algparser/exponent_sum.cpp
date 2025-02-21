@@ -1,5 +1,4 @@
 #include "algexpr.hpp"
-#include <FractionCPP.hpp>
 
 namespace arithmetica {
 algexpr algexpr::exponent_sum() {

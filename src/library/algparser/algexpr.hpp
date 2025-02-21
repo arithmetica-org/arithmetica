@@ -60,6 +60,7 @@ public:
   algexpr divide();   // func == "/"
   algexpr exponent_product();
   algexpr exponent_sum();                                  // expands (...)^n
+  algexpr exponent_exponent();                             // (a^b)^c = a^(bc)
   algexpr simplify_term(bool bring_coeff_to_front = true); // single product
 
   void simplify_in_place(); // simplifies, using all the functions above
