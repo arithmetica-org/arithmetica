@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <array>
 
-#include <iostream>
+// #include <iostream>
 namespace arithmetica {
 std::vector<std::string> algexpr::get_funcs() const {
   std::vector<std::string> funcs = {
@@ -228,13 +228,11 @@ algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
       s = s.substr(l, r - l + 1);
     }
   }
-  std::cout << "expr: " << s << '\n';
   // add multiplication signs before and after ^ and /
   for (auto &c : std::string("^/")) {
     std::size_t i = -1;
     while ((i = s.find(c, i + 1)) != std::string::npos) {
       auto br = bound(s, i, 1), bl = bound(s, i, -1);
-      std::cout << "c: " << c << ", bl: " << bl << ", br: " << br << '\n';
       if (br != (long long)s.length() - 1 and !is_sign(s[br + 1]) and
           !is_bracket(s[br + 1])) {
         s.insert(br + 1, "*"); // add ahead
