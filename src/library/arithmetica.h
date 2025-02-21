@@ -267,7 +267,7 @@ struct point
 /// @return Returns an array of points, each with a malloc'd char *. Free each
 /// of these once they're done being used.
 arithmetica_function_start struct point *
-construct_regular_polygon (int n, const char *length, size_t accuracy);
+construct_regular_polygon (size_t n, const char *length, size_t accuracy);
 
 // Complex number functions
 
