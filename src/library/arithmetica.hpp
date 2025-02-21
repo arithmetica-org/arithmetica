@@ -306,6 +306,19 @@ algexpr exp(const algexpr &a);
 algexpr log(const algexpr &a);
 algexpr sqrt(const algexpr &a);
 algexpr cbrt(const algexpr &a);
+algexpr sin(const algexpr &a);
+algexpr cos(const algexpr &a);
+algexpr tan(const algexpr &a);
+algexpr csc(const algexpr &a);
+algexpr sec(const algexpr &a);
+algexpr cot(const algexpr &a);
+algexpr asin(const algexpr &a);
+algexpr acos(const algexpr &a);
+algexpr atan(const algexpr &a);
+algexpr acsc(const algexpr &a);
+algexpr asec(const algexpr &a);
+algexpr acot(const algexpr &a);
+algexpr abs(const algexpr &a);
 
 class Matrix {
 private:

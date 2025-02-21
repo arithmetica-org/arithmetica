@@ -5,12 +5,16 @@ algexpr algexpr::exponent_sum() {
   if (func != "^") {
     return *this;
   }
+  if (l->func == "^") {
+    return exponent_exponent();
+  }
   if (l->is_numeric() and l->coeff.to_string() == "1") {
     algexpr ans;
     ans.coeff = "1";
     return ans;
   }
-  if (r->is_numeric() and (algexpr("-1") * *r).multiply().is_natural_number()) {
+  if (l->is_numeric() and r->is_numeric() and
+      (algexpr("-1") * *r).multiply().is_natural_number()) {
     return (algexpr("1") /
             (*l ^ (*r * algexpr("-1")).multiply()).exponent_sum())
         .divide();

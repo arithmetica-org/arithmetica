@@ -11,8 +11,23 @@ std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
   // this is because you can't really compare degrees to find the max (something
   // needed by my algorithm) when they involve variables
 
+  // also, temporarily, negative powers dont work either. so i have a hack to
+  // make monovariable negative powers work
+
   auto f = e1.terms();
   auto g = e2.terms();
+
+  // hack for monovariable negative powers
+  if (g.size() == 1) {
+    // special case of rational division
+    if (f.size() == 1 and f[0].is_numeric() and g[0].is_numeric()) {
+      algexpr ans;
+      ans.coeff = f[0].coeff / g[0].coeff;
+      return {ans, algexpr("0")};
+    }
+    return {(e1 * (e2 ^ algexpr("-1"))).simplify(), algexpr("0")};
+  }
+
   auto comp = [](const algexpr &a, const algexpr &b) {
     return a.to_string() < b.to_string();
   };

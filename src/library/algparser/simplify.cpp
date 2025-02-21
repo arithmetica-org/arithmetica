@@ -22,9 +22,9 @@ void algexpr::simplify_in_place() {
   } else if (func == "/") {
     *this = divide();
   } else if (func == "sqrt") {
-    *this = sqrt(*this);
+    *this = sqrt(*l);
   } else if (func == "cbrt") {
-    *this = cbrt(*this);
+    *this = cbrt(*l);
   } else {
     *this = add();
   }

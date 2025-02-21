@@ -9,8 +9,9 @@ int main() {
     std::getline(std::cin, s);
     algexpr expr(s);
     expr = expr.simplify();
-    auto d = diff(expr, algexpr("x"));
-    std::cout << "==> diff(" << expr.to_string() << ") = " << d.to_string()
-              << '\n';
+    std::cout << expr.to_string() << '\n';
+    // auto d = diff(expr, algexpr("x"));
+    // std::cout << "==> diff(" << expr.to_string() << ") = " << d.to_string()
+    //           << '\n';
   }
 }
