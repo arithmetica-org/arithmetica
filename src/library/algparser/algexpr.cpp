@@ -1,8 +1,18 @@
 #include "algexpr.hpp"
 #include <algorithm>
 #include <array>
+#include <iostream>
 
 namespace arithmetica {
+std::vector<std::string> algexpr::get_funcs() const {
+  std::vector<std::string> funcs = {
+      "sin",   "cos",  "tan",   "log",  "abs",   "sgn",   "exp",   "asin",
+      "atan",  "acos", "sec",   "csc",  "cot",   "acsc",  "asec",  "acot",
+      "fact",  "ceil", "floor", "sinh", "cosh",  "tanh",  "asinh", "acosh",
+      "atanh", "csch", "sech",  "coth", "acsch", "asech", "acoth"};
+  return funcs;
+}
+
 bool algexpr::is_opening_bracket(const char &c) const {
   return c == '(' or c == '[' or c == '{';
 }
@@ -23,6 +33,17 @@ int algexpr::find_sign(const std::string &s, const char &c, bool backward,
       return i;
     }
     i -= 2 * backward - 1;
+  }
+  return -1;
+}
+
+int algexpr::opening_bracket(const std::string &s, int st) {
+  for (long long i = st, bal = 0; i >= 0; --i) {
+    bal += is_opening_bracket(s[i]);
+    bal -= is_closing_bracket(s[i]);
+    if (bal == 0) {
+      return i;
+    }
   }
   return -1;
 }
@@ -65,11 +86,7 @@ bool algexpr::is_function(const std::string &s) {
   if (s.empty()) {
     return false;
   }
-  std::vector<std::string> funcs = {
-      "sin",   "cos",  "tan",   "log",  "abs",   "sgn",   "exp",   "asin",
-      "atan",  "acos", "sec",   "csc",  "cot",   "acsc",  "asec",  "acot",
-      "fact",  "ceil", "floor", "sinh", "cosh",  "tanh",  "asinh", "acosh",
-      "atanh", "csch", "sech",  "coth", "acsch", "asech", "acoth"};
+  auto funcs = get_funcs();
   if (std::find(funcs.begin(), funcs.end(), s) != funcs.end()) {
     return true;
   }
@@ -106,6 +123,45 @@ int algexpr::variable_end(const std::string &s, int st) {
   return s.length() - 1;
 }
 
+bool algexpr::is_sign(const char &c) const {
+  return std::string("+-*/^").find(c) != std::string::npos;
+}
+
+int algexpr::bound(const std::string &s, long long i, int incr) {
+  if (i == 0 or i == (long long)s.length() - 1) {
+    return i;
+  }
+  if (incr == 1) {
+    if (is_opening_bracket(s[i + 1])) {
+      return closing_bracket(s, i + 1);
+    }
+    for (auto &func : get_funcs()) {
+      if (s.find(func, i + 1) != std::string::npos) {
+        return closing_bracket(s, i + func.length() + 1);
+      }
+    }
+  }
+  if (incr == -1 and is_closing_bracket(s[i - 1])) {
+    std::size_t open = opening_bracket(s, i - 1);
+    for (auto &func : get_funcs()) {
+      if (s.rfind(func, open - 1) != std::string::npos) {
+        return open - func.length();
+      }
+    }
+    return open;
+  }
+  if (std::isalpha(s[i + incr])) {
+    return i + incr;
+  }
+  i += incr;
+  for (; 0 <= i and i < (long long)s.length(); i += incr) {
+    if (std::isalpha(s[i]) or is_sign(s[i])) {
+      return i - incr;
+    }
+  }
+  return (incr == 1) * (s.length() - 1);
+}
+
 algexpr::~algexpr() {
   delete l;
   delete r;
@@ -135,6 +191,9 @@ algexpr::algexpr(const algexpr &other) {
 }
 
 algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
+  // Some preprocessing
+  // remove spaces
+  s.erase(std::remove(s.begin(), s.end(), ' '), s.end());
   {
     // ((1)) ==> 1
     int l = 0, r = s.length() - 1;
@@ -145,6 +204,19 @@ algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
       s = "";
     } else {
       s = s.substr(l, r - l + 1);
+    }
+  }
+  // add multiplication signs before and after ^ and /
+  for (auto &c : std::string("^/")) {
+    std::size_t i = -1;
+    while ((i = s.find(c, i + 1)) != std::string::npos) {
+      auto br = bound(s, i, 1), bl = bound(s, i, -1);
+      if (br != (long long)s.length() - 1 and !is_sign(s[br + 1])) {
+        s.insert(br + 1, "*"); // add ahead
+      }
+      if (bl != 0 and !is_sign(s[bl - 1])) {
+        s.insert(bl, "*"); // add behind}
+      }
     }
   }
 
