@@ -78,6 +78,10 @@ algexpr operator*(const algexpr &a, const algexpr &b);
 algexpr operator/(const algexpr &a, const algexpr &b);
 algexpr operator^(const algexpr &a, const algexpr &b);
 bool operator==(const algexpr &a, const algexpr &b);
+algexpr exp(const algexpr &a);
+algexpr log(const algexpr &a);
+algexpr sqrt(const algexpr &a);
+algexpr cbrt(const algexpr &a);
 
 std::pair<algexpr, algexpr> divide_polynomial(algexpr f, algexpr g);
 } // namespace arithmetica

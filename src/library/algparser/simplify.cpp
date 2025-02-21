@@ -21,6 +21,10 @@ void algexpr::simplify_in_place() {
     *this = multiply();
   } else if (func == "/") {
     *this = divide();
+  } else if (func == "sqrt") {
+    *this = sqrt(*this);
+  } else if (func == "cbrt") {
+    *this = cbrt(*this);
   } else {
     *this = add();
   }

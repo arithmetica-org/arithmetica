@@ -191,22 +191,27 @@ std::string to_string(const Fraction &f);
 
 class algexpr {
 private:
+  std::vector<std::string> get_funcs() const;
   bool has_non_number(const std::string &s) const;
   std::string add_parentheses_if_needed(const std::string &s,
                                         const std::string &f) const;
   std::string stringify_function_call(const std::string &f,
                                       const std::string &l,
                                       const std::string &r) const;
-  bool is_opening_bracket(const char &c) const;
-  bool is_closing_bracket(const char &c) const;
   int find_sign(const std::string &s, const char &c, bool backward,
                 bool exclude_first = true) const;
+  int find_letter(const std::string &s);
+  int opening_bracket(const std::string &s, int st);
   int closing_bracket(const std::string &s, int st);
   std::pair<int, int> get_first_bracket_pair(const std::string &s);
-  bool is_function(const std::string &s);
-  int find_letter(const std::string &s);
   int variable_end(const std::string &s, int st);
   std::string debug_string(int i) const;
+  bool is_opening_bracket(const char &c) const;
+  bool is_closing_bracket(const char &c) const;
+  bool is_bracket(const char &c) const;
+  bool is_function(const std::string &s);
+  bool is_sign(const char &c) const;
+  int bound(const std::string &s, long long i, int incr);
 
 public:
   algexpr *l;
@@ -274,6 +279,9 @@ public:
   /// all terms.
   /// @return Returns the modified expression.
   algexpr exponent_sum();
+  /// @brief Transforms (a^b)^c to a^(bc).
+  /// @return Returns the modified expression.
+  algexpr exponent_exponent();
   /// @brief Simplifies a single product by combining powers (x^a*x^b ==> x^(a +
   /// b)), and ordering variables.
   /// @param bring_coeff_to_front Decides whether to bring the coefficient to
@@ -294,6 +302,10 @@ algexpr operator*(const algexpr &a, const algexpr &b);
 algexpr operator/(const algexpr &a, const algexpr &b);
 algexpr operator^(const algexpr &a, const algexpr &b);
 bool operator==(const algexpr &a, const algexpr &b);
+algexpr exp(const algexpr &a);
+algexpr log(const algexpr &a);
+algexpr sqrt(const algexpr &a);
+algexpr cbrt(const algexpr &a);
 
 class Matrix {
 private:
@@ -319,4 +331,13 @@ public:
 };
 
 std::optional<Matrix> operator*(Matrix &a, Matrix &b);
+
+/// @brief Performs differentiation: differetiates a given algebraic expression
+/// with respect to the variable specified in the function's parameters.
+/// @param expr The algebraic expression to differentiate.
+/// @param x The variable to differentiate with respect to. Make sure
+/// this is a single variable (something like x), not multiple (something like
+/// xy).
+/// @return Returns the derivative of [expr].
+algexpr diff(algexpr expr, algexpr x);
 } // namespace arithmetica

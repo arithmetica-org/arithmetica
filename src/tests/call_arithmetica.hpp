@@ -581,6 +581,21 @@ std::string call_arithmetica(std::vector<std::string> args, double &timeMS) {
              1e-6;
     return ans;
   }
+  if (args[0] == "diff") {
+    if (args.size() < 2) {
+      return "";
+    }
+    auto start = std::chrono::high_resolution_clock::now();
+    std::string ans =
+        arithmetica::diff(arithmetica::algexpr(args[1]).simplify(),
+                          arithmetica::algexpr(args[2]).simplify())
+            .to_string();
+    auto end = std::chrono::high_resolution_clock::now();
+    timeMS = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)
+                 .count() *
+             1e-6;
+    return ans;
+  }
 
   return "function does not exist";
 }

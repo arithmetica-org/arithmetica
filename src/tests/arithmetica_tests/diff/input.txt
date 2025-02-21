@@ -1,0 +1,5 @@
+exp(x) x
+x^2 x
+xy x
+sqrt(x) x
+x^x^x x

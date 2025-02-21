@@ -1,0 +1,5 @@
+exp(x)
+2x
+y
+1/2x^(-1/2)
+(log(x))^2x^(x + x^x) + log(x)x^(x + x^x) + x^(-1 + x + x^x)

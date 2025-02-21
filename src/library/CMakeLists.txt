@@ -17,6 +17,8 @@ endif()
 set(c_cpp_sources
     arithmetica.cpp
 
+    check_accuracy.c
+
     func/arccos.c
     func/arcsin.c
     func/arctan.c
@@ -68,7 +70,7 @@ set(c_cpp_sources
     algparser/exponent_sum.cpp
     algparser/exponent_exponent.cpp
     algparser/numeric_checks.cpp
-    algparser/operators.cpp
+    algparser/functions.cpp
     algparser/products.cpp
     algparser/terms.cpp
     algparser/simplify.cpp
@@ -79,7 +81,7 @@ set(c_cpp_sources
     matrix/invert.cpp
     matrix/to_string.cpp
 
-    check_accuracy.c
+    calculus/diff.cpp
 )
 
 set(include_directories
@@ -89,6 +91,7 @@ set(include_directories
     "complex"
     "algparser"
     "matrix"
+    "calculus"
     "."
 )
 

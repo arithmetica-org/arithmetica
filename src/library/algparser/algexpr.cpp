@@ -5,10 +5,11 @@
 namespace arithmetica {
 std::vector<std::string> algexpr::get_funcs() const {
   std::vector<std::string> funcs = {
-      "sin",   "cos",  "tan",   "log",  "abs",   "sgn",   "exp",   "asin",
-      "atan",  "acos", "sec",   "csc",  "cot",   "acsc",  "asec",  "acot",
-      "fact",  "ceil", "floor", "sinh", "cosh",  "tanh",  "asinh", "acosh",
-      "atanh", "csch", "sech",  "coth", "acsch", "asech", "acoth"};
+      "sin",   "cos",   "tan",   "log",   "abs",   "sgn",  "exp",
+      "asin",  "atan",  "acos",  "sec",   "csc",   "cot",  "acsc",
+      "asec",  "acot",  "fact",  "ceil",  "floor", "sinh", "cosh",
+      "tanh",  "asinh", "acosh", "atanh", "csch",  "sech", "coth",
+      "acsch", "asech", "acoth", "sqrt",  "cbrt"};
   std::sort(funcs.begin(), funcs.end(),
             [](const std::string &a, const std::string &b) {
               return a.length() > b.length();
