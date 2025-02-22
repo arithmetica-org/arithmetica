@@ -320,6 +320,8 @@ algexpr asec(const algexpr &a);
 algexpr acot(const algexpr &a);
 algexpr abs(const algexpr &a);
 
+std::pair<algexpr, algexpr> divide_polynomial(algexpr &f, algexpr &g);
+
 class Matrix {
 private:
   bool called_invert;

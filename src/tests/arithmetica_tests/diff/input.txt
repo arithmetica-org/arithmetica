@@ -3,3 +3,10 @@ x^2 x
 xy x
 sqrt(x) x
 x^x^x x
+asin(x) x
+acos(x) x
+atan(x) x
+atan(1/x) x
+acot(x) x
+(x^2+1)^sin(x) x
+(x^x)exp(x) x

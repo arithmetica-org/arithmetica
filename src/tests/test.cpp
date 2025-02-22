@@ -85,6 +85,14 @@ static std::string color_digits(std::string s, std::string col) {
   return answer;
 }
 
+bool compare(const std::string &a, const std::string &b,
+             const std::string &func) {
+  if (func == "diff") {
+    return arithmetica::algexpr(a) == arithmetica::algexpr(b);
+  }
+  return a == b;
+}
+
 int main(int argc, char **argv) {
   std::cout << "Testing arithmetica:\n\n";
   std::vector<std::string> functions = {"diff",
@@ -164,7 +172,7 @@ int main(int argc, char **argv) {
       arithmetica_inputs.push_back(inputs);
       std::string res = call_arithmetica(inputs, timeMS);
       totalTimeMS += timeMS;
-      if (std::string(res) != Expected) {
+      if (!compare(std::string(res), Expected, functions[i])) {
         std::cout << spaces << "<" << currentTest << "> "
                   << color("Error: " + functions[i] + "(", "Red") << inputsStr
                   << color(") failed.", "Red") << "\n"

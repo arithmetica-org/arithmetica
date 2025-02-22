@@ -4,35 +4,23 @@
 
 using namespace arithmetica;
 namespace arithmetica {
-std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
+// note that this WILL modify the polynomials in the case of them having
+// negative powers: it will make it so they don't
+std::pair<algexpr, algexpr> divide_polynomial(algexpr &e1, algexpr &e2) {
   // note: i havent coded division where the powers for any of the variables
   // involve variables
 
   // this is because you can't really compare degrees to find the max (something
   // needed by my algorithm) when they involve variables
 
-  // also, temporarily, negative powers dont work either. so i have a hack to
-  // make monovariable negative powers work
-
   auto f = e1.terms();
   auto g = e2.terms();
-
-  // hack for monovariable negative powers
-  if (g.size() == 1) {
-    // special case of rational division
-    if (f.size() == 1 and f[0].is_numeric() and g[0].is_numeric()) {
-      algexpr ans;
-      ans.coeff = f[0].coeff / g[0].coeff;
-      return {ans, algexpr("0")};
-    }
-    return {(e1 * (e2 ^ algexpr("-1"))).simplify(), algexpr("0")};
-  }
 
   auto comp = [](const algexpr &a, const algexpr &b) {
     return a.to_string() < b.to_string();
   };
   bool power_contains_variable = false;
-  auto extract_highest_powers = [&](std::vector<algexpr> &f) {
+  auto extract_highest_powers = [&](std::vector<algexpr> &f, bool highest) {
     std::map<algexpr, Fraction, decltype(comp)> p(comp);
     for (auto &term : f) {
       for (auto &i : term.simplify_term().products()) {
@@ -45,13 +33,19 @@ std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
             continue;
           }
           if (p.count(*i.l)) {
-            p[*i.l] = i.r->coeff < p[*i.l] ? p[*i.l] : i.r->coeff;
+            p[*i.l] = ((i.r->coeff < p[*i.l] and highest) or
+                       (p[*i.l] < i.r->coeff and !highest))
+                          ? p[*i.l]
+                          : i.r->coeff;
           } else {
             p[*i.l] = i.r->coeff;
           }
         } else {
           if (p.count(i)) {
-            p[i] = Fraction("1") < p[i] ? p[i] : Fraction("1");
+            p[i] = ((Fraction("1") < p[i] and highest) or
+                    (Fraction("1") < p[i] and !highest))
+                       ? p[i]
+                       : Fraction("1");
           } else {
             p[i] = Fraction("1");
           }
@@ -60,7 +54,7 @@ std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
     }
     return p;
   };
-  auto p = extract_highest_powers(f), q = extract_highest_powers(g);
+  auto p = extract_highest_powers(f, true), q = extract_highest_powers(g, true);
   if (power_contains_variable) {
     return {algexpr("0"), e1};
   }
@@ -75,6 +69,25 @@ std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
     algexpr e;
     e.coeff = Fraction("1") / e2.add().coeff;
     return {(e1 * e).simplify(), algexpr("0")};
+  }
+
+  // deal with negative powers by multiplying both the numerator and denominator
+  {
+    algexpr factor("1");
+    bool needed = false;
+    for (auto &[base, pow] : extract_highest_powers(g, false)) {
+      if (pow < Fraction("0")) {
+        needed = true;
+        arithmetica::algexpr e1;
+        e1.coeff = pow * Fraction("-1");
+        factor = factor * (base ^ e1);
+      }
+    }
+    if (needed) {
+      e1 = (e1 * factor).simplify();
+      e2 = (e2 * factor).simplify();
+      return divide_polynomial(e1, e2);
+    }
   }
 
   // note: by this point, we have alr ensured that powers don't contain
@@ -111,7 +124,8 @@ std::pair<algexpr, algexpr> divide_polynomial(algexpr e1, algexpr e2) {
   }
 
   auto k = (max_f * (max_g ^ algexpr("-1"))).simplify();
-  auto ans = divide_polynomial((e1 - (k * e2).multiply()).add(), e2);
+  auto left = (e1 - (k * e2).multiply()).add();
+  auto ans = divide_polynomial(left, e2);
   if (ans.second == algexpr("0")) {
     return {(k + ans.first).add(), ans.second};
   }
@@ -122,11 +136,12 @@ algexpr algexpr::divide() {
   if (func != "/") {
     return *this;
   }
-  auto ans = divide_polynomial(*l, *r);
+  algexpr _l = *l, _r = *r;
+  auto ans = divide_polynomial(_l, _r);
   // l/r = ans.first + ans.second/r
   if (ans.second == algexpr("0")) {
     return ans.first;
   }
-  return (ans.first + (ans.second * (*r ^ algexpr("-1"))).multiply()).add();
+  return (ans.first + (ans.second * (_r ^ algexpr("-1"))).multiply()).add();
 }
 } // namespace arithmetica

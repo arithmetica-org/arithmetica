@@ -144,7 +144,7 @@ int algexpr::bound(const std::string &s, long long i, int incr) {
       return closing_bracket(s, i + 1);
     }
     for (auto &func : get_funcs()) {
-      if (s.find(func, i + 1) != std::string::npos) {
+      if (s.find(func, i + 1) == std::size_t(i) + 1) {
         return closing_bracket(s, i + func.length() + 1);
       }
     }
@@ -211,7 +211,7 @@ algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
         len++;
         continue;
       } else {
-        if (len % 2 == 1 and len != 1) {
+        if (len % 2 == 1 and (len != 1 or _s.back() == '-')) {
           _s.pop_back();
         }
         _s.push_back(s[i]);
@@ -238,11 +238,26 @@ algexpr::algexpr(std::string s) : l(nullptr), r(nullptr) {
     while ((i = s.find(c, i + 1)) != std::string::npos) {
       auto br = bound(s, i, 1), bl = bound(s, i, -1);
       if (br != (long long)s.length() - 1 and !is_sign(s[br + 1]) and
-          !is_bracket(s[br + 1])) {
+          !is_closing_bracket(s[br + 1])) {
         s.insert(br + 1, "*"); // add ahead
       }
-      if (bl != 0 and !is_sign(s[bl - 1]) and !is_bracket(s[bl - 1])) {
-        s.insert(bl, "*"); // add behind}
+      if (bl != 0 and !is_sign(s[bl - 1]) and !is_opening_bracket(s[bl - 1])) {
+        s.insert(bl, "*"); // add behind
+      }
+    }
+  }
+
+  // add multiplication signs before functions: 2sin(x) ==> 2*sin(x)
+  for (std::size_t i = 0; i < s.length(); ++i) {
+    for (auto &func : get_funcs()) {
+      if (s.find(func, i) == i) {
+        bool added =
+            i != 0 and !is_sign(s[i - 1]) and !is_opening_bracket(s[i - 1]);
+        if (added) {
+          s.insert(i, "*");
+        }
+        i = closing_bracket(s, i + func.length() + added);
+        break;
       }
     }
   }
