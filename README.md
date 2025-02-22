@@ -235,6 +235,25 @@ Arithmetica can do some geometry:
 ## Geometry functions
 - `construct_regular_polygon()` constructs an n-sided regular polygon, with a specified length and accuracy.
 
+## Linear algebra
+- `Matrix::invert()` inverts a square matrix.
+- `Matrix::multiply()` multiplies two matrices.
+
+## Algebra
+- `algexpr::terms()` splits the expression at '+' and '-' signs, and returns the sub-expressions formed in an `std::vector`.
+- `algexpr::products()` splits the expression at '*' signs, and returns the sub-expressions formed in an `std::vector`.
+- `algexpr::add()` combines like terms with integer coefficients. Note: this does not factor.
+- `algexpr::multiply()` if the expression represents a multiplication of two sub-expressions, this multiplies them.
+- `algexpr::divide()` performs polynomial division if the expression represents a division of two expressions.
+- `algexpr::exponent_product()` distributes the exponent across all products in a term: for example, (uv)^n ==> u^n * v^n
+- `algexpr::exponent_sum()` expands (x_1 + x_2 + ... + x_k)^n: distributes the exponent across all terms.
+- `algexpr::exponent_exponent()` transforms (a^b)^c to a^(bc).
+- `algexpr::simplify_term()`  simplifies a single product by combining powers (x^a*x^b ==> x^(a + b)), and ordering variables.
+- `algexpr::simplify()` simplifies an algebraic expression symbolically.
+
+## Calculus
+- `diff()` performs differentiation: differetiates a given algebraic expression with respect to the variable specified in the function's parameters.
+
 ## To-do List
 - Port complex functions other than `operator+` to C++
 - Rename `FractionCPP.hpp` and `Fraction.cpp` to better file names
