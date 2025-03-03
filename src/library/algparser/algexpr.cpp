@@ -144,11 +144,7 @@ int algexpr::bound(const std::string &s, long long i, int incr) {
       return closing_bracket(s, i + 1);
     }
     for (auto &func : get_funcs()) {
-<<<<<<< HEAD
-      if (s.find(func, i + 1) == i + 1) {
-=======
       if (s.find(func, i + 1) == std::size_t(i) + 1) {
->>>>>>> 7b5a8f8f737e4b7aa175c4f8d686a6d39a968ac0
         return closing_bracket(s, i + func.length() + 1);
       }
     }
