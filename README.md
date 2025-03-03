@@ -250,6 +250,7 @@ Arithmetica can do some geometry:
 - `algexpr::exponent_exponent()` transforms `(a^b)^c` to `a^(bc)`.
 - `algexpr::simplify_term()`  simplifies a single product by combining powers (`x^a*x^b ==> x^(a + b)`), and ordering variables.
 - `algexpr::simplify()` simplifies an algebraic expression symbolically.
+- `algexpr::prettify()` prettifies an algebraic expression. Recommended to call before printing (by calling `to_string()`).
 
 ## Calculus
 - `diff()` performs differentiation: differetiates a given algebraic expression with respect to the variable specified in the function's parameters.
