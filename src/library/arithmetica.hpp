@@ -194,7 +194,7 @@ private:
   std::vector<std::string> get_funcs() const;
   bool has_non_number(const std::string &s) const;
   std::string add_parentheses_if_needed(const std::string &s,
-                                        const std::string &f) const;
+                                        const std::string &f, bool right) const;
   std::string stringify_function_call(const std::string &f,
                                       const std::string &l,
                                       const std::string &r) const;
@@ -212,6 +212,7 @@ private:
   bool is_function(const std::string &s);
   bool is_sign(const char &c) const;
   int bound(const std::string &s, long long i, int incr);
+  algexpr prettify_term();
 
 public:
   algexpr *l;
@@ -245,6 +246,9 @@ public:
   /// define 0 to also be a natural number. [0, 1, 2, ..., inf).
   /// @return True or false depending on the above condition.
   bool is_natural_number();
+  /// @brief Returns whether the current expression is a negative number.
+  /// @return True or false depending on the above condition.
+  bool is_negative_number();
 
   /// @brief Splits the expression at '+' and '-' signs, and returns the
   /// sub-expressions formed in an std::vector.
@@ -294,6 +298,10 @@ public:
   /// @brief Simplifies the algebraic experssion.
   /// @return Returns the simplified expression.
   algexpr simplify();
+  /// @brief Makes an algebraic expression 'prettier', that is,
+  /// converts xy^(-1) to x/y, or x+(-1)y to x-y.
+  /// @return Returns the prettified expression.
+  algexpr prettify();
 };
 
 algexpr operator+(const algexpr &a, const algexpr &b);

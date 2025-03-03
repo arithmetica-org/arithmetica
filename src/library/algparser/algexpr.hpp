@@ -14,7 +14,7 @@ private:
   std::vector<std::string> get_funcs() const;
   bool has_non_number(const std::string &s) const;
   std::string add_parentheses_if_needed(const std::string &s,
-                                        const std::string &f) const;
+                                        const std::string &f, bool right) const;
   std::string stringify_function_call(const std::string &f,
                                       const std::string &l,
                                       const std::string &r) const;
@@ -32,6 +32,7 @@ private:
   bool is_function(const std::string &s);
   bool is_sign(const char &c) const;
   int bound(const std::string &s, long long i, int incr);
+  algexpr prettify_term();
 
 public:
   algexpr *l;
@@ -56,6 +57,7 @@ public:
 
   bool is_numeric();
   bool is_natural_number(); // [0,1,...,inf)
+  bool is_negative_number();
 
   std::vector<algexpr> terms();
   std::vector<algexpr> products();
@@ -70,6 +72,7 @@ public:
 
   void simplify_in_place(); // simplifies, using all the functions above
   algexpr simplify();
+  algexpr prettify();
 };
 
 algexpr operator+(const algexpr &a, const algexpr &b);

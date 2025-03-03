@@ -10,11 +10,12 @@ bool algexpr::has_non_number(const std::string &s) const {
 }
 
 std::string algexpr::add_parentheses_if_needed(const std::string &s,
-                                               const std::string &f) const {
+                                               const std::string &f,
+                                               bool right) const {
   if (s.length() == 1) {
     return s;
   }
-  if (f == "+") {
+  if (f == "+" or (f == "-" and !right)) {
     return s;
   }
   if (f == "*") {
@@ -34,7 +35,12 @@ std::string algexpr::stringify_function_call(const std::string &f,
                                              const std::string &l,
                                              const std::string &r) const {
   if (f == "+" or f == "-" or f == "*" or f == "/" or f == "^") {
-    std::string ans = add_parentheses_if_needed(l, f);
+    std::string ans;
+    if (f == "*" and l == "-1") {
+      ans = "-";
+    } else {
+      ans = add_parentheses_if_needed(l, f, false);
+    }
     bool include_f = f == "+" or f == "-" or f == "*" or f == "/" or f == "^";
     bool include_space = f == "+" or f == "-" or f == "*";
     if (f == "*" and has_non_number(r)) {
@@ -49,7 +55,7 @@ std::string algexpr::stringify_function_call(const std::string &f,
     if (include_space) {
       ans += " ";
     }
-    ans += add_parentheses_if_needed(r, f);
+    ans += add_parentheses_if_needed(r, f, true);
     return ans;
   }
   // unary functions

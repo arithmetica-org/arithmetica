@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.16)
 
 project(arithmetica C)
 
+if(APPLE)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "Build for x86_64" FORCE)
+endif()
+
 enable_language(ASM_NASM)
 enable_language(CXX)
 
