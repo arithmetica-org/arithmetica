@@ -1,5 +1,12 @@
 exp(x)
 2x
 y
-1/2x^(-1/2)
+1/(2sqrt(x))
 (log(x))^2x^(x + x^x) + log(x)x^(x + x^x) + x^(-1 + x + x^x)
+1/sqrt(1-x^2)
+-1/sqrt(1-x^2)
+1/(1+x^2)
+-1/(1+x^2)
+-1/(1+x^2)
+2(1 + x^2)^(-1 + sin(x))sin(x)x + (1 + x^2)^(sin(x))cos(x)log(1 + x^2)
+exp(x)x^x(2 + log(x))

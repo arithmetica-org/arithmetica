@@ -9,6 +9,7 @@ x^(1/2)
 ((-1)x^(-2))/(1+x^(-1)x^(-1))
 x-asin(x)/a
 --x
+a++b
 sqrt(x)
 sqrt(x^2)
 cbrt(x^2)

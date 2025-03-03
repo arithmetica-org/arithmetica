@@ -199,14 +199,14 @@ Currently, arithmetica has the following decimal number functions:
 - `arctan()` computes the [inverse tangent](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) of any number within the function's domain to any decimal place.
 - `continued_fraction_to_fraction()` converts a [continued fraction](https://en.wikipedia.org/wiki/Continued_fraction) to a non-negative rational fraction.
 - `cosine()` computes the [cosine](https://en.wikipedia.org/wiki/Sine_and_cosine) of an angle in radians to any decimal place.
-- `exponential()` computes e^x, where x is any real number to any decimal place.
+- `exponential()` computes `e^x`, where `x` is any real number to any decimal place.
 - `factorial()` computes the [factorial](https://en.wikipedia.org/wiki/Factorial) of a non-negative integer.
 - `find_roots_of_polynomial()` finds the **exact** rational roots of a polynomial function.
 - `fraction_to_continued_fraction()` converts a non-negative rational fraction to a [continued fraction](https://en.wikipedia.org/wiki/Continued_fraction).
 - `igcd()` computes the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative integers.
 - `ilcm()` computes the [least common multiple](https://en.wikipedia.org/wiki/Least_common_multiple) of two non-negative integers.
 - `natural_logarithm()` computes the [natural logarithm](https://en.wikipedia.org/wiki/Natural_logarithm) of a positive number to any decimal place.
-- `power()` computes x^n, where x and n are rational numbers to any decimal place.
+- `power()` computes `x^n`, where `x` and `n` are rational numbers to any decimal place.
 - `repeating_decimal_to_fraction()` converts a [repeating decimal](https://en.wikipedia.org/wiki/Repeating_decimal) to a fraction.
 - `simplify_arithmetic_expression()` simplifies an arithmetic expression involving the five basic math operations: addition, subtraction, multiplication, division, and exponentiation. This function can output either a decimal or fractional answer.
 - `sine()` computes the [sine](https://en.wikipedia.org/wiki/Sine_and_cosine) of an angle in radians to any decimal place.
@@ -219,14 +219,14 @@ Arithmetica supports basic fraction arithmetic:
 - `add_fraction()` adds two fractions.
 - `multiply_fraction()` multiplies two fractions.
 - `parse_fraction()` extracts a fraction from a string and/or converts a decimal to a fraction.
-- `power_fraction()` computes x^n, where x and n are fractions.
+- `power_fraction()` computes `x^n`, where `x` and `n` are fractions.
 - `subtract_fraction()` subtracts two fractions.
 
 Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex_number) functions:
 ## Complex number functions:
 - `add_complex()` adds two complex numbers.
 - `divide_complex()` divides two complex numbers to any decimal place.
-- `exponential_complex()` computes e^(a + bi), where a + bi is a complex number to any decimal place.
+- `exponential_complex()` computes `e^(a + bi)`, where `a + bi` is a complex number to any decimal place.
 - `multiply_complex()` multiplies two complex numbers.
 - `square_root_complex()` finds the [square root](https://en.wikipedia.org/wiki/Square_root) of a complex number to any decimal place.
 - `subtract_complex()` subtracts two complex numbers.
@@ -234,6 +234,25 @@ Arithmetica also has some [complex number](https://en.wikipedia.org/wiki/Complex
 Arithmetica can do some geometry:
 ## Geometry functions
 - `construct_regular_polygon()` constructs an n-sided regular polygon, with a specified length and accuracy.
+
+## Linear algebra
+- `Matrix::invert()` inverts a square matrix.
+- `Matrix::multiply()` multiplies two matrices.
+
+## Algebra
+- `algexpr::terms()` splits the expression at '`+`' and '`-`' signs, and returns the sub-expressions formed in an `std::vector`.
+- `algexpr::products()` splits the expression at '`*`' signs, and returns the sub-expressions formed in an `std::vector`.
+- `algexpr::add()` combines like terms with integer coefficients. Note: this does not factor.
+- `algexpr::multiply()` if the expression represents a multiplication of two sub-expressions, this multiplies them.
+- `algexpr::divide()` performs polynomial division if the expression represents a division of two expressions.
+- `algexpr::exponent_product()` distributes the exponent across all products in a term: for example, `(uv)^n ==> u^n * v^n`
+- `algexpr::exponent_sum()` expands `(x_1 + x_2 + ... + x_k)^n`: distributes the exponent across all terms.
+- `algexpr::exponent_exponent()` transforms `(a^b)^c` to `a^(bc)`.
+- `algexpr::simplify_term()`  simplifies a single product by combining powers (`x^a*x^b ==> x^(a + b)`), and ordering variables.
+- `algexpr::simplify()` simplifies an algebraic expression symbolically.
+
+## Calculus
+- `diff()` performs differentiation: differetiates a given algebraic expression with respect to the variable specified in the function's parameters.
 
 ## To-do List
 - Port complex functions other than `operator+` to C++
