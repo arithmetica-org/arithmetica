@@ -30,6 +30,7 @@ public:
   Matrix inverse();
 
   std::string to_string() const;
+  std::string to_pretty_string() const;
 };
 
 std::optional<Matrix> operator*(Matrix &a, Matrix &b);
