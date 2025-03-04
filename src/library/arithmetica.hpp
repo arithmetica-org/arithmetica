@@ -302,6 +302,9 @@ public:
   /// converts xy^(-1) to x/y, or x+(-1)y to x-y.
   /// @return Returns the prettified expression.
   algexpr prettify();
+  /// @brief Replaces all `x`s with `y`s in the current algebraic expression.
+  /// @return Returns the modified expression.
+  algexpr substitute(algexpr x, algexpr y);
 };
 
 algexpr operator+(const algexpr &a, const algexpr &b);

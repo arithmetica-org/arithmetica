@@ -73,6 +73,7 @@ public:
   void simplify_in_place(); // simplifies, using all the functions above
   algexpr simplify();
   algexpr prettify();
+  algexpr substitute(algexpr x, algexpr y);
 };
 
 algexpr operator+(const algexpr &a, const algexpr &b);

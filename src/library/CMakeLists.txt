@@ -76,6 +76,7 @@ set(c_cpp_sources
     algparser/simplify.cpp
     algparser/to_string.cpp
     algparser/prettify.cpp
+    algparser/substitute.cpp
 
     matrix/Matrix.cpp
     matrix/multiply.cpp
